@@ -2,6 +2,7 @@ using AYellowpaper.SerializedCollections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class BlockGroup : MonoBehaviour
@@ -19,8 +20,7 @@ public class BlockGroup : MonoBehaviour
 
     public void ResetModule()
     {
-        transform.position = defaultPostion;
-        transform.rotation = defaultRotaton;
+        transform.SetPositionAndRotation(defaultPostion, defaultRotaton);
     }
 
     public void Active()
@@ -28,7 +28,7 @@ public class BlockGroup : MonoBehaviour
         foreach (KeyValuePair<PosistionAndRotationTrigger, List<PathLink>> connectPath in testDic)
         {
             PosistionAndRotationTrigger key = connectPath.Key;
-            bool isActivePath = key.position == transform.position && key.rotation == transform.rotation;
+            bool isActivePath = key.Equals(transform);
 
             foreach (PathLink link in connectPath.Value)
             {
@@ -45,10 +45,26 @@ public class BlockGroup : MonoBehaviour
 }
 
 [Serializable]
-public struct PosistionAndRotationTrigger
+public struct PosistionAndRotationTrigger : IEquatable<PosistionAndRotationTrigger>
 {
     public Vector3 position;
     public Quaternion rotation;
+
+    public bool Equals(Transform other){
+        return position.Equals(other.position) && rotation.Equals(other.rotation);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool Equals(PosistionAndRotationTrigger other)
+    {
+        return position.Equals(other.position) && rotation.Equals(other.rotation);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override int GetHashCode()
+    {
+        return position.GetHashCode() ^ rotation.GetHashCode();
+    }
 }
 
 [Serializable]
