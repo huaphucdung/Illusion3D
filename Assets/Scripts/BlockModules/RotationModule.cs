@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using Project.Utilities;
 using UnityEngine;
@@ -7,40 +8,41 @@ namespace Project.Module
 {
     public sealed class RotationModule : BlockModule, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        private Vector3 m_initialMousePosition;
-        private Vector3 m_initialObjectPosition;
-        private Camera m_camera;
-        private Transform m_thisTransform;
+        [SerializeField] float speed;
+        Transform m_thisTransform;
+        Vector2 m_initialDragPosition;
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            m_camera = Camera.main;
             m_thisTransform = transform;
-            // Record the initial mouse position in world coordinates
-            m_initialMousePosition = m_camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, m_camera.WorldToScreenPoint(m_thisTransform.position).z));
-
-            // Record the object's initial position
-            m_initialObjectPosition = m_thisTransform.position;
+            m_initialDragPosition = eventData.position;
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            // Get the current mouse position in world space
-            Vector3 currentMousePosition = m_camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, m_camera.WorldToScreenPoint(m_thisTransform.position).z));
+            Vector2 dragDelta = eventData.position - m_initialDragPosition;
 
-            // Calculate the displacement between the initial and current mouse positions along the up axis
-            Vector3 dragDirection = m_thisTransform.up;
-            float displacement = Vector3.Dot(currentMousePosition - m_initialMousePosition, dragDirection);
+            // rotating in which direction
+            if (Mathf.Abs(dragDelta.x) > Mathf.Abs(dragDelta.y))
+            {
+                // Horizontal drag, rotate along the Y-axis
+                float rotationY = dragDelta.x * speed * Time.deltaTime;
+                m_thisTransform.Rotate(0f, -rotationY, 0f, Space.World);
+            }
+            else
+            {
+                // Vertical drag, rotate along the X-axis
+                float rotationX = dragDelta.y * speed * Time.deltaTime;
+                m_thisTransform.Rotate(rotationX, 0f, 0f, Space.World);
+            }
 
-            // Move the object along its up axis by the calculated displacement
-            m_thisTransform.position = m_initialObjectPosition + dragDirection * displacement;
+            m_initialDragPosition = eventData.position;
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            //Active event
-            Vector3 currentPostion = VectorExtensions.Round(m_thisTransform.position);
-            m_thisTransform.DOMove(currentPostion, .2f).SetEase(Ease.Linear).OnComplete(Active);
+            Vector3 targetRotation = VectorExtensions.SnapRotation(m_thisTransform.eulerAngles);
+            m_thisTransform.DORotate(targetRotation, .2f).SetEase(Ease.Linear).OnComplete(Active);
         }
     }
 }
