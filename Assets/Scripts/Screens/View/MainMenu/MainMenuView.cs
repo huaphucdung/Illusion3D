@@ -6,10 +6,13 @@ using UnityEngine.UI;
 namespace Project.Screens{
     public sealed class MainMenuView : AppView<MainMenuViewState>
     {
-        [SerializeField] private Button startButton;
+        [SerializeField] Button startButton;
+        [SerializeField] Button exitButton;
         protected override IEnumerator InitializeInternal(MainMenuViewState state)
         {
-            startButton.onClick.AddListener(state.OnStartButtonClick);
+            var internalState = (IMainMenuInternalState)state;
+            startButton.onClick.AddListener(internalState.InvokeStartEvent);
+            exitButton.onClick.AddListener(internalState.InvokeExitEvent);
             yield break;
         }
     }
