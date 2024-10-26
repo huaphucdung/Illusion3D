@@ -7,12 +7,12 @@ using UnityEngine;
 public class Walkable : MonoBehaviour
 {
     [Header("Path Connects:")]
-    public List<Path> possiblePaths;
+    public List<Path> possiblePaths = new List<Path>();
 
     [Header("Build Settings:")]
     [SerializeField] private bool isStair = false;
     [SerializeField] private float walkPointOffset = 0.5f;
-    [SerializeField] private float stairPointOffset = 0.1f;
+    [SerializeField] private float stairPointOffset = 0.0f;
 
     public Walkable previousBlock { get; set; }
     public IPathCommand pathCommandDo { get; set; }
