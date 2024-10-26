@@ -5,33 +5,44 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private Player player;
 
-    public GameInput input {  get; private set; }
-
     public MapController mapController;
     private void Start()
     {
-        input = new GameInput();
-        input.Enable();
-        input.Player.Click.canceled += OnClick;
         Initalize();
+    }
+
+    [ContextMenu("Reset")]
+    public void Test()
+    {
+        EventBus<ResetEvent>.Raise(new ResetEvent());
     }
 
     public void Initalize()
     {
+        InputManager.Initialize();
+        InputManager.ActiveInput(true);
         mapController.Initiliaze(player);
+        AddInputAction();
     }
 
 
     public void SetMapControler(MapController mapController)
     {
-        //Remove old map
         this.mapController = mapController;
-        //Spawn new map
     }
 
+    private void AddInputAction()
+    {
+        InputManager.click += OnClick;
+    }
+
+    private void RemoveInputAction()
+    {
+        InputManager.click -= OnClick;
+    }
 
     #region Callback Methods
-    private void OnClick(InputAction.CallbackContext context)
+    private void OnClick()
     {
         if (player.IsWalking) return;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

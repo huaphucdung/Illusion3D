@@ -54,21 +54,25 @@ public class LadderPathCommand : IPathCommand
 
     public Sequence MovePath(Player player, Walkable from, Walkable to)
     {
-        Debug.Log("Ladder Move");
         Vector3 fromWalkPoint = from.GetWalkPoint();
         Vector3 toWalkPoint = to.GetWalkPoint();
         Vector3 posBetween = IsUp ? fromWalkPoint : toWalkPoint;
-       
+
+        Vector3 moveDirection = (to.GetWalkPoint() - from.GetWalkPoint()).normalized;
+        Vector3 fixedUp = to.transform.up;
+        Vector3 right = Vector3.Cross(fixedUp, moveDirection).normalized;
+        Vector3 forward = Vector3.Cross(right, fixedUp).normalized;
+
         posBetween.y = IsUp ? toWalkPoint.y : fromWalkPoint.y;
 
         float time = Mathf.Abs(fromWalkPoint.y - toWalkPoint.y); 
         Sequence sequence = DOTween.Sequence();
 
         sequence.Append(player.transform.DOMove(posBetween, (IsUp ? time : 1) * .2f).SetEase(Ease.Linear));
-        //TODO Set rotation
+        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixedUp), 0.1f).SetEase(Ease.Linear));
 
         sequence.Append(player.transform.DOMove(toWalkPoint, (IsUp ? 1 : time) * .2f).SetEase(Ease.Linear));
-        //TODO Set rotation
+        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(IsUp ? forward : -forward, fixedUp), 0.1f).SetEase(Ease.Linear));
         return sequence;
     }
 }
@@ -114,8 +118,7 @@ public class BezierPathCommand : IPathCommand
         Vector3 posCenter = (from.GetWalkPoint() + to.GetWalkPoint()) / 2;
         Vector3 moveDirection = (to.GetWalkPoint() - from.GetWalkPoint()).normalized;
 
-        Vector3 fixedUp = to.transform.up;
-        
+        Vector3 fixedUp = to.transform.up; 
         Vector3 right = Vector3.Cross(fixedUp, moveDirection).normalized;
         Vector3 forward = to.IsStar ? moveDirection : Vector3.Cross(right, fixedUp).normalized;
 

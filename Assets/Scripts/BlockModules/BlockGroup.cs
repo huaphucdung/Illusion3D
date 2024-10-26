@@ -1,6 +1,6 @@
 using AYellowpaper.SerializedCollections;
+using DG.Tweening;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -9,8 +9,10 @@ public class BlockGroup : MonoBehaviour
 {
     [SerializedDictionary("Position and Rotation", "Test")]
     [SerializeField] private SerializedDictionary<PosistionAndRotationTrigger, List<PathLink>> testDic;
+    
     private Vector3 defaultPostion;
     private Quaternion defaultRotaton;
+    private EventBinding<ResetEvent> resetEventBiding;
 
     private void Start()
     {
@@ -18,9 +20,27 @@ public class BlockGroup : MonoBehaviour
         defaultRotaton = transform.rotation;
     }
 
-    public void ResetModule()
+    private void OnEnable()
+    {
+        resetEventBiding = new EventBinding<ResetEvent>(ResetModule);
+        EventBus<ResetEvent>.Register(resetEventBiding);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<ResetEvent>.Deregister(resetEventBiding);
+    }
+
+    private void ResetModule()
     {
         transform.SetPositionAndRotation(defaultPostion, defaultRotaton);
+    }
+    public void SetPositionAndRotaion(Vector3 postion, Quaternion rotation)
+    {
+        DOTween.Kill(transform);
+        transform.DOMove(postion, 0.2f);
+        transform.DORotateQuaternion(rotation, 0.2f);
+        Active();
     }
 
     public void Active()
@@ -42,6 +62,7 @@ public class BlockGroup : MonoBehaviour
         link.pathFrom.ActivePath(link.pathTo, isActive);
         link.pathTo.ActivePath(link.pathFrom, isActive);
     }
+
 }
 
 [Serializable]

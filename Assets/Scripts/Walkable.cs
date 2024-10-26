@@ -14,9 +14,17 @@ public class Walkable : MonoBehaviour
     [SerializeField] private float walkPointOffset = 0.5f;
     [SerializeField] private float stairPointOffset = 0.0f;
 
+    [Header("Module:")]
+    [SerializeField] private BlockModule blockActiveModule;
+
     public Walkable previousBlock { get; set; }
     public IPathCommand pathCommandDo { get; set; }
     public bool IsStar => isStair;
+
+    private void Start()
+    {
+        blockActiveModule = GetComponent<BlockModule>();
+    }
 
     public Vector3 GetWalkPoint()
     {
@@ -34,6 +42,11 @@ public class Walkable : MonoBehaviour
         Path path = possiblePaths.FirstOrDefault(x => x.target == target);
         if (path == null) return;
         path.active = value;
+    }
+
+    public void ActiveModule(Player player)
+    {
+        blockActiveModule?.Active(player);
     }
 
     private void OnDrawGizmos()

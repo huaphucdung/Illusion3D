@@ -93,15 +93,13 @@ public class Player : MonoBehaviour
         foreach(Walkable path in movePath)
         {
             sequeue.Append(path.DoMove(this));
-
-            /*if (!path.dontRotate)
-                sequeue.Join(transform.DOLookAt(path.transfrom.position, .1f, AxisConstraint.Y, Vector3.up));*/
+            sequeue.AppendCallback(() =>
+            {
+                transform.parent = path.transform;
+                _currentBlock = path;
+                _currentBlock.ActiveModule(this);
+            });
         }
-
-        /*if (_clickedBlock.isButton)
-        {
-            sequeue.AppendCallback(() => GameManager.instance.RotateRightPivot());
-        }*/
 
         sequeue.AppendCallback(Clear);
         sequeue.AppendCallback(SetNewCurrentBlock);

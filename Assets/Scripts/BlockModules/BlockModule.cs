@@ -4,13 +4,23 @@ using UnityEngine;
 
 public abstract class BlockModule : MonoBehaviour
 {
-    [SerializeField] private List<BlockGroup> groups;
-
-    protected void Active()
+    private EventBinding<ResetEvent> resetEventBiding;
+    private void OnEnable()
     {
-        foreach (var group in groups)
-        {
-            group.Active();
-        }
+        resetEventBiding = new EventBinding<ResetEvent>(ResetModule);
+        EventBus<ResetEvent>.Register(resetEventBiding);
     }
+
+    private void OnDisable()
+    {
+        EventBus<ResetEvent>.Deregister(resetEventBiding);
+    }
+
+    protected virtual void ResetModule()
+    {
+    }
+
+    public abstract void Active();
+
+    public abstract void Active(Player player);
 }
