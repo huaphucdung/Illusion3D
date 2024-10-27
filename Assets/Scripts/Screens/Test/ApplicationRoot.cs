@@ -1,26 +1,36 @@
 using System;
 using System.Collections;
+using Project.Domain.MapLevel;
+using Project.Repository;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityScreenNavigator.Runtime.Core.Page;
 
 namespace Project.Screens.Testing{
     [RequireComponent(typeof(PageContainer))]
     internal sealed class ApplicationRoot : MonoBehaviour{
         [SerializeField] private string MainMenuKey = "UIScreens/MainMenu";
+        [SerializeField] AssetReferenceT<ScriptableMapTable> mapTableAsset;
         private PageContainer m_UIPageContainer;
         private IMainMenuTransition m_mainMenuTransition;
         private IPauseMenuTransition m_pauseMenuTransition;
+        private IMapRepository mapRepository;
 
         void Awake(){
             m_UIPageContainer = GetComponent<PageContainer>();
+            mapRepository = new AddressableMapRepository<ScriptableMapTable>(mapTableAsset);
         }
 
-        void Start(){
+        IEnumerator Start(){
             m_mainMenuTransition = new DebugMainMenuTransition(new TestMainMenuTransition(this));
             m_pauseMenuTransition = new DebugPauseMenuTransition(new TestPauseMenuTransition(this));
-            
+            yield return mapRepository.FetchMapTable();
 
             OnAppStarted();
+        }
+
+        void OnDestroy(){
+            mapRepository?.Dispose();
         }
 
         private void OnAppStarted()
@@ -36,7 +46,11 @@ namespace Project.Screens.Testing{
 
         internal void StartGame()
         {
-            OpenPauseMenu();
+            MapLevelModel mapLevelModel = mapRepository.MapTable.GetMapLevelModel(0);
+            if(mapLevelModel != null){
+                Addressables.LoadSceneAsync(mapLevelModel.Address);
+            }
+            // OpenPauseMenu();
         }
 
         internal void ExitGame()
