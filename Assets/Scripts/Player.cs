@@ -26,7 +26,72 @@ public class Player : MonoBehaviour
     {
         DOTween.Kill(gameObject.transform);
         _clickedBlock = block;
-        FindPath();
+        Clear();
+        FollowPath(FindPath(from: _currentBlock, to: _clickedBlock));
+    }
+
+    private void FollowPath(List<Path> paths){
+        if(paths == null || paths.Count == 0) {
+            Debug.Log("No path found");
+            return;
+        }
+
+        Sequence sequeue = DOTween.Sequence();
+        IsWalking = true;
+        Walkable currentWalkable = _currentBlock;
+        foreach(Path path in paths){
+            sequeue.Append(path.command.MovePath(this, currentWalkable, path.target))
+                    .AppendCallback(
+                        () => { // update current block
+                            transform.parent = path.target.transform;
+                            _currentBlock = path.target;
+                            _currentBlock.ActiveModule(this);
+                        }
+                    );
+            currentWalkable = path.target;
+        }
+
+        sequeue.AppendCallback(Clear).AppendCallback(SetNewCurrentBlock);
+    }
+    private List<Path> FindPath(Walkable from, Walkable to){
+        Queue<List<Path>> queue = new Queue<List<Path>>();
+
+        _pastBlocks.Add(from);
+        foreach(Path path in from.possiblePaths){
+            if(path.active == true){
+                queue.Enqueue(new List<Path> { path });
+                _pastBlocks.Add(path.target);
+            }
+        }
+
+
+        while(queue.Count > 0){
+            List<Path> currentPath = queue.Dequeue();
+
+            Walkable currentWalkable = currentPath[^1].target;
+
+            if(currentWalkable == to){
+                return currentPath;
+            }
+
+            foreach(Path path in currentWalkable.possiblePaths){
+                if(path.active == false || _pastBlocks.Contains(path.target)) continue;
+
+                // found path
+                if(path.target == to){
+                    currentPath.Add(path);
+                    return currentPath; 
+                }
+
+                // create new list with the old paths and new path
+                List<Path> newPath = new List<Path>(currentPath) { path }; 
+                queue.Enqueue(newPath);
+                // mark as visited
+                _pastBlocks.Add(path.target);
+            }
+        }
+
+        return null;
     }
 
     private void FindPath()
