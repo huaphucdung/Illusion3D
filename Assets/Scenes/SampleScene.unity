@@ -8868,6 +8868,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd8ab5a9bbc8507429fe824a3dbf6a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  test: []
+  _currentBlock: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []
 --- !u!4 &1475298165
 Transform:
   m_ObjectHideFlags: 0

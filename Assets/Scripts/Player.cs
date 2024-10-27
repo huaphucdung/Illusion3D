@@ -1,18 +1,20 @@
 using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private readonly List<Walkable> movePath = new List<Walkable>();
 
     private Walkable _currentBlock;
     private Walkable _clickedBlock;
     //private Walkable _indicator;
 
+    private readonly List<Walkable> _movePath = new List<Walkable>();
     private readonly HashSet<Walkable> _nextBlocks = new HashSet<Walkable>();
     private readonly HashSet<Walkable> _pastBlocks = new HashSet<Walkable>();
+    private readonly Queue<List<Path>> _queue = new Queue<List<Path>>();
 
     public bool IsWalking { get; private set; } = false;
 
@@ -31,10 +33,7 @@ public class Player : MonoBehaviour
     }
 
     private void FollowPath(List<Path> paths){
-        if(paths == null || paths.Count == 0) {
-            Debug.Log("No path found");
-            return;
-        }
+        if (paths == null || paths.Count == 0) return;
 
         Sequence sequeue = DOTween.Sequence();
         IsWalking = true;
@@ -54,28 +53,24 @@ public class Player : MonoBehaviour
         sequeue.AppendCallback(Clear).AppendCallback(SetNewCurrentBlock);
     }
     private List<Path> FindPath(Walkable from, Walkable to){
-        Queue<List<Path>> queue = new Queue<List<Path>>();
-
+        
         _pastBlocks.Add(from);
         foreach(Path path in from.possiblePaths){
-            if(path.active == true){
-                queue.Enqueue(new List<Path> { path });
-                _pastBlocks.Add(path.target);
-            }
+            if (!path.active) continue;
+            
+            _queue.Enqueue(new List<Path> { path });
+            _pastBlocks.Add(path.target);
         }
 
-
-        while(queue.Count > 0){
-            List<Path> currentPath = queue.Dequeue();
-
+        while(_queue.Count > 0){
+            List<Path> currentPath = _queue.Dequeue();
             Walkable currentWalkable = currentPath[^1].target;
 
-            if(currentWalkable == to){
-                return currentPath;
-            }
+            if(currentWalkable == to) return currentPath;
+            
 
             foreach(Path path in currentWalkable.possiblePaths){
-                if(path.active == false || _pastBlocks.Contains(path.target)) continue;
+                if(!path.active || _pastBlocks.Contains(path.target)) continue;
 
                 // found path
                 if(path.target == to){
@@ -85,100 +80,20 @@ public class Player : MonoBehaviour
 
                 // create new list with the old paths and new path
                 List<Path> newPath = new List<Path>(currentPath) { path }; 
-                queue.Enqueue(newPath);
+                _queue.Enqueue(newPath);
                 // mark as visited
                 _pastBlocks.Add(path.target);
             }
         }
-
         return null;
-    }
-
-    private void FindPath()
-    {
-        if (_currentBlock == null) return;
-        Clear();
-
-        foreach (Path path in _currentBlock.possiblePaths)
-        {
-            if(path.active)
-            {
-                _nextBlocks.Add(path.target);
-                path.target.previousBlock = _currentBlock;
-                path.target.pathCommandDo = path.command;
-            }
-        }
-
-        _pastBlocks.Add(_currentBlock);
-
-        ExplorePath();
-        BuildPath();
-    }
-
-    private void ExplorePath()
-    {
-        if(_nextBlocks.Count == 0) return;
-        Walkable current = _nextBlocks.First();
-        _nextBlocks.Remove(current);
-
-        if (current == _clickedBlock) return;
-
-        foreach(Path path in current.possiblePaths)
-        {
-            if (_pastBlocks.Contains(path.target) || !path.active) continue;
-            _nextBlocks.Add(path.target);
-            path.target.previousBlock = current;
-            path.target.pathCommandDo = path.command;
-        }
-
-        _pastBlocks.Add(current);
-
-        if (_nextBlocks.Count == 0) return;
-        ExplorePath();
-    }
-
-    private void BuildPath()
-    {
-        Walkable block = _clickedBlock;
-        while(block != _currentBlock)
-        {
-            movePath.Add(block);
-            if (block.previousBlock == null) return;
-            block = block.previousBlock;
-        }
-
-        FollowPath();
-    }
-
-    private void FollowPath()
-    {
-        Sequence sequeue = DOTween.Sequence();
-        IsWalking = true;
-        movePath.Reverse();
-        foreach(Walkable path in movePath)
-        {
-            sequeue.Append(path.DoMove(this));
-            sequeue.AppendCallback(() =>
-            {
-                transform.parent = path.transform;
-                _currentBlock = path;
-                _currentBlock.ActiveModule(this);
-            });
-        }
-
-        sequeue.AppendCallback(Clear);
-        sequeue.AppendCallback(SetNewCurrentBlock);
     }
 
     private void Clear()
     {
-        foreach (Walkable path in movePath)
-        {
-            path.previousBlock = null;
-        }
-        movePath.Clear();
+        _movePath.Clear();
         _nextBlocks.Clear();
         _pastBlocks.Clear();
+        _queue.Clear();
         IsWalking = false;
     }
     

@@ -17,8 +17,6 @@ public class Walkable : MonoBehaviour
     [Header("Module:")]
     [SerializeField] private BlockModule blockActiveModule;
 
-    public Walkable previousBlock { get; set; }
-    public IPathCommand pathCommandDo { get; set; }
     public bool IsStar => isStair;
 
     private void Start()
@@ -30,11 +28,6 @@ public class Walkable : MonoBehaviour
     {
         float offset = isStair ? stairPointOffset : walkPointOffset;
         return transform.position + transform.up * offset;
-    }
-
-    public Sequence DoMove(Player player)
-    { 
-        return pathCommandDo.MovePath(player, previousBlock, this); ;
     }
 
     public void ActivePath(Walkable target, bool value)
