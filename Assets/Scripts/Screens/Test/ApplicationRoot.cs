@@ -48,7 +48,7 @@ namespace Project.Screens.Testing{
         {
             MapLevelModel mapLevelModel = mapRepository.MapTable.GetMapLevelModel(0);
             if(mapLevelModel != null){
-                Addressables.LoadSceneAsync(mapLevelModel.Address);
+                Addressables.LoadSceneAsync(mapLevelModel.SceneAddress);
             }
             // OpenPauseMenu();
         }

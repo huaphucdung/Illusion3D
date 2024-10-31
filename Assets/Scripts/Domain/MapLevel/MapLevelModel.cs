@@ -11,7 +11,7 @@ namespace Project.Domain.MapLevel{
 
         public ushort LevelId => levelId; 
         public string SceneName => sceneReference.Name;
-        public string Address => sceneReference.Address;
+        public string SceneAddress => sceneReference.Address;
         public bool IsLocked => isLocked;
     }
 }

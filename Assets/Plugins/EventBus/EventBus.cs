@@ -8,9 +8,13 @@ public static class EventBus<T> where T : IEvent {
     public static void Deregister(EventBinding<T> binding) => bindings.Remove(binding);
 
     public static void Raise(T @event) {
-        var snapshot = new HashSet<IEventBinding<T>>(bindings);
 
-        foreach (var binding in snapshot) {
+        // xài snapshot cho multi-threading thôi: tại k thể register/deregister trong lúc raise
+        // nên ông idol mới xài snapshot
+        // mốt chắc xài lock chứ k copy nguyên cái hashset
+        // var snapshot = new HashSet<IEventBinding<T>>(bindings);
+
+        foreach (var binding in bindings) {
             if (bindings.Contains(binding)) {
                 binding.OnEvent.Invoke(@event);
                 binding.OnEventNoArgs.Invoke();
