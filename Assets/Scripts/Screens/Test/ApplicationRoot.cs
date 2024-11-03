@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using Project.Audio;
 using Project.Domain.MapLevel;
+using Project.Events;
 using Project.Repository;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -13,14 +15,25 @@ namespace Project.Screens.Testing{
         [SerializeField] private string SelectionMenuKey = "UIScreens/LevelSelectionMenu";
         [SerializeField] AssetReferenceT<ScriptableMapTable> mapTableAsset;
         [SerializeField] ushort currentLevelId;
+        [SerializeField] AudioSource audioSource;
+        [SerializeField] AudioClip audioClip;
         private PageContainer m_UIPageContainer;
         private IMainMenuTransition m_mainMenuTransition;
         private IPauseMenuTransition m_pauseMenuTransition;
         private IMapRepository mapRepository;
 
+        private AudioEventHandler m_audioEventHandler;
+        private IAudioService m_audioService;
+        private IEventBinding<PlaySoundEvent> m_playSoundEventBinding;
+
         void Awake(){
             m_UIPageContainer = GetComponent<PageContainer>();
             mapRepository = new AddressableMapRepository<ScriptableMapTable>(mapTableAsset);
+            
+            m_audioService = new SimpleAudioService(audioSource, audioClip);
+            m_playSoundEventBinding = new EventBinding<PlaySoundEvent>(onEvent: null);
+            EventBus<PlaySoundEvent>.Register(m_playSoundEventBinding);
+            m_audioEventHandler = new AudioEventHandler(m_audioService, m_playSoundEventBinding);
         }
 
         void Start(){
@@ -32,6 +45,7 @@ namespace Project.Screens.Testing{
 
         void OnDestroy(){
             mapRepository?.Dispose();
+            EventBus<PlaySoundEvent>.Deregister(m_playSoundEventBinding);
         }
 
         private void OnAppStarted()

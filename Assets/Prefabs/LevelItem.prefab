@@ -470,6 +470,7 @@ GameObject:
   - component: {fileID: 9090018232862862591}
   - component: {fileID: 3325355488058866709}
   - component: {fileID: 984834501430422403}
+  - component: {fileID: 278886655921806554}
   m_Layer: 0
   m_Name: LevelItem
   m_TagString: Untagged
@@ -531,6 +532,18 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &278886655921806554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3156957549772232070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31aaf2f9b034057438c81e90874ec47e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6257596425951477201
 GameObject:
   m_ObjectHideFlags: 0
