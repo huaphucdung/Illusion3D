@@ -10,7 +10,9 @@ namespace Project.Screens.Testing{
     [RequireComponent(typeof(PageContainer))]
     internal sealed class ApplicationRoot : MonoBehaviour{
         [SerializeField] private string MainMenuKey = "UIScreens/MainMenu";
+        [SerializeField] private string SelectionMenuKey = "UIScreens/LevelSelectionMenu";
         [SerializeField] AssetReferenceT<ScriptableMapTable> mapTableAsset;
+        [SerializeField] ushort currentLevelId;
         private PageContainer m_UIPageContainer;
         private IMainMenuTransition m_mainMenuTransition;
         private IPauseMenuTransition m_pauseMenuTransition;
@@ -21,10 +23,9 @@ namespace Project.Screens.Testing{
             mapRepository = new AddressableMapRepository<ScriptableMapTable>(mapTableAsset);
         }
 
-        IEnumerator Start(){
+        void Start(){
             m_mainMenuTransition = new DebugMainMenuTransition(new TestMainMenuTransition(this));
             m_pauseMenuTransition = new DebugPauseMenuTransition(new TestPauseMenuTransition(this));
-            yield return mapRepository.FetchMapTable();
 
             OnAppStarted();
         }
@@ -46,11 +47,14 @@ namespace Project.Screens.Testing{
 
         internal void StartGame()
         {
-            MapLevelModel mapLevelModel = mapRepository.MapTable.GetMapLevelModel(0);
-            if(mapLevelModel != null){
-                Addressables.LoadSceneAsync(mapLevelModel.SceneAddress);
-            }
+            m_UIPageContainer.Push<LevelSelectionPage>(SelectionMenuKey, playAnimation: true, stack: true, onLoad: OnLevelMenuLoaded);
             // OpenPauseMenu();
+        }
+
+        private void OnLevelMenuLoaded((string pageId, LevelSelectionPage page) tuple)
+        {
+            LevelSelectionMenuPresenter presenter = new LevelSelectionMenuPresenter(tuple.page, currentLevelId, mapRepository);
+            presenter.Initialize();
         }
 
         internal void ExitGame()

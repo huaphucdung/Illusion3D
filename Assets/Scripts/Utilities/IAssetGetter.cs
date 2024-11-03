@@ -10,19 +10,26 @@ namespace Project.Utilities{
         Task<TObject> GetAsync();
     }
 
-    public readonly struct AddressableAssetGetter<TObject> : IAssetGetter<TObject> where TObject : Object
+    public readonly struct AddressableAssetGetter<TObject> : IAssetGetter<TObject>, System.IEquatable<AddressableAssetGetter<TObject>> where TObject : Object
     {
-        private readonly string m_assetAddress;
-        public AddressableAssetGetter(string assetAddress) => m_assetAddress = assetAddress;
+        public readonly string AssetAddress;
+        public AddressableAssetGetter(string assetAddress){
+            if(string.IsNullOrEmpty(assetAddress)) throw new System.ArgumentNullException(nameof(assetAddress));
+            AssetAddress = assetAddress;
+        }
 
         public void Dispose()
         {
-            Addressables.Release(m_assetAddress);
+            AddressableRefHelper.ReleaseAsset(this);
         }
 
         public Task<TObject> GetAsync()
         {
-            return Addressables.LoadAssetAsync<TObject>(m_assetAddress).Task;
+            return AddressableRefHelper.GetAssetAsync<TObject>(this);
+        }
+
+        public bool Equals(AddressableAssetGetter<TObject> other){
+            return AssetAddress.Equals(other.AssetAddress);
         }
     }
 }

@@ -9,13 +9,16 @@ namespace Project.Repository{
     {
         [SerializeField] MapLevelModel[] mapLevelModels;
         private readonly Dictionary<ushort, MapLevelModel> m_mapLevelModelsDictionary = new Dictionary<ushort, MapLevelModel>();
+
+        public int AllLevelsCount => mapLevelModels.Length;
+
         public IEnumerator Initialize(){
             m_mapLevelModelsDictionary.Clear();
 
             foreach (MapLevelModel mapLevelModel in mapLevelModels){
                 m_mapLevelModelsDictionary.Add(mapLevelModel.LevelId, mapLevelModel);
             }
-            yield return null;
+            yield break;
 
         }
         public MapLevelModel GetMapLevelModel(ushort id)

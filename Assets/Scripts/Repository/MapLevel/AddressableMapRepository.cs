@@ -14,6 +14,7 @@ namespace Project.Repository{
             m_mapTableAsset = mapTableAsset;
         }
         public IEnumerator FetchMapTable(){
+            if(m_isInitialized) yield break;
             yield return m_mapTableAsset.LoadAssetAsync<TMapTable>();
             m_isInitialized = true;
             m_scriptableMapTable = m_mapTableAsset.Asset as TMapTable;

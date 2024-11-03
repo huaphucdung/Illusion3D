@@ -14,21 +14,6 @@ namespace Project.Utilities
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static Vector3 SnapRotation(Vector3 euler)
         {
-            // // Find the axis with the largest magnitude
-            // int largestAxis = 0;
-            // float largestValue = Mathf.Abs(euler[0]);
-
-            // for (int i = 1; i < 3; i++)
-            // {
-            //     if (Mathf.Abs(euler[i]) > largestValue)
-            //     {
-            //         largestValue = Mathf.Abs(euler[i]);
-            //         largestAxis = i;
-            //     }
-            // }
-
-            // Vector3 clampedEuler = Vector3.zero;
-            // clampedEuler[largestAxis] = SnapToClosest(euler[largestAxis], snapStep: 90f);
             Vector3 clampedEuler = euler;
             clampedEuler[0] = SnapToClosest(euler[0], snapStep: 90f);
             clampedEuler[1] = SnapToClosest(euler[1], snapStep: 90f);

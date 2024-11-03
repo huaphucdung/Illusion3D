@@ -14,7 +14,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapLevelModels:
   - levelId: 0
+    name: Wibu 1
     sceneReference:
       asset: {fileID: 102900000, guid: 44a63a0c4ece6454f8b6168e6b26cac1, type: 3}
       guid: 44a63a0c4ece6454f8b6168e6b26cac1
+    thumbnailAddress: wallhaven-6o1lvw
+    isLocked: 0
+  - levelId: 1
+    name: Wibu 2
+    sceneReference:
+      asset: {fileID: 102900000, guid: 44a63a0c4ece6454f8b6168e6b26cac1, type: 3}
+      guid: 44a63a0c4ece6454f8b6168e6b26cac1
+    thumbnailAddress: froot
+    isLocked: 0
+  - levelId: 2
+    name: Wibu 3
+    sceneReference:
+      asset: {fileID: 102900000, guid: 44a63a0c4ece6454f8b6168e6b26cac1, type: 3}
+      guid: 44a63a0c4ece6454f8b6168e6b26cac1
+    thumbnailAddress: blue_archive015
+    isLocked: 0
+  - levelId: 3
+    name: Wibu 4
+    sceneReference:
+      asset: {fileID: 102900000, guid: 44a63a0c4ece6454f8b6168e6b26cac1, type: 3}
+      guid: 44a63a0c4ece6454f8b6168e6b26cac1
+    thumbnailAddress: blue_archive016
+    isLocked: 0
+  - levelId: 4
+    name: Wibu 5
+    sceneReference:
+      asset: {fileID: 102900000, guid: 44a63a0c4ece6454f8b6168e6b26cac1, type: 3}
+      guid: 44a63a0c4ece6454f8b6168e6b26cac1
+    thumbnailAddress: loadsc1
+    isLocked: 0
+  - levelId: 5
+    name: Wibu 6
+    sceneReference:
+      asset: {fileID: 102900000, guid: 44a63a0c4ece6454f8b6168e6b26cac1, type: 3}
+      guid: 44a63a0c4ece6454f8b6168e6b26cac1
+    thumbnailAddress: loadsc14
     isLocked: 0
