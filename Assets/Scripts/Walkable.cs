@@ -37,9 +37,14 @@ public class Walkable : MonoBehaviour
         path.active = value;
     }
 
-    public void ActiveModule(Player player)
+    public void ActiveEnterModule(Player player)
     {
         blockActiveModule?.Active(player);
+    }
+
+    public void ActiveLevaveModule(Player player)
+    {
+        Debug.Log("Trigger Leave");
     }
 
     private void OnDrawGizmos()

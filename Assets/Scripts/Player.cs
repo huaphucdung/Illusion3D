@@ -41,16 +41,17 @@ public class Player : MonoBehaviour
         foreach(Path path in paths){
             sequeue.Append(path.command.MovePath(this, currentWalkable, path.target))
                     .AppendCallback(
-                        () => { // update current block
+                        () => {
+                            _currentBlock?.ActiveLevaveModule(this);
                             transform.parent = path.target.transform;
                             _currentBlock = path.target;
-                            _currentBlock.ActiveModule(this);
+                            _currentBlock.ActiveEnterModule(this);
                         }
                     );
             currentWalkable = path.target;
         }
 
-        sequeue.AppendCallback(Clear).AppendCallback(SetNewCurrentBlock);
+        sequeue.AppendCallback(Clear);
     }
     private List<Path> FindPath(Walkable from, Walkable to){
         
@@ -95,10 +96,5 @@ public class Player : MonoBehaviour
         _pastBlocks.Clear();
         _queue.Clear();
         IsWalking = false;
-    }
-    
-    private void SetNewCurrentBlock()
-    {
-        _currentBlock = _clickedBlock;
     }
 }
