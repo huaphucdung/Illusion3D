@@ -1,8 +1,6 @@
 using DG.Tweening;
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using static UnityEngine.Rendering.HableCurve;
 public interface IPathCommand
 {
     void DrawGizmod(Walkable from,  Walkable to);
@@ -24,11 +22,18 @@ public class WalkPathCommand : IPathCommand
         
         Vector3 fromWalkPoint = from.GetWalkPoint();
         Vector3 toWalkPoint = to.GetWalkPoint();
-
+        
         Vector3 moveDirection = (toWalkPoint - fromWalkPoint).normalized;
         Vector3 fixedUp = to.transform.up;
         Vector3 right = Vector3.Cross(fixedUp, moveDirection).normalized;
         Vector3 forward = Vector3.Cross(right, fixedUp).normalized;
+
+        float maxInVector = Mathf.Max(Mathf.Abs(forward.x), Mathf.Abs(forward.y), Mathf.Abs(forward.z));
+        forward = new Vector3(
+            Mathf.Abs(forward.x) == maxInVector ? forward.x : 0,
+            Mathf.Abs(forward.y) == maxInVector ? forward.y : 0,
+            Mathf.Abs(forward.z) == maxInVector ? forward.z : 0
+            ).normalized;
 
         sequence.Append(player.transform.DOMove(to.GetWalkPoint(), time * .2f).SetEase(Ease.Linear));
         sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixedUp), 0.1f).SetEase(Ease.Linear));
@@ -93,8 +98,7 @@ public class BezierPathCommand : IPathCommand
 
         Vector3 posCenter = (from.GetWalkPoint() + to.GetWalkPoint()) / 2;
         
-        Walkable isNotStar = !from.IsStar ? from : to;
-        posCenter += isNotStar.transform.up * valueOffset;
+        posCenter += valueOffset *(from.transform.up + to.transform.up);
 
         // Loop through the segments and draw the curve
         for (int i = 1; i <= segments; i++)
@@ -115,24 +119,25 @@ public class BezierPathCommand : IPathCommand
 
     public Sequence MovePath(Player player, Walkable from, Walkable to)
     {
-        Vector3 posCenter = (from.GetWalkPoint() + to.GetWalkPoint()) / 2;
         Vector3 moveDirection = (to.GetWalkPoint() - from.GetWalkPoint()).normalized;
+        Vector3 posCenter = (from.GetWalkPoint() + to.GetWalkPoint()) / 2;
 
-        Vector3 fixedUp = to.transform.up; 
+        Vector3 fixedUp = to.transform.up;
+        
         Vector3 right = Vector3.Cross(fixedUp, moveDirection).normalized;
-        Vector3 forward = to.IsStar ? moveDirection : Vector3.Cross(right, fixedUp).normalized;
+        Vector3 forward = Vector3.Cross(right, fixedUp).normalized;
 
-        Walkable isNotStar = !from.IsStar ? from : to;
-        posCenter += isNotStar.transform.up * valueOffset;
+        posCenter += valueOffset * (from.transform.up + to.transform.up);
 
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(DOTween.To(ReturnTime, SetMove, 1f, .2f).SetEase(Ease.Linear));
+
+        sequence.Append(DOTween.To(ReturnTime, SetMove, 1f, .3f).SetEase(Ease.Linear));
         void SetMove(float t)
         {
             player.transform.position = GetBezierPosition(t, from.GetWalkPoint(), posCenter, to.GetWalkPoint());
         }
         
-        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixedUp), 0.1f).SetEase(Ease.Linear));
+        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixedUp), .3f).SetEase(Ease.Linear));
         return sequence;
     }
 

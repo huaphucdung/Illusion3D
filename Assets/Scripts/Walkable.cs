@@ -80,6 +80,7 @@ public class Path
 {
     public Walkable target;
     public bool active = false;
+    public bool activeDeep = false;
     [SerializeReference, SubclassSelector]
     public IPathCommand command = new WalkPathCommand();
 }
