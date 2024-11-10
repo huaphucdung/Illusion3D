@@ -12,6 +12,7 @@ namespace Project.Screens{
         [SerializeField] Image m_thumbnail;
         [SerializeField] TextMeshProUGUI m_levelName;
         [SerializeField] Animation m_animation;
+        [SerializeField] Button m_button;
 
         private bool m_unlockFlag;
         protected override IEnumerator InitializeInternal(LevelSelectionItemViewState state)
@@ -19,14 +20,17 @@ namespace Project.Screens{
             m_levelName.text = state.LevelName;
             m_unlockFlag = state.IsUnlocked;
             SetupThumbnail(state.LevelThumbnail);
+            
+            ILevelSelectionItemViewState internalState = state;
+            internalState.LevelLockChangeEvent += OnUnlockFlagChanged;
+            m_button.onClick.AddListener(internalState.InvokeButtonClick);
             yield break;
         }
 
-        internal void CheckUnlockFlag()
+        void OnUnlockFlagChanged(bool isUnlocked)
         {
-            if(m_unlockFlag == true){
+            if(isUnlocked == true){
                 StartCoroutine(PlayUnlockAnimation());
-                m_unlockFlag = false;
             }
         }
 

@@ -6,6 +6,7 @@ public interface IEventBinding<T> {
 }
 
 public class EventBinding<T> : IEventBinding<T> where T : IEvent {
+    public readonly static EventBinding<T> Empty = new EventBinding<T>(onEvent: null);
     Action<T> onEvent = _ => { };
     Action onEventNoArgs = () => { };
 

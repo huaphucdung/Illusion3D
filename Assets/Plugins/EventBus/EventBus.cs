@@ -7,6 +7,8 @@ public static class EventBus<T> where T : IEvent {
     public static void Register(IEventBinding<T> binding) => bindings.Add(binding);
     public static void Deregister(IEventBinding<T> binding) => bindings.Remove(binding);
 
+    public static void Raise(IEvent @event) => Raise((T)@event);
+
     public static void Raise(T @event) {
 
         // xài snapshot cho multi-threading thôi: tại k thể register/deregister trong lúc raise

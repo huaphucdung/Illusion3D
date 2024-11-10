@@ -545,7 +545,6 @@ GameObject:
   - component: {fileID: 1096867060}
   - component: {fileID: 1096867063}
   - component: {fileID: 1096867062}
-  - component: {fileID: 1096867061}
   m_Layer: 0
   m_Name: UIRoot
   m_TagString: Untagged
@@ -572,28 +571,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1096867061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1096867059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db9a33822d0b1a498939b78355706a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MainMenuKey: UIScreens/MainMenu
-  SelectionMenuKey: UIScreens/LevelSelectionMenu
-  mapTableAsset:
-    m_AssetGUID: 831a42de35116dd4997dbd4139f34918
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  currentLevelId: 2
-  audioSource: {fileID: 1051730735}
-  audioClip: {fileID: 8300000, guid: b773f31ba04d3df4283f8a927f186f3b, type: 3}
 --- !u!114 &1096867062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -621,6 +598,98 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!1 &1515116635
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1515116636}
+  - component: {fileID: 1515116637}
+  - component: {fileID: 1515116638}
+  - component: {fileID: 1515116639}
+  m_Layer: 0
+  m_Name: UIApplicationRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1515116636
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515116635}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1515116637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515116635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2a669833e0af6048aa7c6dad53c1a6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_mainMenuId: UIScreens/MainMenu
+  m_levelSelectionMenuId: UIScreens/LevelSelectionMenu
+  m_pauseMenuId: 
+  m_mainCanvas: {fileID: 935950806}
+  m_pageContainer: {fileID: 1096867062}
+  mapTableAsset:
+    m_AssetGUID: 831a42de35116dd4997dbd4139f34918
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+--- !u!114 &1515116638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515116635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 013add9204ea66a4896295c790e4b1a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  mapController: {fileID: 0}
+--- !u!114 &1515116639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515116635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34efd82ce9085de4186ca837757bc800, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invokeOnStart: 1
+  serializedEvent:
+    rid: 6298960507804057603
+  references:
+    version: 2
+    RefIds:
+    - rid: 6298960507804057603
+      type: {class: SerializableUIEvent, ns: Project.Events, asm: Assembly-CSharp}
+      data:
+        state: 0
 --- !u!1 &2106397577
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,3 +817,4 @@ SceneRoots:
   - {fileID: 935950807}
   - {fileID: 611658708}
   - {fileID: 1051730736}
+  - {fileID: 1515116636}

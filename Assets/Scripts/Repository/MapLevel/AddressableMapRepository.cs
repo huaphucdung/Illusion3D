@@ -24,7 +24,9 @@ namespace Project.Repository{
         public void Dispose(){
             m_isInitialized = false;
             m_scriptableMapTable = null;
-            m_mapTableAsset.ReleaseAsset();
+            if(m_mapTableAsset.IsValid()){
+                m_mapTableAsset.ReleaseAsset();
+            }
         }
     }
 }

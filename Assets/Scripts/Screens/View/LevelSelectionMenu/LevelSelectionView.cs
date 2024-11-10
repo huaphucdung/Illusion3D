@@ -20,12 +20,5 @@ namespace Project.Screens{
             }
             yield break;
         }
-
-        internal void ValidateUnlockState()
-        {
-            foreach (LevelSelectionItemView itemView in m_itemViews){
-                itemView.CheckUnlockFlag();
-            }
-        }
     }
 }
