@@ -15,6 +15,7 @@ namespace Project.Screens
 
         public IAssetGetter<Sprite> LevelThumbnail;
         public string LevelName;
+        public bool Completed = true;
 
         private bool m_unlockFlag;
         public bool IsUnlocked {
