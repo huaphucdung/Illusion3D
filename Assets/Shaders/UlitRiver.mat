@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UlitWater
+  m_Name: UlitRiver
   m_Shader: {fileID: -6465566751694194690, guid: d682eabe8df34e74292a611be2260d61,
     type: 3}
   m_Parent: {fileID: 0}
@@ -15,7 +15,7 @@ Material:
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _FoamTextureNoise:
-        m_Texture: {fileID: 2800000, guid: d9cb6d53daedc084c9ea166305086901, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -42,26 +42,26 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DeepAmount: 17
-    - _DissolveNoice: 10
-    - _Dissove: 0.57
+    - _DeepAmount: 4
+    - _DissolveNoice: 20
+    - _Dissove: 1
     - _Float: 0.183
-    - _FoamAmount: 0.7
-    - _FoamCell: 20
-    - _FoamCutOff: 0.8
+    - _FoamAmount: 0.3
+    - _FoamCell: 10
+    - _FoamCutOff: 0.7
     - _FoamOffset: 1
-    - _FoamSpeed: 0.01
-    - _IsRiver: 0
-    - _IsRunning: 1
+    - _FoamSpeed: 1
+    - _IsRiver: 1
+    - _IsRunning: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RiverGo: 1
-    - _Thickness: 0.1
+    - _Thickness: 0.107
     m_Colors:
-    - _Color: {r: 0.11630469, g: 0.31401718, b: 0.6226415, a: 0}
+    - _Color: {r: 0.29245266, g: 0.566951, b: 1, a: 0}
     - _DeepColor: {r: 0.03704517, g: 0.20020676, b: 0.45660365, a: 0}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 0}
-    - _FoamSpeed: {r: 0.05, g: 0.05, b: 0, a: 0}
+    - _FoamSpeed: {r: 0.2, g: 0, b: 0, a: 0}
     - _FoamTextureScale: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2675204795142216814

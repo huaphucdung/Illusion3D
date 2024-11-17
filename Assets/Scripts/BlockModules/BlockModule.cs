@@ -5,9 +5,15 @@ using UnityEngine;
 public abstract class BlockModule : MonoBehaviour
 {
     private EventBinding<ResetEvent> resetEventBiding;
-    private void OnEnable()
+
+    private void Start()
     {
         resetEventBiding = new EventBinding<ResetEvent>(ResetModule);
+    }
+
+    private void OnEnable()
+    {
+        
         EventBus<ResetEvent>.Register(resetEventBiding);
     }
 
