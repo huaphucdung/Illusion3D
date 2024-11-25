@@ -1,6 +1,6 @@
 namespace Project.Screens
 {
-    public sealed class PauseMenuFactory : AbstractScreenFactory<PauseMenuPage, PauseMenuPresenter>
+    public sealed class PauseMenuFactory : AbstractPageFactory<PauseMenuPage, PauseMenuPresenter>
     {
         private readonly IPauseMenuTransition m_pauseMenuTransition;
         public PauseMenuFactory(string pageId, IPauseMenuTransition pauseMenuTransition) : base(pageId) => m_pauseMenuTransition = pauseMenuTransition;
