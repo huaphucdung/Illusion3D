@@ -35,29 +35,21 @@ namespace Project.Screens{
         }
         private void OnUIEventRaised(UIEvent @event)
         {
-            ScreenType type = ScreenType.MainMenu;
-            switch (@event.GameState){
-                case GameState.GamePlay:
-                    type = ScreenType.NotSupported;
-                    break;
-                case GameState.Pause:
-                    type = ScreenType.PauseMenu;
-                    break;
-                case GameState.MainMenu:
-                    type = ScreenType.MainMenu;
-                    break;
-                case GameState.LevelSelection:
-                    type = ScreenType.LevelSelectionMenu;
-                    break;
-            }
-
+            var type = @event.GameState switch
+            {
+                GameState.GamePlay => ScreenType.NotSupported,
+                GameState.Pause => ScreenType.PauseMenu,
+                GameState.MainMenu => ScreenType.MainMenu,
+                GameState.LevelSelection => ScreenType.LevelSelectionMenu,
+                _ => ScreenType.NotSupported,
+            };
             m_screenService.ShowScreen(type);
         }
 
 
         #region Builder
         public sealed class Builder{
-            private UIRoot m_instance;
+            private readonly UIRoot m_instance;
             private Builder(){
                 m_instance = new UIRoot();
                 m_instance.m_eventBinding = EventBinding<UIEvent>.Empty;

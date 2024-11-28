@@ -29,16 +29,16 @@ namespace Project.Screens
 
             if (m_unlockFlag == true)
             {
-                ToUnlockedStateInstantly(m_animation);
+                SkipToUnlockedState(m_animation);
             }
 
             if(state.Completed == true){
-                ToUnlockedStateInstantly(m_completeAnimation);
+                SkipToUnlockedState(m_completeAnimation);
             }
             yield break;
         }
 
-        private void ToUnlockedStateInstantly(Animation animation)
+        private void SkipToUnlockedState(Animation animation)
         {
             AnimationClip clip = animation.clip;
             AnimationState state = animation[clip.name];

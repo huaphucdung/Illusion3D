@@ -9,11 +9,12 @@ namespace HuyDu_UISystem{
         where TRootView : AppView<TRootViewState>
         where TRootViewState : AppViewState, new()
     {
-        private readonly List<IDisposable> m_disposables = new List<IDisposable>();
+        private readonly List<IDisposable> m_disposables;
         private TRootViewState m_state;
 
         protected PagePresenter(TPage view) : base(view)
         {
+            m_disposables = QuickListPool<IDisposable>.Get();
         }
 
         protected sealed override void Initialize(TPage view)
@@ -136,6 +137,7 @@ namespace HuyDu_UISystem{
             base.Dispose(view);
             foreach (var disposable in m_disposables)
                 disposable.Dispose();
+            QuickListPool<IDisposable>.Release(m_disposables);
         }
     }
 

@@ -1,17 +1,15 @@
 namespace Project.Screens{
-    public sealed class LevelSelectionMenuFactory : AbstractScreenFactory<LevelSelectionPage, LevelSelectionMenuPresenter>
+    public sealed class LevelSelectionMenuFactory : AbstractPageFactory<LevelSelectionPage, LevelSelectionMenuPresenter>
     {
-        private readonly ushort m_currentLevelId;
-        private readonly Domain.MapLevel.IMapRepository m_mapRepository;
+        private readonly ILevelSelectionMenuUseCase m_useCase;
 
-        public LevelSelectionMenuFactory(string pageId, ushort currentLevelId, Domain.MapLevel.IMapRepository mapRepository) : base(pageId)
+        public LevelSelectionMenuFactory(string pageId, ILevelSelectionMenuUseCase useCase) : base(pageId)
         {
-            m_currentLevelId = currentLevelId;
-            m_mapRepository = mapRepository;
+            m_useCase = useCase;
         }
         protected override LevelSelectionMenuPresenter CreatePresenter(LevelSelectionPage page)
         {
-            return new LevelSelectionMenuPresenter(page, m_currentLevelId, m_mapRepository);
+            return new LevelSelectionMenuPresenter(page, m_useCase);
         }
     }
 }

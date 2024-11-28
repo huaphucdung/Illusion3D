@@ -3,38 +3,26 @@ using System.Collections;
 using HuyDu_UISystem;
 using Project.Domain.MapLevel;
 using UnityEngine;
+using UnityScreenNavigator.Runtime.Core.Modal;
 
 namespace Project.Screens
 {
     public sealed class LevelSelectionMenuPresenter : PagePresenter<LevelSelectionPage, LevelSelectionView, LevelSelectionViewState>
     {
-        private readonly IMapRepository m_mapRepository;
-        private readonly ushort m_currentLevelId;
-        public LevelSelectionMenuPresenter(LevelSelectionPage view, ushort currentLevelId, IMapRepository mapRepository) : base(view)
+        private readonly ILevelSelectionMenuUseCase m_useCase;
+        public LevelSelectionMenuPresenter(LevelSelectionPage view, ILevelSelectionMenuUseCase useCase) : base(view)
         {
-            m_currentLevelId = currentLevelId;
-            m_mapRepository = mapRepository;
+            m_useCase = useCase;
         }
 
         protected override IEnumerator ViewDidLoad(LevelSelectionPage view, LevelSelectionViewState viewState)
         {
-            yield return m_mapRepository.FetchMapTable();
+            yield return m_useCase.FetchTable();
 
-            ushort i = 0;
-            for (; i < m_currentLevelId; ++i)
-            {
-                MapLevelModel model = m_mapRepository.MapTable.GetMapLevelModel(i);
+            foreach (LevelSelectionData data in m_useCase.GetAllLevels()){
                 var itemState = new LevelSelectionItemViewState();
-                SetupForCompletedLevel(itemState, model);
-                viewState.AddItemState(itemState);
-            }
-
-            ushort totalLevel = (ushort)m_mapRepository.MapTable.AllLevelsCount;
-            for (; i < totalLevel; ++i)
-            {
-                MapLevelModel model = m_mapRepository.MapTable.GetMapLevelModel(i);
-                var itemState = new LevelSelectionItemViewState();
-                SetupForIncompleteLevel(itemState, model);
+                if(data.IsUnlocked) SetupForCompletedLevel(itemState, data.Model);
+                else SetupForIncompleteLevel(itemState, data.Model);
                 viewState.AddItemState(itemState);
             }
         }
@@ -42,19 +30,26 @@ namespace Project.Screens
         private void SetupForIncompleteLevel(LevelSelectionItemViewState itemState, MapLevelModel model)
         {
 
+            ushort levelId = model.LevelId;
+
             itemState.LevelName = model.LevelName;
             itemState.IsUnlocked = false;
-            itemState.ClickEvent += () => {
-                itemState.IsUnlocked = true;
-            };
+            itemState.ClickEvent += () => OnLevelItemClicked(levelId);
             itemState.LevelThumbnail = new Utilities.AddressableAssetGetter<Sprite>(model.ThumbnailAddress);
         }
 
-        private void SetupForCompletedLevel(in LevelSelectionItemViewState state, MapLevelModel model)
+        private void SetupForCompletedLevel(LevelSelectionItemViewState itemState, MapLevelModel model)
         {
-            state.LevelName = model.LevelName;
-            state.IsUnlocked = true;
-            state.LevelThumbnail = new Utilities.AddressableAssetGetter<Sprite>(model.ThumbnailAddress);
+            ushort levelId = model.LevelId;
+
+            itemState.LevelName = model.LevelName;
+            itemState.IsUnlocked = true;
+            itemState.ClickEvent += () => OnLevelItemClicked(levelId);
+            itemState.LevelThumbnail = new Utilities.AddressableAssetGetter<Sprite>(model.ThumbnailAddress);
+        }
+
+        private void OnLevelItemClicked(ushort id) {
+            m_useCase.ShowLevelDetail(id);
         }
     }
 }
