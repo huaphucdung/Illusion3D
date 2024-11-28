@@ -3939,6 +3939,11 @@ MonoBehaviour:
     activeDeep: 0
     command:
       rid: 5389755700644413456
+  - target: {fileID: 419319811}
+    active: 1
+    activeDeep: 0
+    command:
+      rid: 5785453600957005825
   isStair: 0
   walkPointOffset: 0.5
   stairPointOffset: 0.1
@@ -3952,6 +3957,11 @@ MonoBehaviour:
     - rid: 5389755700644413456
       type: {class: WalkPathCommand, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 5785453600957005825
+      type: {class: CirclePath, ns: , asm: Assembly-CSharp}
+      data:
+        type: 0
+        flip: 1
 --- !u!64 &386085085
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4722,6 +4732,11 @@ MonoBehaviour:
     activeDeep: 0
     command:
       rid: 5389755700644413450
+  - target: {fileID: 386085084}
+    active: 1
+    activeDeep: 0
+    command:
+      rid: 5785453598840455168
   isStair: 0
   walkPointOffset: 0.5
   stairPointOffset: 0.1
@@ -4736,6 +4751,11 @@ MonoBehaviour:
       type: {class: LadderPathCommand, ns: , asm: Assembly-CSharp}
       data:
         IsUp: 0
+    - rid: 5785453598840455168
+      type: {class: CirclePath, ns: , asm: Assembly-CSharp}
+      data:
+        type: 0
+        flip: 1
 --- !u!1 &429131271
 GameObject:
   m_ObjectHideFlags: 0

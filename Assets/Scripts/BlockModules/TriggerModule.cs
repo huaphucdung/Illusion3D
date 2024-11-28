@@ -12,7 +12,7 @@ public class TriggerModule : BlockModule
 
     public override void Active(Player player)
     {
-        EventBus<TriggetEvent>.Raise(new TriggetEvent { type = triggerType });
+        EventBus<TriggertEvent>.Raise(new TriggertEvent { type = triggerType });
     }
 }
 
@@ -22,7 +22,7 @@ public enum TriggerType
     CutScene,
 }
 
-public struct TriggetEvent : IEvent
+public struct TriggertEvent : IEvent
 {
     public TriggerType type;
 }

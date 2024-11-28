@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
         Walkable currentWalkable = _currentBlock;
 
         //Check Do Rotation before before move at player all
-        FirstRotation(sequeue, currentWalkable, paths[0].target);
+        //FirstRotation(sequeue, currentWalkable, paths[0].target);
 
         foreach (Path path in paths){
             sequeue.Append(path.command.MovePath(this, currentWalkable, path.target).OnStart(() => ActiveDeepFeature(path.activeDeep)))

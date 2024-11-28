@@ -30,11 +30,17 @@ public class Walkable : MonoBehaviour
         return transform.position + transform.up * offset;
     }
 
-    public void ActivePath(Walkable target, bool value)
+    public void ActivePath(Walkable target, bool value, bool activeDeepPath)
     {
         Path path = possiblePaths.FirstOrDefault(x => x.target == target);
         if (path == null) return;
         path.active = value;
+        path.activeDeep = value & activeDeepPath;
+    }
+
+    public void ActiveTopDeepLayer(bool value)
+    {
+        //TODO: Active deep for layer
     }
 
     public void ActiveEnterModule(Player player)

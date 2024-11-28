@@ -7,9 +7,11 @@ using UnityEngine;
 
 public class BlockGroup : MonoBehaviour
 {
-    [SerializedDictionary("Position and Rotation", "Test")]
+    [SerializedDictionary("Position and Rotation", "Path To Path")]
     [SerializeField] private SerializedDictionary<PosistionAndRotationTrigger, List<PathLink>> testDic;
-    
+    [SerializeField] private float moveDuriation = 2f;
+
+
     private Vector3 defaultPostion;
     private Quaternion defaultRotaton;
     private EventBinding<ResetEvent> resetEventBiding;
@@ -35,16 +37,20 @@ public class BlockGroup : MonoBehaviour
     {
         transform.SetPositionAndRotation(defaultPostion, defaultRotaton);
     }
-    public void SetPositionAndRotaion(Vector3 postion, Quaternion rotation)
+    public void SetPositionAndRotaion(Vector3 position, Vector3 rotation)
     {
-        DOTween.Kill(transform);
-        transform.DOMove(postion, 0.2f);
-        transform.DORotateQuaternion(rotation, 0.2f);
-        Active();
+        DisablePathAll();
+        Sequence sequence = DOTween.Sequence();
+        if (transform.localPosition != position)
+            sequence.Append(transform.DOLocalMove(position, moveDuriation).SetEase(Ease.Linear));
+        if (transform.localEulerAngles != rotation)
+            sequence.Append(transform.DOLocalRotate(rotation, moveDuriation).SetEase(Ease.Linear));
+        sequence.AppendCallback(Active);
     }
 
     public void Active()
     {
+        Debug.Log("Active");
         foreach (KeyValuePair<PosistionAndRotationTrigger, List<PathLink>> connectPath in testDic)
         {
             PosistionAndRotationTrigger key = connectPath.Key;
@@ -57,10 +63,24 @@ public class BlockGroup : MonoBehaviour
         }
     }
 
+    private void DisablePathAll()
+    {
+        foreach (KeyValuePair<PosistionAndRotationTrigger, List<PathLink>> connectPath in testDic)
+        {
+            foreach (PathLink link in connectPath.Value)
+            {
+                ActiveLink(link, false);
+            }
+        }
+    }
+
     private void ActiveLink(PathLink link, bool isActive)
     {
-        link.pathFrom.ActivePath(link.pathTo, isActive);
-        link.pathTo.ActivePath(link.pathFrom, isActive);
+        link.pathFrom.ActiveTopDeepLayer(link.activeDeepLayerPathFrom);
+        link.pathTo.ActiveTopDeepLayer(link.activeDeepLayerPathTo);
+
+        link.pathFrom.ActivePath(link.pathTo, isActive, link.activeDeep);
+        link.pathTo.ActivePath(link.pathFrom, isActive, link.activeDeep);
     }
 
 }
@@ -69,10 +89,11 @@ public class BlockGroup : MonoBehaviour
 public struct PosistionAndRotationTrigger : IEquatable<PosistionAndRotationTrigger>
 {
     public Vector3 position;
-    public Quaternion rotation;
+    public Vector3 rotation;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Equals(Transform other){
-        return position.Equals(other.position) && rotation.Equals(other.rotation);
+        return position.Equals(other.localPosition) && rotation.Equals(other.eulerAngles);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -91,6 +112,12 @@ public struct PosistionAndRotationTrigger : IEquatable<PosistionAndRotationTrigg
 [Serializable]
 public class PathLink
 {
+    [Header("Path From")]
     public Walkable pathFrom;
+    public bool activeDeepLayerPathFrom;
+    [Header("Path From")]
     public Walkable pathTo;
+    public bool activeDeepLayerPathTo;
+    [Header("Settings:")]
+    public bool activeDeep;
 }

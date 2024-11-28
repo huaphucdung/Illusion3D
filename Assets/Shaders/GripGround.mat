@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4903473844242249894
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -7,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MapObject1
-  m_Shader: {fileID: -6465566751694194690, guid: 2cb8cac0076eb4f4798dfd0cef33c01f,
+  m_Name: GripGround
+  m_Shader: {fileID: -6465566751694194690, guid: 1eeff27c6d392264685fe2a64101734a,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -38,26 +51,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _HeightAdjuct: 3.4
-    - _HightLightThick: 0.762
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Thickness: 0.9
     m_Colors:
-    - _ColorDown: {r: 0, g: 0, b: 0, a: 0}
-    - _ColorTop: {r: 1, g: 0.7437094, b: 0, a: 0}
-    - _MinMaxHeight: {r: 0, g: 1.5, b: 0, a: 0}
-    - _TopHightLight: {r: 0.34942997, g: 0.28738162, b: 0, a: 0}
+    - _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+    - _CellSize: {r: 100, g: 100, b: 0, a: 0}
+    - _GridColor: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &4840350256988377199
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 7

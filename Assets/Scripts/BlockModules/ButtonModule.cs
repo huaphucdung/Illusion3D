@@ -7,12 +7,17 @@ public class ButtonModule : BlockModule
     [SerializedDictionary("Block Ground", "Position And Rotation Trigger")]
     [SerializeField] private SerializedDictionary<BlockGroup, PosistionAndRotationTrigger> blockEventDictionary;
 
-    private bool isPress;
+    private bool canPress;
     private EventBinding<ResetEvent> resetEventBiding;
+
+    private void Awake()
+    {
+        resetEventBiding = new EventBinding<ResetEvent>(ResetButton);
+        canPress = true;
+    }
 
     private void OnEnable()
     {
-        resetEventBiding = new EventBinding<ResetEvent>(ResetButton);
         EventBus<ResetEvent>.Register(resetEventBiding);
     }
 
@@ -23,7 +28,7 @@ public class ButtonModule : BlockModule
 
     private void ResetButton()
     {
-        isPress = false;
+        canPress = true;
     }
 
     public override void Active()
@@ -32,11 +37,14 @@ public class ButtonModule : BlockModule
     }
 
     public override void Active(Player player) {
+        if (!canPress) return;
+
         foreach (KeyValuePair<BlockGroup, PosistionAndRotationTrigger> blockEvent in blockEventDictionary)
         {
             BlockGroup key = blockEvent.Key;
             PosistionAndRotationTrigger value = blockEvent.Value;
             key.SetPositionAndRotaion(value.position, value.rotation);
         }
+        canPress = false;
     }
 }
