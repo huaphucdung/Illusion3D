@@ -11,9 +11,7 @@ public class BlockGroup : MonoBehaviour
     [SerializeField] private SerializedDictionary<PosistionAndRotationTrigger, List<PathLink>> pathToPathDictionary;
     [SerializeField] private float moveDuriation = 2f;
 
-    [Header("Mini Map Reference")]
-    [SerializeField] private MiniMap miniMap;
-
+    
     private Vector3 defaultPostion;
     private Quaternion defaultRotaton;
     private EventBinding<ResetEvent> resetEventBiding;

@@ -29,11 +29,11 @@ Transform:
   m_GameObject: {fileID: 520954198586407681}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 2, y: 4, z: -11}
+  m_LocalPosition: {x: -4.5, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 905107274142916453}
+  m_Father: {fileID: 8084725670346581846}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &1615387277834163796
 MonoBehaviour:
@@ -1087,7 +1087,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 322
+  m_VersionIndex: 325
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1175,6 +1175,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520954198586407681}
   m_Mesh: {fileID: 0}
+--- !u!1 &1094186085570700997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7157167241301859999}
+  m_Layer: 0
+  m_Name: Rotation1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7157167241301859999
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094186085570700997}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 2.5, y: 0.5, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5116096708881431403}
+  m_Father: {fileID: 905107274142916453}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &1460900545562190152
 GameObject:
   m_ObjectHideFlags: 0
@@ -2563,12 +2595,12 @@ Transform:
   m_GameObject: {fileID: 3349638814628676571}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 2, y: 1, z: 3}
+  m_LocalPosition: {x: -0.5, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 905107274142916453}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_Father: {fileID: 7157167241301859999}
+  m_LocalEulerAnglesHint: {x: 90, y: -90, z: -90}
 --- !u!114 &8442666836434286308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8145,6 +8177,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7872681554513946002}
   m_Mesh: {fileID: 0}
+--- !u!1 &8225058164533706141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8084725670346581846}
+  m_Layer: 0
+  m_Name: Rotation2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8084725670346581846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8225058164533706141}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 6.5, y: 4.5, z: -11}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3124766512094133686}
+  m_Father: {fileID: 905107274142916453}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &8248393485967062233
 GameObject:
   m_ObjectHideFlags: 0
@@ -8834,7 +8898,7 @@ Transform:
   m_GameObject: {fileID: 8746585379568669174}
   serializedVersion: 2
   m_LocalRotation: {x: 1.110223e-17, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 4, z: 0}
+  m_LocalPosition: {x: 2, y: 4, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9332,23 +9396,23 @@ MonoBehaviour:
   - {x: 0, y: 1, z: 2}
   - {x: 1, y: 1, z: 2}
   - {x: 1, y: 0, z: 1}
-  - {x: 1, y: -4.440892e-16, z: -11}
+  - {x: 1, y: -4.440892e-16, z: -12}
   - {x: 1, y: 1, z: 1}
-  - {x: 1, y: 1, z: -11}
-  - {x: 1, y: -4.440892e-16, z: -11}
-  - {x: 0, y: -4.440892e-16, z: -11}
-  - {x: 1, y: 1, z: -11}
-  - {x: 0, y: 1, z: -11}
-  - {x: 0, y: -4.440892e-16, z: -11}
+  - {x: 1, y: 1, z: -12}
+  - {x: 1, y: -4.440892e-16, z: -12}
+  - {x: 0, y: -4.440892e-16, z: -12}
+  - {x: 1, y: 1, z: -12}
+  - {x: 0, y: 1, z: -12}
+  - {x: 0, y: -4.440892e-16, z: -12}
   - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 1, z: -11}
+  - {x: 0, y: 1, z: -12}
   - {x: 0, y: 1, z: 1}
   - {x: 0, y: 1, z: 1}
   - {x: 1, y: 1, z: 1}
-  - {x: 0, y: 1, z: -11}
-  - {x: 1, y: 1, z: -11}
-  - {x: 0, y: -4.440892e-16, z: -11}
-  - {x: 1, y: -4.440892e-16, z: -11}
+  - {x: 0, y: 1, z: -12}
+  - {x: 1, y: 1, z: -12}
+  - {x: 0, y: -4.440892e-16, z: -12}
+  - {x: 1, y: -4.440892e-16, z: -12}
   - {x: 0, y: 0, z: 1}
   - {x: 1, y: 0, z: 1}
   - {x: 0, y: 0, z: 1}
@@ -9437,23 +9501,23 @@ MonoBehaviour:
   - {x: 0, y: 1}
   - {x: -1, y: 1}
   - {x: 1, y: 0}
-  - {x: -11, y: -4.440892e-16}
+  - {x: -12, y: -4.440892e-16}
   - {x: 1, y: 1}
-  - {x: -11, y: 1}
+  - {x: -12, y: 1}
   - {x: 1, y: -4.440892e-16}
   - {x: 0, y: -4.440892e-16}
   - {x: 1, y: 1}
   - {x: 0, y: 1}
-  - {x: 11, y: -4.440892e-16}
+  - {x: 12, y: -4.440892e-16}
   - {x: -1, y: 0}
-  - {x: 11, y: 1}
+  - {x: 12, y: 1}
   - {x: -1, y: 1}
   - {x: 0, y: 1}
   - {x: 1, y: 1}
-  - {x: 0, y: -11}
-  - {x: 1, y: -11}
-  - {x: -0, y: -11}
-  - {x: -1, y: -11}
+  - {x: 0, y: -12}
+  - {x: 1, y: -12}
+  - {x: -0, y: -12}
+  - {x: -1, y: -12}
   - {x: 0, y: 1}
   - {x: -1, y: 1}
   - {x: 0, y: 1}
@@ -9652,7 +9716,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1234
+  m_VersionIndex: 1284
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -9765,8 +9829,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5116096708881431403}
-  - {fileID: 3124766512094133686}
+  - {fileID: 7157167241301859999}
+  - {fileID: 8084725670346581846}
   - {fileID: 3352225552763619457}
   - {fileID: 575247085140172350}
   - {fileID: 8981644851632152822}
@@ -9793,3 +9857,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2517f1f333c0004bb5d7b955c2605a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointStart: {fileID: 0}
+  director: {fileID: 0}
+  groupToGroupConnects: []

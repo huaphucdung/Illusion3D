@@ -1,13 +1,17 @@
 using DG.Tweening;
+using Project.Module;
+using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 namespace Project.Module
 {
     public class DragModule : BlockModule, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-       
-        [SerializeField] private List<BlockGroup> groups;
+
+        [SerializeField] private BlockGroup blockGroup;
+        [SerializeField] private List<DragGroupActive> dragGroups;
         [SerializeField] private Vector3 constrainXYZ;
         [SerializeField] private float maxDrag = 5f;
         
@@ -15,28 +19,44 @@ namespace Project.Module
         private Vector3 initialObjectPosition;
 
         private Vector3 _defaultPosition;
+
         private void Start()
         {
             _defaultPosition = transform.position;
+            
+            // Record the object's initial position
+            initialObjectPosition = transform.position;
         }
 
         public override void Active()
         {
-            foreach (var group in groups)
-            {
-                group.Active();
-            }
+            // Record the object's initial position
+            initialObjectPosition = transform.position;
+            blockGroup.Active();
         }
 
         public override void Active(Player player) {}
+
+        public void HandleDrag(float dragAmount, Vector3 direction)
+        {
+            Vector3 newPosition = initialObjectPosition + direction * dragAmount;
+            if (Vector3.Distance(newPosition, _defaultPosition) > maxDrag) return;
+            transform.position = newPosition;
+        }
+
+        public void EndDrag()
+        {
+            Vector3 currentPostion = transform.position;
+            currentPostion.x = Mathf.Round(currentPostion.x);
+            currentPostion.y = Mathf.Round(currentPostion.y);
+            currentPostion.z = Mathf.Round(currentPostion.z);
+            transform.DOMove(currentPostion, .2f).SetEase(Ease.Linear).OnComplete(Active);
+        }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
             // Record the initial mouse position in world coordinates
             initialMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(transform.position).z));
-
-            // Record the object's initial position
-            initialObjectPosition = transform.position;
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -47,20 +67,29 @@ namespace Project.Module
             // Calculate the displacement between the initial and current mouse positions along the up axis
             float displacement = Vector3.Dot(currentMousePosition - initialMousePosition, constrainXYZ);
 
+            // Move another object along its up axis by the calculated displacement
+            foreach (var group in dragGroups)
+            {
+                group.blockDrags.HandleDrag(displacement, group.constrainXYZ);
+            }
             // Move the object along its up axis by the calculated displacement
-            Vector3 newPosition = initialObjectPosition + constrainXYZ * displacement;
-            if (Vector3.Distance(newPosition, _defaultPosition) > maxDrag) return;
-            transform.position = newPosition;
+            HandleDrag(displacement, constrainXYZ);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            //Active event
-            Vector3 currentPostion = transform.position;
-            currentPostion.x = Mathf.Round(currentPostion.x);
-            currentPostion.y = Mathf.Round(currentPostion.y);
-            currentPostion.z = Mathf.Round(currentPostion.z);
-            transform.DOMove(currentPostion, .2f).SetEase(Ease.Linear).OnComplete(Active);
+            foreach (var group in dragGroups)
+            {
+                group.blockDrags.EndDrag();
+            }
+            EndDrag();
         }
     }
+}
+
+[Serializable]
+public class DragGroupActive
+{
+    public DragModule blockDrags;
+    public Vector3 constrainXYZ;
 }

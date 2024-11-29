@@ -21,7 +21,7 @@ public class MiniMap : MonoBehaviour
     public Walkable PointStart => pointStart;
     public PlayableDirector Director => director;
 
-    private readonly HashSet<PathLink> pathLinksConnect = new HashSet<PathLink>();
+    private static HashSet<PathLink> pathLinksConnect = new HashSet<PathLink>();
 
     public void ActivePathGroupToGroup(BlockGroup blockGroup)
     {

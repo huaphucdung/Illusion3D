@@ -1793,7 +1793,6 @@ MonoBehaviour:
         activeDeepLayerPathTo: 0
         activeDeep: 0
   moveDuriation: 2
-  miniMap: {fileID: 7803994018651869808}
 --- !u!114 &1698389843219924242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3087,8 +3086,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cd098966da0be4f9e436c7777f5cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groups:
-  - {fileID: 4133713935958448701}
+  blockGroup: {fileID: 4133713935958448701}
+  dragGroups: []
   constrainXYZ: {x: 0, y: 1, z: 0}
   maxDrag: 6
 --- !u!114 &4133713935958448701
@@ -3129,7 +3128,6 @@ MonoBehaviour:
         activeDeepLayerPathTo: 0
         activeDeep: 1
   moveDuriation: 2
-  miniMap: {fileID: 7803994018651869808}
 --- !u!65 &7806009695324904681
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5529,7 +5527,6 @@ MonoBehaviour:
   pathToPathDictionary:
     _serializedList: []
   moveDuriation: 2
-  miniMap: {fileID: 7803994018651869808}
 --- !u!1 &4275164082006525371
 GameObject:
   m_ObjectHideFlags: 0
