@@ -8,9 +8,11 @@ using UnityEngine;
 public class BlockGroup : MonoBehaviour
 {
     [SerializedDictionary("Position and Rotation", "Path To Path")]
-    [SerializeField] private SerializedDictionary<PosistionAndRotationTrigger, List<PathLink>> testDic;
+    [SerializeField] private SerializedDictionary<PosistionAndRotationTrigger, List<PathLink>> pathToPathDictionary;
     [SerializeField] private float moveDuriation = 2f;
 
+    [Header("Mini Map Reference")]
+    [SerializeField] private MiniMap miniMap;
 
     private Vector3 defaultPostion;
     private Quaternion defaultRotaton;
@@ -50,22 +52,23 @@ public class BlockGroup : MonoBehaviour
 
     public void Active()
     {
-        Debug.Log("Active");
-        foreach (KeyValuePair<PosistionAndRotationTrigger, List<PathLink>> connectPath in testDic)
+        foreach (KeyValuePair<PosistionAndRotationTrigger, List<PathLink>> connectPath in pathToPathDictionary)
         {
             PosistionAndRotationTrigger key = connectPath.Key;
             bool isActivePath = key.Equals(transform);
-
             foreach (PathLink link in connectPath.Value)
             {
                 ActiveLink(link, isActivePath);
             }
         }
+
+        //Active connect Group to Group
+        EventBus<BlockGroupEvent>.Raise(new BlockGroupEvent() { group = this});
     }
 
     private void DisablePathAll()
     {
-        foreach (KeyValuePair<PosistionAndRotationTrigger, List<PathLink>> connectPath in testDic)
+        foreach (KeyValuePair<PosistionAndRotationTrigger, List<PathLink>> connectPath in pathToPathDictionary)
         {
             foreach (PathLink link in connectPath.Value)
             {
@@ -74,7 +77,7 @@ public class BlockGroup : MonoBehaviour
         }
     }
 
-    private void ActiveLink(PathLink link, bool isActive)
+    public void ActiveLink(PathLink link, bool isActive)
     {
         link.pathFrom.ActiveTopDeepLayer(link.activeDeepLayerPathFrom);
         link.pathTo.ActiveTopDeepLayer(link.activeDeepLayerPathTo);
@@ -93,7 +96,9 @@ public struct PosistionAndRotationTrigger : IEquatable<PosistionAndRotationTrigg
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Equals(Transform other){
-        return position.Equals(other.localPosition) && rotation.Equals(other.eulerAngles);
+        Quaternion rotation1 = Quaternion.Euler(rotation);
+        Quaternion rotation2 = Quaternion.Euler(other.localEulerAngles);
+        return position == other.localPosition && (Quaternion.Angle(rotation1, rotation2) < 0.01f);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

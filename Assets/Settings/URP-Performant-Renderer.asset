@@ -148,10 +148,10 @@ MonoBehaviour:
   - {fileID: -3896329696581569149}
   - {fileID: -1301103432113935594}
   - {fileID: -3871529154650608343}
+  - {fileID: 5119349555349710603}
   - {fileID: 1765142236019161250}
   - {fileID: 7154835455050375447}
-  - {fileID: 5119349555349710603}
-  m_RendererFeatureMap: 49e71e44aeade35d96dea12122bd634c833573dbc874edc916abce70528df1ed296d7bffbe9045caa2f8f5f3820b7f1817e1a53cf0144b630b67ac0f4c950b47
+  m_RendererFeatureMap: 49e71e44aeade35d96dea12122bd634c833573dbc874edc916abce70528df1ed296d7bffbe9045ca0b67ac0f4c950b47a2f8f5f3820b7f1817e1a53cf0144b63
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Active: 0
   settings:
     passTag: DeepPlayer
-    Event: 300
+    Event: 400
     filterSettings:
       RenderQueueType: 0
       LayerMask:
@@ -217,7 +217,7 @@ MonoBehaviour:
         m_Bits: 8
       PassNames: []
     overrideMaterial: {fileID: 0}
-    overrideMaterialPassIndex: 41
+    overrideMaterialPassIndex: 0
     overrideShader: {fileID: 0}
     overrideShaderPassIndex: 0
     overrideMode: 1
@@ -235,7 +235,7 @@ MonoBehaviour:
       overrideCamera: 0
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
-      cameraFieldOfView: 60
+      cameraFieldOfView: 39.6
 --- !u!114 &5119349555349710603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: DeepTopObejct
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   settings:
     passTag: DeepTopObejct
     Event: 300
@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: Deep PlayerSub
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: Deep PlayerSub
     Event: 300

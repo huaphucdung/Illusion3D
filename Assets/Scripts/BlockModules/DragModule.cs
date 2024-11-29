@@ -6,10 +6,19 @@ namespace Project.Module
 {
     public class DragModule : BlockModule, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
+       
         [SerializeField] private List<BlockGroup> groups;
         [SerializeField] private Vector3 constrainXYZ;
+        [SerializeField] private float maxDrag = 5f;
+        
         private Vector3 initialMousePosition;
         private Vector3 initialObjectPosition;
+
+        private Vector3 _defaultPosition;
+        private void Start()
+        {
+            _defaultPosition = transform.position;
+        }
 
         public override void Active()
         {
@@ -39,7 +48,9 @@ namespace Project.Module
             float displacement = Vector3.Dot(currentMousePosition - initialMousePosition, constrainXYZ);
 
             // Move the object along its up axis by the calculated displacement
-            transform.position = initialObjectPosition + constrainXYZ * displacement;
+            Vector3 newPosition = initialObjectPosition + constrainXYZ * displacement;
+            if (Vector3.Distance(newPosition, _defaultPosition) > maxDrag) return;
+            transform.position = newPosition;
         }
 
         public void OnEndDrag(PointerEventData eventData)

@@ -118,7 +118,6 @@ public class Player : MonoBehaviour
         _nextBlocks.Clear();
         _pastBlocks.Clear();
         _queue.Clear();
-        ActiveDeepFeature(false);
         IsWalking = false;
     }
 }
