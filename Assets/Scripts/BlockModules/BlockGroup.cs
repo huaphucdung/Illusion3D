@@ -11,10 +11,17 @@ public class BlockGroup : MonoBehaviour
     [SerializeField] private SerializedDictionary<PosistionAndRotationTrigger, List<PathLink>> pathToPathDictionary;
     [SerializeField] private float moveDuriation = 2f;
 
-    
+    [Header("Settings:")]
+    [SerializeField] private bool isLock;
+    [SerializeField] private bool isCannotLockWhenPlayerOn = false;
+    public bool IsLock => isLock;
+
     private Vector3 defaultPostion;
     private Quaternion defaultRotaton;
-    private EventBinding<ResetEvent> resetEventBiding;
+    private EventBinding<ResetEvent> resetEventBinding;
+    private EventBinding<BlockGroundEvent> blockGroupEventBinding;
+
+    public event Action<bool> lockAction;
 
     private void Start()
     {
@@ -22,21 +29,45 @@ public class BlockGroup : MonoBehaviour
         defaultRotaton = transform.rotation;
     }
 
+    private void Awake()
+    {
+        resetEventBinding = new EventBinding<ResetEvent>(ResetModule);
+        blockGroupEventBinding = new EventBinding<BlockGroundEvent>(Lock);
+    }
+
     private void OnEnable()
     {
-        resetEventBiding = new EventBinding<ResetEvent>(ResetModule);
-        EventBus<ResetEvent>.Register(resetEventBiding);
+        EventBus<ResetEvent>.Register(resetEventBinding);
+        EventBus<BlockGroundEvent>.Register(blockGroupEventBinding);
     }
 
     private void OnDisable()
     {
-        EventBus<ResetEvent>.Deregister(resetEventBiding);
+        EventBus<ResetEvent>.Deregister(resetEventBinding);
+        EventBus<BlockGroundEvent>.Deregister(blockGroupEventBinding);
     }
 
     private void ResetModule()
     {
         transform.SetPositionAndRotation(defaultPostion, defaultRotaton);
     }
+
+    private void Lock(BlockGroundEvent @event)
+    {
+        isLock = @event.isLock;
+    }
+
+    public void Lock(bool value)
+    {
+        LockNotCallAction(value);
+        lockAction?.Invoke(IsLock);
+    }
+
+    public void LockNotCallAction(bool value)
+    {
+        isLock = value ^ isCannotLockWhenPlayerOn;
+    }
+
     public void SetPositionAndRotaion(Vector3 position, Vector3 rotation)
     {
         DisablePathAll();
@@ -77,11 +108,9 @@ public class BlockGroup : MonoBehaviour
 
     public void ActiveLink(PathLink link, bool isActive)
     {
-        link.pathFrom.ActiveTopDeepLayer(link.activeDeepLayerPathFrom);
-        link.pathTo.ActiveTopDeepLayer(link.activeDeepLayerPathTo);
-
-        link.pathFrom.ActivePath(link.pathTo, isActive, link.activeDeep);
-        link.pathTo.ActivePath(link.pathFrom, isActive, link.activeDeep);
+       
+        link.pathFrom.ActivePath(link.pathTo, isActive);
+        link.pathTo.ActivePath(link.pathFrom, isActive);
     }
 
 }
@@ -117,10 +146,11 @@ public class PathLink
 {
     [Header("Path From")]
     public Walkable pathFrom;
-    public bool activeDeepLayerPathFrom;
-    [Header("Path From")]
+    [Header("Path To")]
     public Walkable pathTo;
-    public bool activeDeepLayerPathTo;
-    [Header("Settings:")]
-    public bool activeDeep;
+}
+
+public struct BlockGroundEvent: IEvent
+{
+    public bool isLock;
 }

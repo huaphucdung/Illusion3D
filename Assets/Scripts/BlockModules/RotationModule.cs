@@ -8,7 +8,7 @@ namespace Project.Module
 {
     public sealed class RotationModule : BlockModule, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        [SerializeField] private List<BlockGroup> groups;
+        [SerializeField] private BlockGroup blockGround;
         [SerializeField] private Vector3 constrainXYZ;
        /* [SerializeField] float speed;
         Transform m_thisTransform;
@@ -18,10 +18,7 @@ namespace Project.Module
 
         public override void Active()
         {
-            foreach (var group in groups)
-            {
-                group.Active();
-            }
+            blockGround.Active();
         }
         public override void Active(Player player) { }
 
@@ -37,6 +34,8 @@ namespace Project.Module
 
         public void OnDrag(PointerEventData eventData)
         {
+            if (blockGround.IsLock) return;
+
             /*Vector2 dragDelta = eventData.position - m_initialDragPosition;
 
             // rotating in which direction

@@ -1,9 +1,7 @@
 using DG.Tweening;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
 
 public class Player : MonoBehaviour
@@ -42,7 +40,12 @@ public class Player : MonoBehaviour
     private void FollowPath(List<Path> paths){
         if (paths == null || paths.Count == 0) return;
         Sequence sequeue = DOTween.Sequence();
+        
+        // Lock action and group when player move
         IsWalking = true;
+        EventBus<BlockGroundEvent>.Raise(new BlockGroundEvent() { isLock = true });
+
+
         Walkable currentWalkable = _currentBlock;
 
         //Check Do Rotation before before move at player all
@@ -118,6 +121,10 @@ public class Player : MonoBehaviour
         _nextBlocks.Clear();
         _pastBlocks.Clear();
         _queue.Clear();
+        // Release action and group when player move
         IsWalking = false;
+        EventBus<BlockGroundEvent>.Raise(new BlockGroundEvent() { isLock = false });
+        _currentBlock?.LockBockGroup();
     }
 }
+

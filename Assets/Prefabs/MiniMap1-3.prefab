@@ -1049,16 +1049,12 @@ MonoBehaviour:
         rotation: {x: 0, y: 0, z: 0}
       Value:
       - pathFrom: {fileID: 5971782520638853144}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 7535111131992831744}
-        activeDeepLayerPathTo: 0
-        activeDeep: 0
       - pathFrom: {fileID: 6874517425681594168}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 8013362578993209593}
-        activeDeepLayerPathTo: 0
-        activeDeep: 0
   moveDuriation: 2
+  isLock: 0
+  isCannotLockWhenPlayerOn: 0
 --- !u!114 &2673815787612092875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5949,6 +5945,8 @@ MonoBehaviour:
   pathToPathDictionary:
     _serializedList: []
   moveDuriation: 1
+  isLock: 0
+  isCannotLockWhenPlayerOn: 0
 --- !u!1 &3233989381024733585
 GameObject:
   m_ObjectHideFlags: 0
@@ -11040,38 +11038,28 @@ MonoBehaviour:
         rotation: {x: 0, y: 90, z: 0}
       Value:
       - pathFrom: {fileID: 3841138116938717187}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 6788980678501359022}
-        activeDeepLayerPathTo: 0
-        activeDeep: 1
     - Key:
         position: {x: 8.5, y: 6.5, z: -8.5}
         rotation: {x: 0, y: -90, z: 0}
       Value:
       - pathFrom: {fileID: 6736954315375364781}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 6788980678501359022}
-        activeDeepLayerPathTo: 0
-        activeDeep: 1
     - Key:
         position: {x: 8.5, y: 6.5, z: -8.5}
         rotation: {x: 0, y: 0, z: 0}
       Value:
       - pathFrom: {fileID: 3841138116938717187}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 3779913638865242583}
-        activeDeepLayerPathTo: 0
-        activeDeep: 0
     - Key:
         position: {x: 8.5, y: 6.5, z: -8.5}
         rotation: {x: 0, y: 180, z: 0}
       Value:
       - pathFrom: {fileID: 6736954315375364781}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 3779913638865242583}
-        activeDeepLayerPathTo: 0
-        activeDeep: 0
   moveDuriation: 2
+  isLock: 0
+  isCannotLockWhenPlayerOn: 0
 --- !u!114 &2259330060646165767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11084,8 +11072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc85691d7bae3e44582de73097295dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groups:
-  - {fileID: 6368076268909545473}
+  blockGround: {fileID: 6368076268909545473}
   constrainXYZ: {x: 0, y: 1, z: 0}
 --- !u!65 &1785707699416754793
 BoxCollider:
@@ -16582,10 +16569,7 @@ MonoBehaviour:
       rotation: {x: 0, y: 90, z: 0}
     pathLinks:
     - pathFrom: {fileID: 6874517425681594168}
-      activeDeepLayerPathFrom: 0
       pathTo: {fileID: 6736954315375364781}
-      activeDeepLayerPathTo: 0
-      activeDeep: 1
   - blockGroupFrom: {fileID: 5629920612570090483}
     posistionAndRotationRequireFrom:
       position: {x: 7, y: 15, z: -15}
@@ -16596,10 +16580,7 @@ MonoBehaviour:
       rotation: {x: 0, y: -90, z: 0}
     pathLinks:
     - pathFrom: {fileID: 6874517425681594168}
-      activeDeepLayerPathFrom: 0
       pathTo: {fileID: 3841138116938717187}
-      activeDeepLayerPathTo: 0
-      activeDeep: 1
   - blockGroupFrom: {fileID: 5629920612570090483}
     posistionAndRotationRequireFrom:
       position: {x: 7, y: 15, z: -15}
@@ -16610,10 +16591,7 @@ MonoBehaviour:
       rotation: {x: 0, y: 0, z: 0}
     pathLinks:
     - pathFrom: {fileID: 7535111131992831744}
-      activeDeepLayerPathFrom: 0
       pathTo: {fileID: 4189365549215773006}
-      activeDeepLayerPathTo: 0
-      activeDeep: 0
   - blockGroupFrom: {fileID: 5629920612570090483}
     posistionAndRotationRequireFrom:
       position: {x: 7, y: 11, z: -15}
@@ -16624,10 +16602,7 @@ MonoBehaviour:
       rotation: {x: 0, y: 0, z: 0}
     pathLinks:
     - pathFrom: {fileID: 7535111131992831744}
-      activeDeepLayerPathFrom: 0
       pathTo: {fileID: 4189365549215773006}
-      activeDeepLayerPathTo: 0
-      activeDeep: 0
   - blockGroupFrom: {fileID: 5629920612570090483}
     posistionAndRotationRequireFrom:
       position: {x: 7, y: 11, z: -15}
@@ -16638,10 +16613,7 @@ MonoBehaviour:
       rotation: {x: 0, y: 0, z: 0}
     pathLinks:
     - pathFrom: {fileID: 6874517425681594168}
-      activeDeepLayerPathFrom: 0
       pathTo: {fileID: 6736954315375364781}
-      activeDeepLayerPathTo: 0
-      activeDeep: 1
   - blockGroupFrom: {fileID: 5629920612570090483}
     posistionAndRotationRequireFrom:
       position: {x: 7, y: 11, z: -15}
@@ -16652,10 +16624,7 @@ MonoBehaviour:
       rotation: {x: 0, y: 180, z: 0}
     pathLinks:
     - pathFrom: {fileID: 6874517425681594168}
-      activeDeepLayerPathFrom: 0
       pathTo: {fileID: 3841138116938717187}
-      activeDeepLayerPathTo: 0
-      activeDeep: 1
 --- !u!1 &8817845468688573537
 GameObject:
   m_ObjectHideFlags: 0
@@ -17010,30 +16979,20 @@ MonoBehaviour:
         rotation: {x: 0, y: 0, z: 0}
       Value:
       - pathFrom: {fileID: 5319919808017847474}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 2118863191015167026}
-        activeDeepLayerPathTo: 0
-        activeDeep: 0
       - pathFrom: {fileID: 4055943044984290300}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 6788980678501359022}
-        activeDeepLayerPathTo: 0
-        activeDeep: 0
     - Key:
         position: {x: 15, y: 16, z: -11}
         rotation: {x: 0, y: 0, z: 0}
       Value:
       - pathFrom: {fileID: 4055943044984290300}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 5093114538489970542}
-        activeDeepLayerPathTo: 0
-        activeDeep: 1
       - pathFrom: {fileID: 2118863191015167026}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 7724023089227566274}
-        activeDeepLayerPathTo: 0
-        activeDeep: 0
   moveDuriation: 2
+  isLock: 0
+  isCannotLockWhenPlayerOn: 0
 --- !u!114 &2149804312566852785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20008,6 +19967,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: blockGroup
+      value: 
+      objectReference: {fileID: 5629920612570090483}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: blockActiveModule
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[-2]
       value: 
       objectReference: {fileID: 0}
@@ -20580,6 +20549,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 299955186230253010}
     m_Modifications:
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: blockGroup
+      value: 
+      objectReference: {fileID: 7347271811133592493}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: managedReferences[-2]
@@ -21371,6 +21345,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5236938375520878248}
     m_Modifications:
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: blockGroup
+      value: 
+      objectReference: {fileID: 5629920612570090483}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: blockActiveModule
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: managedReferences[-2]
@@ -23744,6 +23728,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: blockGroup
+      value: 
+      objectReference: {fileID: 7347271811133592493}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[-2]
       value: 
       objectReference: {fileID: 0}
@@ -24034,6 +24023,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5236938375520878248}
     m_Modifications:
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: blockGroup
+      value: 
+      objectReference: {fileID: 5629920612570090483}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: blockActiveModule
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: managedReferences[-2]
@@ -25288,6 +25287,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: blockGroup
+      value: 
+      objectReference: {fileID: 7347271811133592493}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[-2]
       value: 
       objectReference: {fileID: 0}
@@ -25432,6 +25436,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5236938375520878248}
     m_Modifications:
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: blockGroup
+      value: 
+      objectReference: {fileID: 5629920612570090483}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: blockActiveModule
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: managedReferences[-2]

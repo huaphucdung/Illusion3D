@@ -15,6 +15,7 @@ namespace Project.Module
         [SerializeField] private Vector3 constrainXYZ;
         [SerializeField] private float maxDrag = 5f;
         
+
         private Vector3 initialMousePosition;
         private Vector3 initialObjectPosition;
 
@@ -23,7 +24,6 @@ namespace Project.Module
         private void Start()
         {
             _defaultPosition = transform.position;
-            
             // Record the object's initial position
             initialObjectPosition = transform.position;
         }
@@ -61,6 +61,8 @@ namespace Project.Module
 
         public void OnDrag(PointerEventData eventData)
         {
+            if (blockGroup.IsLock) return;
+
             // Get the current mouse position in world space
             Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(transform.position).z));
 
@@ -83,6 +85,29 @@ namespace Project.Module
                 group.blockDrags.EndDrag();
             }
             EndDrag();
+        }
+
+        private void OnEnable()
+        {
+            blockGroup.lockAction += LockDragGroup;
+        }
+
+        private void OnDisable()
+        {
+            blockGroup.lockAction -= LockDragGroup;
+        }
+
+        private void LockDragGroup(bool value)
+        {
+            foreach(var group in dragGroups)
+            {
+                group.blockDrags.ActiveLockGroup(value);
+            }
+        }
+
+        public void ActiveLockGroup(bool value)
+        {
+            blockGroup.LockNotCallAction(value);
         }
     }
 }
