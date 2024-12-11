@@ -4180,31 +4180,20 @@ MonoBehaviour:
         rotation: {x: 0, y: 90, z: 0}
       Value:
       - pathFrom: {fileID: 887649788404328106}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 8559457183055662575}
-        activeDeepLayerPathTo: 0
-        activeDeep: 0
       - pathFrom: {fileID: 3739005957589988762}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 4797211154936664468}
-        activeDeepLayerPathTo: 0
-        activeDeep: 0
     - Key:
         position: {x: 9.5, y: 6.5, z: -7.5}
         rotation: {x: 0, y: 0, z: 0}
       Value:
       - pathFrom: {fileID: 887649788404328106}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 1189207826461944872}
-        activeDeepLayerPathTo: 0
-        activeDeep: 1
       - pathFrom: {fileID: 3739005957589988762}
-        activeDeepLayerPathFrom: 0
         pathTo: {fileID: 9195648539668082087}
-        activeDeepLayerPathTo: 0
-        activeDeep: 0
   moveDuriation: 2
-  miniMap: {fileID: -4834921848774634123}
+  isLock: 0
+  isCannotLockWhenPlayerOn: 0
 --- !u!1 &6315614203872940192
 GameObject:
   m_ObjectHideFlags: 0
@@ -9811,6 +9800,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891648]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891648].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -9947,6 +9941,16 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891537]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891536].directionTarget
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891537].directionTarget
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -10077,6 +10081,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891619]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891619].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -10214,6 +10223,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891649]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891649].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -10350,6 +10364,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891653]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891653].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -10480,6 +10499,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891675]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891675].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -10612,6 +10636,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891683]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891683].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -10742,6 +10771,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891579]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891579].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -10879,6 +10913,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891657]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891657].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -11009,6 +11048,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891605]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891605].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -11146,6 +11190,16 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891566]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891565].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891566].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -11277,6 +11331,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891591]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891591].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -11407,6 +11466,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891644]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891644].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -11554,6 +11618,11 @@ PrefabInstance:
       propertyPath: possiblePaths.Array.data[1].activeDeep
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891650].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -11690,6 +11759,16 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891539]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891538].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891539].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -11820,6 +11899,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891681]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891681].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -11952,6 +12036,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891643]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891643].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -12082,6 +12171,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891631]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891631].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -12219,6 +12313,16 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891674]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891673].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891674].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -12355,6 +12459,16 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891677]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891676].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891677].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -12485,6 +12599,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891682]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891682].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -12617,6 +12736,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891646]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891646].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -12747,6 +12871,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891679]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891679].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -13013,6 +13142,21 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891553]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891551].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891552].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891553].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -13159,6 +13303,16 @@ PrefabInstance:
       propertyPath: possiblePaths.Array.data[1].activeDeep
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891651].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891652].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -13274,6 +13428,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891512]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891512].directionTarget
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -13425,6 +13584,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891655]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891655].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -13582,6 +13746,16 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891660].IsUp
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891659].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891660].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -13723,6 +13897,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891603].IsUp
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891604].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -13853,6 +14032,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891678]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891678].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -13985,6 +14169,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891645]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891645].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -14115,6 +14304,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891567]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891567].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -14247,6 +14441,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891606]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891606].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -14372,6 +14571,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891661].IsUp
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891661].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -14547,6 +14751,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891607]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891607].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -14677,6 +14886,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891524]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891524].directionTarget
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -14814,6 +15028,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891654]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891654].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -14950,6 +15169,11 @@ PrefabInstance:
       propertyPath: managedReferences[5785453781237891656]
       value: Assembly-CSharp WalkPathCommand
       objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891656].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: m_Name
@@ -15080,6 +15304,11 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453781237891680]
       value: Assembly-CSharp WalkPathCommand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: managedReferences[5785453781237891680].directionTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}

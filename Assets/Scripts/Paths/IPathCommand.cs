@@ -2,21 +2,45 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-public interface IPathCommand
+public abstract class IPathCommand
 {
-    void DrawGizmod(Walkable from,  Walkable to);
-    Sequence MovePath(Player player, Walkable from, Walkable to);
+    [SerializeField] protected bool isForceRotation;
+    [SerializeField] protected Direction directionTarget;
+   
+    public Sequence FirstRotaion(Player player, Walkable from, Walkable to)
+    {
+        Vector3 fixUp = from.transform.up;
+        Vector3 forward;
+        Sequence sequence = DOTween.Sequence();
+        if (isForceRotation)
+        {
+            forward = GameManager.GameData.GetDirection(directionTarget);
+        }
+        else
+        {
+            Vector3 moveDirection = (to.GetWalkPoint() - from.GetWalkPoint()).normalized;
+            Vector3 right = Vector3.Cross(fixUp, moveDirection).normalized;
+            forward = Vector3.Cross(right, fixUp).normalized;
+        }
+        
+        if (Vector3.Dot(player.transform.forward, forward) > .8f) return sequence;
+        sequence.Append(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixUp), .1f).SetEase(Ease.Linear));
+        return sequence;
+    }
+
+    public abstract void DrawGizmod(Walkable from,  Walkable to);
+    public abstract Sequence MovePath(Player player, Walkable from, Walkable to);
 }
 
 [Serializable]
 public class WalkPathCommand : IPathCommand
 {
-    public void DrawGizmod(Walkable from, Walkable to)
+    public override void DrawGizmod(Walkable from, Walkable to)
     {
         Gizmos.DrawLine(from.GetWalkPoint(), to.GetWalkPoint());
     }
 
-    public Sequence MovePath(Player player, Walkable from, Walkable to)
+    public override Sequence MovePath(Player player, Walkable from, Walkable to)
     {
         Sequence sequence = DOTween.Sequence();
         float time = to.IsStar ? 1.5f : 1;
@@ -36,8 +60,8 @@ public class WalkPathCommand : IPathCommand
             Mathf.Abs(forward.z) == maxInVector ? forward.z : 0
             ).normalized;
 
-        sequence.Append(player.transform.DOMove(to.GetWalkPoint(), time * .2f).SetEase(Ease.Linear));
-        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixedUp), 0.1f).SetEase(Ease.Linear));
+        sequence.Append(player.transform.DOMove(to.GetWalkPoint(), time * GameManager.GameData.WalkDuriation).SetEase(Ease.Linear));
+        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixedUp), GameManager.GameData.WalkRotationDuriation).SetEase(Ease.Linear));
         return sequence;
     }
 }
@@ -46,7 +70,7 @@ public class WalkPathCommand : IPathCommand
 public class LadderPathCommand : IPathCommand
 {
     public bool IsUp;
-    public void DrawGizmod(Walkable from, Walkable to)
+    public override void DrawGizmod(Walkable from, Walkable to)
     {
         Vector3 fromWalkPoint = from.GetWalkPoint();
         Vector3 toWalkPoint = to.GetWalkPoint();
@@ -58,7 +82,7 @@ public class LadderPathCommand : IPathCommand
         Gizmos.DrawLine(posBetween, toWalkPoint);
     }
 
-    public Sequence MovePath(Player player, Walkable from, Walkable to)
+    public override Sequence MovePath(Player player, Walkable from, Walkable to)
     {
         Vector3 fromWalkPoint = from.GetWalkPoint();
         Vector3 toWalkPoint = to.GetWalkPoint();
@@ -74,11 +98,13 @@ public class LadderPathCommand : IPathCommand
         float time = Mathf.Abs(fromWalkPoint.y - toWalkPoint.y); 
         Sequence sequence = DOTween.Sequence();
 
-        sequence.Append(player.transform.DOMove(posBetween, (IsUp ? time : 1) * .2f).SetEase(Ease.Linear));
-        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixedUp), 0.1f).SetEase(Ease.Linear));
+        sequence.Append(player.transform.DOMove(posBetween, IsUp ? time * GameManager.GameData.LadderDuriation : 
+            GameManager.GameData.InAndOutLadderDuriation).SetEase(Ease.Linear));
+        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixedUp), GameManager.GameData.LadderRotationDuriation).SetEase(Ease.Linear));
 
-        sequence.Append(player.transform.DOMove(toWalkPoint, (IsUp ? 1 : time) * .2f).SetEase(Ease.Linear));
-        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(IsUp ? forward : -forward, fixedUp), 0.1f).SetEase(Ease.Linear));
+        sequence.Append(player.transform.DOMove(toWalkPoint, IsUp ? GameManager.GameData.InAndOutLadderDuriation :
+            time * GameManager.GameData.LadderDuriation).SetEase(Ease.Linear));
+        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(IsUp ? forward : -forward, fixedUp), GameManager.GameData.LadderRotationDuriation).SetEase(Ease.Linear));
         return sequence;
     }
 }
@@ -87,9 +113,10 @@ public class LadderPathCommand : IPathCommand
 public class BezierPathCommand : IPathCommand
 {
     public float valueOffset; 
+    
     // Number of segments to draw the curve
     private int segments = 20;
-    public void DrawGizmod(Walkable from, Walkable to)
+    public override void DrawGizmod(Walkable from, Walkable to)
     {
         if (from == null || to == null) return;
 
@@ -117,7 +144,7 @@ public class BezierPathCommand : IPathCommand
         Gizmos.DrawSphere(posCenter, 0.1f);
     }
 
-    public Sequence MovePath(Player player, Walkable from, Walkable to)
+    public override Sequence MovePath(Player player, Walkable from, Walkable to)
     {
         Vector3 moveDirection = (to.GetWalkPoint() - from.GetWalkPoint()).normalized;
         Vector3 posCenter = (from.GetWalkPoint() + to.GetWalkPoint()) / 2;
@@ -131,13 +158,13 @@ public class BezierPathCommand : IPathCommand
 
         Sequence sequence = DOTween.Sequence();
 
-        sequence.Append(DOTween.To(ReturnTime, SetMove, 1f, .3f).SetEase(Ease.Linear));
+        sequence.Append(DOTween.To(ReturnTime, SetMove, 1f, GameManager.GameData.BezierDuriation).SetEase(Ease.Linear));
         void SetMove(float t)
         {
             player.transform.position = GetBezierPosition(t, from.GetWalkPoint(), posCenter, to.GetWalkPoint());
         }
         
-        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixedUp), .3f).SetEase(Ease.Linear));
+        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixedUp), GameManager.GameData.BezierRotationDuriation).SetEase(Ease.Linear));
         return sequence;
     }
 
@@ -159,25 +186,26 @@ public class CirclePath : IPathCommand
     public CircleType type;
     public bool flip = false;
 
-    private Dictionary<CircleType, float> angleDictionary = new Dictionary<CircleType, float>()
+    private readonly Dictionary<CircleType, float> angleDictionary = new Dictionary<CircleType, float>()
         {{CircleType.Half, 180f },
-        {CircleType.Quater, 90f }};
+        {CircleType.Quater, -90f }};
 
     // Number of segments to draw the curve
     private int segments = 20;
 
-    public void DrawGizmod(Walkable from, Walkable to)
+    public override void DrawGizmod(Walkable from, Walkable to)
     {
         if (from == null || to == null) return;
+        float angle = Mathf.Abs(angleDictionary[type]);
 
-        Vector3 midPoint = CacculatePointCenter(from.GetWalkPoint(), to.GetWalkPoint(), angleDictionary[type], from.transform.up, flip);
+        Vector3 midPoint = CacculatePointCenter(from.GetWalkPoint(), to.GetWalkPoint(), angle, from.transform.up, flip);
         float radius = Vector3.Distance(from.GetWalkPoint(), midPoint);
 
         // Vector from A to B
         Vector3 direction = (to.GetWalkPoint() - from.GetWalkPoint()).normalized;
 
         Vector3 previousPoint = from.GetWalkPoint();
-        float angleStep = angleDictionary[type] / segments;
+        float angleStep = angle / segments;
         
         // Draw the arc path
         for (int i = 1; i <= segments; i++)
@@ -196,38 +224,32 @@ public class CirclePath : IPathCommand
         Gizmos.DrawSphere(midPoint, 0.1f);
     }
 
-    public Sequence MovePath(Player player, Walkable from, Walkable to)
+    public override Sequence MovePath(Player player, Walkable from, Walkable to)
     {
-        Vector3 midPoint = CacculatePointCenter(from.GetWalkPoint(), to.GetWalkPoint(), angleDictionary[type], from.transform.up, flip);
+        float angle = Mathf.Abs(angleDictionary[type]);
+        Vector3 midPoint = CacculatePointCenter(from.GetWalkPoint(), to.GetWalkPoint(), angle, from.transform.up, flip);
         float radius = Vector3.Distance(from.GetWalkPoint(), midPoint);
 
-        // Vector from A to B
         Vector3 previousPoint = from.GetWalkPoint();
         Vector3 fixedUp = to.transform.up;
 
-
-        float flipValue = flip ? 1 : -1;
-        Vector3 directionToCenter = (midPoint - from.GetWalkPoint()).normalized;
-        Vector3 startDirection = Vector3.Cross(directionToCenter, fixedUp * flipValue); 
-        Quaternion rotation = Quaternion.Euler(fixedUp * flipValue * (angleDictionary[type]));
-        Vector3 endDirectoin = rotation * startDirection;
-
-        //TODO find rotaion direction left or right 
-
-
         Sequence sequence = DOTween.Sequence();
-        float durationByAngle = angleDictionary[type] / 90;
-
-        /*sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(moveDirection * flipValue, fixedUp), .1f)
-            .SetEase(Ease.Linear));*/
-
-        sequence.Append(DOTween.To(ReturnTime, SetMove, 1f, durationByAngle * .3f).SetEase(Ease.Linear));
+        float time = angle / 90;
+        
+        //Do Move
+        sequence.Append(DOTween.To(ReturnTime, SetMove, 1f, time * GameManager.GameData.QuaterCircleDuriationByOneUnitRadius * radius).SetEase(Ease.Linear));
         void SetMove(float t)
         {
-            float angleForPoint = t * angleDictionary[type];
+            float angleForPoint = t * angle;
             player.transform.position = CalculatePointC(midPoint, radius, from.GetWalkPoint(), angleForPoint, fixedUp, flip);
         }
-        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(endDirectoin, fixedUp), durationByAngle * .3f)
+
+        //DoRoatrion
+        Vector3 startDirection = GameManager.GameData.GetDirection(directionTarget);
+        Quaternion rotation = Quaternion.Euler(fixedUp * (flip ? 1 : -1) * (angleDictionary[type]));
+        Vector3 endDirectoin = rotation * startDirection;
+
+        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(endDirectoin, fixedUp), time * GameManager.GameData.QuaterCircleRotationDuriationByOneUnitRadius * radius)
             .SetEase(Ease.Linear));
 
         return sequence;
@@ -235,7 +257,7 @@ public class CirclePath : IPathCommand
 
     private Vector3 CalculatePointC(Vector3 center, float radius, Vector3 pointA, float angle, Vector3 direction, bool flip)
     {
-        float flipValue = flip ? 1f : -1f;
+        float flipValue = flip ? -1f : 1f;
         // Convert angleAOC from degrees to radians
         float angleAOC_Radians = angle * Mathf.Deg2Rad;
 
@@ -258,7 +280,7 @@ public class CirclePath : IPathCommand
     {
         if (angle == 180) return (pointA + pointB) / 2;
 
-        int flipValue = flip ? -1 : 1;
+        int flipValue = flip ? 1 : -1;
         // Step 1: Calculate the midpoint M between points A and B
         Vector3 midpoint = (pointA + pointB) / 2;
 
@@ -291,4 +313,14 @@ public enum CircleType
 {
     Half,
     Quater
+}
+
+public enum Direction
+{
+    Forward,
+    Back,
+    Left,
+    Right,
+    Up,
+    Down,
 }

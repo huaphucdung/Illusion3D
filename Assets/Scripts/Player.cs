@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
         Walkable currentWalkable = _currentBlock;
 
         //Check Do Rotation before before move at player all
-        //FirstRotation(sequeue, currentWalkable, paths[0].target);
+        sequeue.Append(paths[0].command.FirstRotaion(this, currentWalkable, paths[0].target));
 
         foreach (Path path in paths){
             sequeue.Append(path.command.MovePath(this, currentWalkable, path.target).OnStart(() => ActiveDeepFeature(path.activeDeep)))
@@ -101,19 +101,6 @@ public class Player : MonoBehaviour
         }
         return null;
     }
-
-    private void FirstRotation(Sequence sequence, Walkable current, Walkable firstPaht)
-    {
-        Vector3 moveDirection = (firstPaht.GetWalkPoint() - current.GetWalkPoint()).normalized;
-
-        Vector3 fixUp = current.transform.up;
-        Vector3 right = Vector3.Cross(fixUp, moveDirection).normalized;
-        Vector3 forward = Vector3.Cross(right, fixUp).normalized;
-
-        if (Vector3.Dot(transform.forward, forward) > .8f) return;
-        sequence.Append(this.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixUp), .1f).SetEase(Ease.Linear));
-    }
-   
 
     private void Clear()
     {
