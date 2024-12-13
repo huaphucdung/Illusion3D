@@ -4,9 +4,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
+[RequireComponent(typeof(PlayerAnimator))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private ScriptableRendererFeature deepRenderFeature;
+    public PlayerAnimator Animator {  get; private set; }
+    
     private Walkable _currentBlock;
     private Walkable _clickedBlock;
     //private Walkable _indicator;
@@ -17,7 +20,12 @@ public class Player : MonoBehaviour
     private readonly Queue<List<Path>> _queue = new Queue<List<Path>>();
 
     public bool IsWalking { get; private set; } = false;
-    
+
+    private void Start()
+    {
+        Animator = GetComponent<PlayerAnimator>();
+    }
+
     public void ActiveDeepFeature(bool value)
     {
         deepRenderFeature.SetActive(value);
@@ -43,6 +51,7 @@ public class Player : MonoBehaviour
         
         // Lock action and group when player move
         IsWalking = true;
+        Animator.ChangeMoving(1);
         EventBus<BlockGroundEvent>.Raise(new BlockGroundEvent() { isLock = true });
 
 
@@ -110,6 +119,7 @@ public class Player : MonoBehaviour
         _queue.Clear();
         // Release action and group when player move
         IsWalking = false;
+        Animator.ChangeMoving(0);
         EventBus<BlockGroundEvent>.Raise(new BlockGroundEvent() { isLock = false });
         _currentBlock?.LockBockGroup();
     }

@@ -98,12 +98,42 @@ public class LadderPathCommand : IPathCommand
         float time = Mathf.Abs(fromWalkPoint.y - toWalkPoint.y); 
         Sequence sequence = DOTween.Sequence();
 
-        sequence.Append(player.transform.DOMove(posBetween, IsUp ? time * GameManager.GameData.LadderDuriation : 
-            GameManager.GameData.InAndOutLadderDuriation).SetEase(Ease.Linear));
+
+        //Move 1 
+        Tween move1 = player.transform.DOMove(posBetween, IsUp ? time * GameManager.GameData.LadderDuriation :
+            GameManager.GameData.InAndOutLadderDuriation).SetEase(Ease.Linear);
+
+        //Set change animation for move 1
+        move1.OnStart(() => player.Animator.ChangeState(IsUp ? player.Animator.ClimbingUpKey : player.Animator.ClimbingDownKey));
+        move1.OnUpdate(() => {
+            if(!IsUp)
+            {
+                move1.onUpdate = null;
+                return;
+            }
+
+            if (move1.Elapsed() < (time * GameManager.GameData.LadderDuriation) - GameManager.GameData.TimeEndLadder) return;
+            move1.onUpdate = null;
+            player.Animator.ChangeState(player.Animator.NormalingKey);
+        });
+
+
+        sequence.Append(move1);
         sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixedUp), GameManager.GameData.LadderRotationDuriation).SetEase(Ease.Linear));
 
-        sequence.Append(player.transform.DOMove(toWalkPoint, IsUp ? GameManager.GameData.InAndOutLadderDuriation :
-            time * GameManager.GameData.LadderDuriation).SetEase(Ease.Linear));
+        //Move 2
+        Tween move2 = player.transform.DOMove(toWalkPoint, IsUp ? GameManager.GameData.InAndOutLadderDuriation :
+            time * GameManager.GameData.LadderDuriation).SetEase(Ease.Linear);
+
+        //Set change animation for move 2
+        move2.OnComplete(() => {
+            if(IsUp) return;
+            player.Animator.ChangeState(player.Animator.NormalingKey);
+
+        });
+       
+
+        sequence.Append(move2);
         sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(IsUp ? forward : -forward, fixedUp), GameManager.GameData.LadderRotationDuriation).SetEase(Ease.Linear));
         return sequence;
     }

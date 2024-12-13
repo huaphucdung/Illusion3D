@@ -70,22 +70,26 @@ public class GameManager : MonoBehaviour
 [Serializable]
 public class GameData
 {
+    [Header("State:")]
+    [Range(0f, 1f)] public float StateChangeDuriation = 0.25f;
     [Header("Walk:")]
-    [Range(0f, 2f)] public float WalkDuriation = 0.2f;
-    [Range(0f, 2f)] public float WalkRotationDuriation = 0.2f;
+    [Range(0f, 1f)] public float WalkDuriation = 0.2f;
+    [Range(0f, 1f)] public float WalkRotationDuriation = 0.2f;
 
     [Header("Ladder:")]
-    [Range(0f, 2f)] public float InAndOutLadderDuriation = 0.2f;
-    [Range(0f, 2f)] public float LadderDuriation = 0.2f;
-    [Range(0f, 2f)] public float LadderRotationDuriation = 0.2f;
+    [Range(0f, 1f)] public float InAndOutLadderDuriation = 0.2f;
+    [Range(0f, 1f)] public float LadderDuriation = 0.2f;
+    [Range(0f, 1f)] public float LadderRotationDuriation = 0.2f;
+
+    [Range(0f, 1f)] public float TimeEndLadder = 0.2f;
 
     [Header("Bezier:")]
-    [Range(0f, 2f)] public float BezierDuriation = 0.2f;
-    [Range(0f, 2f)] public float BezierRotationDuriation = 0.2f;
+    [Range(0f, 1f)] public float BezierDuriation = 0.2f;
+    [Range(0f, 1f)] public float BezierRotationDuriation = 0.2f;
 
     [Header("Circle:")]
-    [Range(0f, 2f)] public float QuaterCircleDuriationByOneUnitRadius = 0.2f;
-    [Range(0f, 2f)] public float QuaterCircleRotationDuriationByOneUnitRadius = 0.2f;
+    [Range(0f, 1f)] public float QuaterCircleDuriationByOneUnitRadius = 0.2f;
+    [Range(0f, 1f)] public float QuaterCircleRotationDuriationByOneUnitRadius = 0.2f;
 
     public readonly Dictionary<Direction, Vector3> directionDictioanry = new Dictionary<Direction, Vector3>()
     {
