@@ -31,8 +31,7 @@ public class River : MonoBehaviour
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        _material = new Material(lineRenderer.material);
-        lineRenderer.material = _material;
+        _material = lineRenderer.material;
         CaculateLengthWater();
         SetTexureScaleByLength();
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1530,8 +1530,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69004bef4d9d31142ac7903a67aed83f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {fileID: 0}
-  endPoint: {fileID: 0}
+  miniMaps: []
+  _currentMiniMap: {fileID: 0}
 --- !u!114 &668796390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3267,6 +3267,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  gameData:
+    StateChangeDuriation: 0.25
+    WalkDuriation: 0.2
+    WalkRotationDuriation: 0.2
+    InAndOutLadderDuriation: 0.2
+    LadderDuriation: 0.2
+    LadderRotationDuriation: 0.2
+    TimeEndLadder: 0.2
+    BezierDuriation: 0.2
+    BezierRotationDuriation: 0.2
+    QuaterCircleDuriationByOneUnitRadius: 0.2
+    QuaterCircleRotationDuriationByOneUnitRadius: 0.2
   mapController: {fileID: 668796389}
 --- !u!1001 &3821740466152058694
 PrefabInstance:

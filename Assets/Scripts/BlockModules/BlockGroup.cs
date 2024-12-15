@@ -9,11 +9,17 @@ public class BlockGroup : MonoBehaviour
 {
     [SerializedDictionary("Position and Rotation", "Path To Path")]
     [SerializeField] private SerializedDictionary<PosistionAndRotationTrigger, List<PathLink>> pathToPathDictionary;
-    [SerializeField] private float moveDuriation = 2f;
+
+    [Space]
+
+    [SerializedDictionary("Position and Rotation", "Path To Path")]
+    [SerializeField] private SerializedDictionary<PosistionAndRotationTrigger, List<RiverLink>> riverToRiverDictionary;
+
 
     [Header("Settings:")]
     [SerializeField] private bool isLock;
     [SerializeField] private bool isCannotLockWhenPlayerOn = false;
+    [SerializeField] private float moveDuriation = 2f;
     public bool IsLock => isLock;
 
     private Vector3 defaultPostion;
@@ -91,6 +97,16 @@ public class BlockGroup : MonoBehaviour
             }
         }
 
+        foreach (KeyValuePair<PosistionAndRotationTrigger, List<RiverLink>> connectPath in riverToRiverDictionary)
+        {
+            PosistionAndRotationTrigger key = connectPath.Key;
+            bool isActivePath = key.Equals(transform);
+            foreach (RiverLink link in connectPath.Value)
+            {
+                ActiveLink(link, isActivePath);
+            }
+        }
+
         //Active connect Group to Group
         EventBus<BlockGroupEvent>.Raise(new BlockGroupEvent() { group = this});
     }
@@ -104,6 +120,14 @@ public class BlockGroup : MonoBehaviour
                 ActiveLink(link, false);
             }
         }
+
+        foreach(KeyValuePair < PosistionAndRotationTrigger, List <RiverLink>> connectPath in riverToRiverDictionary)
+        {
+            foreach (RiverLink link in connectPath.Value)
+            {
+                ActiveLink(link, false);
+            }
+        }
     }
 
     public void ActiveLink(PathLink link, bool isActive)
@@ -111,6 +135,12 @@ public class BlockGroup : MonoBehaviour
        
         link.pathFrom.ActivePath(link.pathTo, isActive);
         link.pathTo.ActivePath(link.pathFrom, isActive);
+    }
+
+    public void ActiveLink(RiverLink link, bool isActive)
+    {
+        link.riverFrom.ActivePath(link.riverTo, isActive);
+        link.riverTo.ActivePath(link.riverFrom, isActive);
     }
 
 }
@@ -149,6 +179,17 @@ public class PathLink
     [Header("Path To")]
     public Walkable pathTo;
 }
+
+[Serializable]
+public class RiverLink
+{
+    [Header("River From")]
+    public River riverFrom;
+    [Header("River To")]
+    public River riverTo;
+}
+
+
 
 public struct BlockGroundEvent: IEvent
 {
