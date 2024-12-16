@@ -1,19 +1,19 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using Zenject;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Player player;
-    [SerializeField] private GameData gameData;
-    public static GameData GameData { get; private set; }
-    public MapController mapController;
+    [Inject] private MapController _mapController;
+    [Inject] private CutSceneController _cutSceneController;
+    [Inject] private GameController _gameController;
 
+    private EventBinding<TriggertEvent> triggerEventBinding;
+    private EventBinding<CutSceneEndEvent> cutSceneEndEventBinding;
 
     private void Awake()
     {
-        GameData = gameData;
+        triggerEventBinding = new EventBinding<TriggertEvent>(OnTriggerEvent);
+        cutSceneEndEventBinding = new EventBinding<CutSceneEndEvent>(OnCutSceneEnd);
     }
 
     private void Start()
@@ -21,89 +21,52 @@ public class GameManager : MonoBehaviour
         Initalize();
     }
 
-    [ContextMenu("Reset")]
-    public void Test()
-    {
-        EventBus<ResetEvent>.Raise(new ResetEvent());
-    }
-
     public void Initalize()
     {
         InputManager.Initialize();
         InputManager.ActiveInput(true);
-        mapController.Initiliaze(player);
-        AddInputAction();
+
+        StartGame();
     }
 
-
-    public void SetMapControler(MapController mapController)
+    private void StartGame()
     {
-        this.mapController = mapController;
+        //Set Firt postion for player
+        _gameController.SetPlayerAtBlock(_mapController.PointStart);
     }
 
-    private void AddInputAction()
+    private void OnEnable()
     {
-        InputManager.click += OnClick;
+        _gameController.ActiveControl();
+        EventBus<TriggertEvent>.Register(triggerEventBinding);
+        EventBus<CutSceneEndEvent>.Register(cutSceneEndEventBinding);
     }
 
-    private void RemoveInputAction()
+    private void OnDisable()
     {
-        InputManager.click -= OnClick;
+        _gameController.DeactiveControl();
+        EventBus<TriggertEvent>.Deregister(triggerEventBinding);
+        EventBus<CutSceneEndEvent>.Deregister(cutSceneEndEventBinding);
     }
+
 
     #region Callback Methods
-    private void OnClick()
+    private void OnTriggerEvent(TriggertEvent @event)
     {
-        if (player.IsWalking) return;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        switch (@event.type)
         {
-            Walkable block = hit.transform.GetComponent<Walkable>();
-            if (block == null) return;
-            player.SetClickedPosition(block);
+            case TriggerType.CutScene:
+                _cutSceneController?.PlayCutScene(_mapController.PlayableDirector);
+                _mapController.NextMap();
+                break;
+            default:
+                break;
         }
     }
-    #endregion
-}
 
-[Serializable]
-public class GameData
-{
-    [Header("State:")]
-    [Range(0f, 1f)] public float StateChangeDuriation = 0.25f;
-    [Header("Walk:")]
-    [Range(0f, 1f)] public float WalkDuriation = 0.2f;
-    [Range(0f, 1f)] public float WalkRotationDuriation = 0.2f;
-
-    [Header("Ladder:")]
-    [Range(0f, 1f)] public float InAndOutLadderDuriation = 0.2f;
-    [Range(0f, 1f)] public float LadderDuriation = 0.2f;
-    [Range(0f, 1f)] public float LadderRotationDuriation = 0.2f;
-
-    [Range(0f, 1f)] public float TimeEndLadder = 0.2f;
-
-    [Header("Bezier:")]
-    [Range(0f, 1f)] public float BezierDuriation = 0.2f;
-    [Range(0f, 1f)] public float BezierRotationDuriation = 0.2f;
-
-    [Header("Circle:")]
-    [Range(0f, 1f)] public float QuaterCircleDuriationByOneUnitRadius = 0.2f;
-    [Range(0f, 1f)] public float QuaterCircleRotationDuriationByOneUnitRadius = 0.2f;
-
-    public readonly Dictionary<Direction, Vector3> directionDictioanry = new Dictionary<Direction, Vector3>()
+    private void OnCutSceneEnd()
     {
-        {Direction.Forward, Vector3.forward },
-        {Direction.Back, Vector3.back },
-        {Direction.Left, Vector3.left },
-        {Direction.Right, Vector3.right },
-        {Direction.Up, Vector3.up },
-        {Direction.Down, Vector3.down },
-    };
-
-    public Vector3 GetDirection(Direction direction)
-    {
-        if (directionDictioanry.TryGetValue(direction, out Vector3 value)) return value;
-        return Vector3.forward;
+        _gameController.SetPlayerAtBlock(_mapController.PointStart);
     }
+    #endregion
 }

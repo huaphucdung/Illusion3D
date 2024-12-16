@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -55,17 +53,14 @@ public class InputManager
 
     private static void OnClickStarted(InputAction.CallbackContext context)
     {
-        Debug.Log("Click started");
         isPress = true;
     }
     private static void OnClickCancled(InputAction.CallbackContext context)
     {
         if(isPress)
         {
-            Debug.Log("Click performed");
             click?.Invoke();
         }
-        Debug.Log("Click canceld");
         isPress = false;
     }
     private static void OnClickMove(InputAction.CallbackContext context)

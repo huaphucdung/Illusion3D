@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13065187d6d8e76498bc7dd3ab2d59bc, type: 3}
+  m_Name: GameDataSOInstaller
+  m_EditorClassIdentifier: 
+  playerSetting:
+    StateChangeDuriation: 0.25
+    WalkDuriation: 0.2
+    WalkRotationDuriation: 0.2
+    InAndOutLadderDuriation: 0.2
+    LadderDuriation: 0.3
+    LadderRotationDuriation: 0.1
+    TimeEndLadder: 0.3
+    BezierDuriation: 0.2
+    BezierRotationDuriation: 0.2
+    QuaterCircleDuriationByOneUnitRadius: 0.3
+    QuaterCircleRotationDuriationByOneUnitRadius: 0.2
