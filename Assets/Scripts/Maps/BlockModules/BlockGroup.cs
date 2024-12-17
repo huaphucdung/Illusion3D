@@ -19,7 +19,7 @@ public class BlockGroup : MonoBehaviour
     private Vector3 defaultPostion;
     private Quaternion defaultRotaton;
     private EventBinding<ResetEvent> resetEventBinding;
-    private EventBinding<BlockGroundEvent> blockGroupEventBinding;
+    private EventBinding<BlockGroupLoockAllEvent> blockGroupEventBinding;
 
     public event Action<bool> lockAction;
 
@@ -32,19 +32,19 @@ public class BlockGroup : MonoBehaviour
     private void Awake()
     {
         resetEventBinding = new EventBinding<ResetEvent>(ResetModule);
-        blockGroupEventBinding = new EventBinding<BlockGroundEvent>(Lock);
+        blockGroupEventBinding = new EventBinding<BlockGroupLoockAllEvent>(Lock);
     }
 
     private void OnEnable()
     {
         EventBus<ResetEvent>.Register(resetEventBinding);
-        EventBus<BlockGroundEvent>.Register(blockGroupEventBinding);
+        EventBus<BlockGroupLoockAllEvent>.Register(blockGroupEventBinding);
     }
 
     private void OnDisable()
     {
         EventBus<ResetEvent>.Deregister(resetEventBinding);
-        EventBus<BlockGroundEvent>.Deregister(blockGroupEventBinding);
+        EventBus<BlockGroupLoockAllEvent>.Deregister(blockGroupEventBinding);
     }
 
     private void ResetModule()
@@ -52,7 +52,7 @@ public class BlockGroup : MonoBehaviour
         transform.SetPositionAndRotation(defaultPostion, defaultRotaton);
     }
 
-    private void Lock(BlockGroundEvent @event)
+    private void Lock(BlockGroupLoockAllEvent @event)
     {
         isLock = @event.isLock;
     }
@@ -71,12 +71,29 @@ public class BlockGroup : MonoBehaviour
     public void SetPositionAndRotaion(Vector3 position, Vector3 rotation)
     {
         DisablePathAll();
+
+        //Call event to add this block group in list lock group
+        OnChangePositionAndRotationStart();
+
         Sequence sequence = DOTween.Sequence();
         if (transform.localPosition != position)
             sequence.Append(transform.DOLocalMove(position, moveDuriation).SetEase(Ease.Linear));
         if (transform.localEulerAngles != rotation)
             sequence.Append(transform.DOLocalRotate(rotation, moveDuriation).SetEase(Ease.Linear));
         sequence.AppendCallback(Active);
+        
+        //Call event to remove this block group out list lock group
+        sequence.AppendCallback(OnChangePositionAndRotationComplete);
+    }
+
+    private void OnChangePositionAndRotationStart()
+    {
+        EventBus<BlockGroupChangePositionAndRoationStartEvent>.Raise(new BlockGroupChangePositionAndRoationStartEvent() { blockGroup = this });
+    }
+
+    private void OnChangePositionAndRotationComplete()
+    {
+        EventBus<BlockGroupChangePositionAndRoationCompleteEvent>.Raise(new BlockGroupChangePositionAndRoationCompleteEvent() { blockGroup = this });
     }
 
     public void Active()
@@ -219,7 +236,17 @@ public class RiverLink
     }
 }
 
-public struct BlockGroundEvent: IEvent
+public struct BlockGroupLoockAllEvent: IEvent
 {
     public bool isLock;
+}
+
+public struct BlockGroupChangePositionAndRoationCompleteEvent : IEvent
+{
+    public BlockGroup blockGroup;
+}
+
+public struct BlockGroupChangePositionAndRoationStartEvent : IEvent
+{
+    public BlockGroup blockGroup;
 }

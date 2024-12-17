@@ -9,24 +9,41 @@ public class GameController
     [Inject] private PlayerSetting _playerSetting;
     [Inject] private Player _player;
 
-    private readonly List<Walkable> _movePath = new List<Walkable>();
-    private readonly HashSet<Walkable> _nextBlocks = new HashSet<Walkable>();
     private readonly HashSet<Walkable> _pastBlocks = new HashSet<Walkable>();
     private readonly Queue<List<Path>> _queue = new Queue<List<Path>>();
+    private readonly HashSet<BlockGroup> _moveingBlockGroup = new HashSet<BlockGroup>();
 
     private Walkable _currentBlock;
     private Walkable _clickedBlock;
 
+    private EventBinding<BlockGroupChangePositionAndRoationStartEvent> _changePositionAndRoationStartEvent;
+    private EventBinding<BlockGroupChangePositionAndRoationCompleteEvent> _changePositionAndRoationCompleteEvent;
+
     public bool IsWalking { get; private set; } = false;
+
+    private Sequence _sequeue;
+
+    public GameController(PlayerSetting playerSetting, Player player)
+    {
+        _playerSetting = playerSetting;
+        _player = player;
+
+        _changePositionAndRoationStartEvent = new EventBinding<BlockGroupChangePositionAndRoationStartEvent>(OnBlockGroupChangeStart);
+        _changePositionAndRoationCompleteEvent = new EventBinding<BlockGroupChangePositionAndRoationCompleteEvent>(OnBlockGroupChangeComplete);
+    }
 
     public void ActiveControl()
     {
         InputManager.click += OnClick;
+        EventBus<BlockGroupChangePositionAndRoationStartEvent>.Register(_changePositionAndRoationStartEvent);
+        EventBus<BlockGroupChangePositionAndRoationCompleteEvent>.Register(_changePositionAndRoationCompleteEvent);
     }
 
     public void DeactiveControl()
     {
         InputManager.click -= OnClick;
+        EventBus<BlockGroupChangePositionAndRoationStartEvent>.Deregister(_changePositionAndRoationStartEvent);
+        EventBus<BlockGroupChangePositionAndRoationCompleteEvent>.Deregister(_changePositionAndRoationCompleteEvent);
     }
 
     #region Main Methods
@@ -46,23 +63,24 @@ public class GameController
     private void FollowPath(List<Path> paths)
     {
         if (paths == null || paths.Count == 0) return;
-        Sequence sequeue = DOTween.Sequence();
+       
 
         // Lock action and group when player move
         IsWalking = true;
         _player.Animator.ChangeMoving(1);
 
-        EventBus<BlockGroundEvent>.Raise(new BlockGroundEvent() { isLock = true });
-
+        _sequeue = DOTween.Sequence().SetAutoKill();
+ 
+        EventBus<BlockGroupLoockAllEvent>.Raise(new BlockGroupLoockAllEvent() { isLock = true });
 
         Walkable currentWalkable = _currentBlock;
 
         //Check Do Rotation before before move at player all
-        sequeue.Append(paths[0].command.FirstRotaion(_player, currentWalkable, paths[0].target, _playerSetting));
+        _sequeue.Append(paths[0].command.FirstRotaion(_player, currentWalkable, paths[0].target, _playerSetting));
 
         foreach (Path path in paths)
         {
-            sequeue.Append(path.command.MovePath(_player, currentWalkable, path.target, _playerSetting).OnStart(() => _player.ActiveDeepFeature(path.activeDeep)))
+            _sequeue.Append(path.command.MovePath(_player, currentWalkable, path.target, _playerSetting).OnStart(() => _player.ActiveDeepFeature(path.activeDeep)))
                     .AppendCallback(
                         () => {
                             _currentBlock?.ActiveLevaveModule(_player);
@@ -74,8 +92,14 @@ public class GameController
             currentWalkable = path.target;
         }
 
-        sequeue.AppendCallback(Clear);
+        _sequeue.AppendCallback(Clear);
     }
+
+    public void AppendSequence(Sequence sequence)
+    {
+        _sequeue.Append(sequence);
+    } 
+
     private List<Path> FindPath(Walkable from, Walkable to)
     {
 
@@ -119,14 +143,12 @@ public class GameController
 
     private void Clear()
     {
-        _movePath.Clear();
-        _nextBlocks.Clear();
         _pastBlocks.Clear();
         _queue.Clear();
         // Release action and group when player move
         IsWalking = false;
         _player.Animator.ChangeMoving(0);
-        EventBus<BlockGroundEvent>.Raise(new BlockGroundEvent() { isLock = false });
+        EventBus<BlockGroupLoockAllEvent>.Raise(new BlockGroupLoockAllEvent() { isLock = false });
         _currentBlock?.LockBockGroup();
     }
     #endregion
@@ -135,7 +157,7 @@ public class GameController
     #region Callback Methods
     private void OnClick()
     {
-        if (IsWalking) return;
+        if (IsWalking || _moveingBlockGroup.Count > 0) return;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
@@ -144,6 +166,17 @@ public class GameController
             if (block == null) return;
             SetTargetBlock(block);
         }
+    }
+
+    private void OnBlockGroupChangeStart(BlockGroupChangePositionAndRoationStartEvent @event)
+    {
+        _moveingBlockGroup.Add(@event.blockGroup);
+      
+    }
+
+    private void OnBlockGroupChangeComplete(BlockGroupChangePositionAndRoationCompleteEvent @event)
+    {
+        _moveingBlockGroup.Remove(@event.blockGroup);
     }
     #endregion
 }

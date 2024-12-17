@@ -48,6 +48,11 @@ public class Player : MonoBehaviour
         transform.SetParent(parent);
     }
 
+    public void SetRotation(Vector3 direction, Vector3 constrain)
+    {
+        transform.rotation = Quaternion.LookRotation(direction, constrain);
+    }
+
     private void OnCutSceneStart()
     {
         SetParent(null);
