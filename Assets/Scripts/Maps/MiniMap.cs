@@ -70,13 +70,13 @@ public class BlockGroupConnect
     [Header("Group From:")]
     public BlockGroup blockGroupFrom;
     public PosistionAndRotationTrigger posistionAndRotationRequireFrom;
-
+    
     [Space]
 
     [Header("Group To:")]
     public BlockGroup blockGroupTo;
     public PosistionAndRotationTrigger posistionAndRotationRequireTo;
-
+    
     [Header("Path Links:")]
     public List<PathLink> pathLinks;
 

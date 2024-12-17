@@ -1964,7 +1964,7 @@ Camera:
   far clip plane: 1000
   field of view: 60.000004
   orthographic: 1
-  orthographic size: 12.5
+  orthographic size: 12
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1989,7 +1989,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.27984518, y: -0.3647056, z: 0.11591566, w: 0.88047725}
-  m_LocalPosition: {x: 17.867655, y: 47.86724, z: 15.132357}
+  m_LocalPosition: {x: 27.367655, y: 28.86724, z: -26.867651}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6893,7 +6893,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1041474732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15168,7 +15168,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1765267378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17095,7 +17095,7 @@ MonoBehaviour:
   - {fileID: 2731595728364350553}
   - {fileID: 4003536142839883895}
   - {fileID: 9100001672824181945}
-  _currentMiniMap: {fileID: 4003536142839883895}
+  _currentMiniMap: {fileID: 6701070327363789381}
 --- !u!1 &2064837412
 GameObject:
   m_ObjectHideFlags: 0
@@ -25759,6 +25759,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: possiblePaths.Array.data[1].directionTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[1].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[5785453827865968886].directionTarget
       value: 0
       objectReference: {fileID: 0}
@@ -29638,7 +29648,9 @@ MonoBehaviour:
           rotation: {x: 0, y: 0, z: 0}
         Value:
         - pathFrom: {fileID: 1994794898063173062}
+          fromDirection: 0
           pathTo: {fileID: 6989266629700449857}
+          toDirection: 0
   riverToRiver:
     riverToRiverDictionary:
       _serializedList: []
@@ -37267,6 +37279,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: possiblePaths.Array.data[0].directionTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[0].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[1].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[5785453827865968895].directionTarget
       value: 0
       objectReference: {fileID: 0}
@@ -41979,13 +42006,17 @@ MonoBehaviour:
           rotation: {x: 0, y: 180, z: 0}
         Value:
         - pathFrom: {fileID: 4059569108662137809}
+          fromDirection: 0
           pathTo: {fileID: 8970422582618857465}
+          toDirection: 0
       - Key:
           position: {x: 1.5, y: 3.5, z: -6.5}
           rotation: {x: 0, y: -180, z: 0}
         Value:
         - pathFrom: {fileID: 4059569108662137809}
+          fromDirection: 0
           pathTo: {fileID: 8970422582618857465}
+          toDirection: 0
   riverToRiver:
     riverToRiverDictionary:
       _serializedList: []
@@ -44783,7 +44814,9 @@ MonoBehaviour:
       rotation: {x: 0, y: 0, z: 0}
     pathLinks:
     - pathFrom: {fileID: 7668213791763550866}
+      fromDirection: 1
       pathTo: {fileID: 4059569108662137809}
+      toDirection: 0
     riverLinks: []
   - blockGroupFrom: {fileID: 2555993853889871180}
     posistionAndRotationRequireFrom:
@@ -44795,7 +44828,9 @@ MonoBehaviour:
       rotation: {x: 0, y: 0, z: 0}
     pathLinks:
     - pathFrom: {fileID: 7668213791763550866}
+      fromDirection: 1
       pathTo: {fileID: 4059569108662137809}
+      toDirection: 0
     riverLinks: []
   - blockGroupFrom: {fileID: 6122744949518911350}
     posistionAndRotationRequireFrom:
@@ -44807,7 +44842,9 @@ MonoBehaviour:
       rotation: {x: 0, y: 0, z: 0}
     pathLinks:
     - pathFrom: {fileID: 6067265006117543847}
+      fromDirection: 3
       pathTo: {fileID: 7225987617946671968}
+      toDirection: 2
     riverLinks: []
 --- !u!65 &2734050649330000576
 BoxCollider:
@@ -47718,6 +47755,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: possiblePaths.Array.data[1].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[5785453800877981722].directionTarget
       value: 0
       objectReference: {fileID: 0}
@@ -49984,6 +50026,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: possiblePaths.Array.data[2].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[3].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[5785453823756861540].directionTarget
       value: 0
       objectReference: {fileID: 0}
@@ -50544,6 +50596,11 @@ PrefabInstance:
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: possiblePaths.Array.data[3].activeDeep
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[3].isForceRotation
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
@@ -53146,6 +53203,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: possiblePaths.Array.data[1].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[5785453827865968894].directionTarget
       value: 0
       objectReference: {fileID: 0}
@@ -54764,7 +54826,9 @@ MonoBehaviour:
       rotation: {x: 0, y: 90, z: 0}
     pathLinks:
     - pathFrom: {fileID: 3250914000842482657}
+      fromDirection: 3
       pathTo: {fileID: 3388070742683770444}
+      toDirection: 2
     riverLinks: []
   - blockGroupFrom: {fileID: 8822719361172551031}
     posistionAndRotationRequireFrom:
@@ -54776,7 +54840,9 @@ MonoBehaviour:
       rotation: {x: 0, y: -90, z: 0}
     pathLinks:
     - pathFrom: {fileID: 3250914000842482657}
+      fromDirection: 3
       pathTo: {fileID: 5130962160442985701}
+      toDirection: 2
     riverLinks: []
   - blockGroupFrom: {fileID: 8822719361172551031}
     posistionAndRotationRequireFrom:
@@ -54788,7 +54854,9 @@ MonoBehaviour:
       rotation: {x: 0, y: 0, z: 0}
     pathLinks:
     - pathFrom: {fileID: 1939001419796489192}
+      fromDirection: 2
       pathTo: {fileID: 5213266106327197098}
+      toDirection: 3
     riverLinks: []
   - blockGroupFrom: {fileID: 8822719361172551031}
     posistionAndRotationRequireFrom:
@@ -54800,7 +54868,9 @@ MonoBehaviour:
       rotation: {x: 0, y: 0, z: 0}
     pathLinks:
     - pathFrom: {fileID: 1939001419796489192}
+      fromDirection: 2
       pathTo: {fileID: 5213266106327197098}
+      toDirection: 3
     riverLinks: []
   - blockGroupFrom: {fileID: 8822719361172551031}
     posistionAndRotationRequireFrom:
@@ -54812,7 +54882,9 @@ MonoBehaviour:
       rotation: {x: 0, y: 0, z: 0}
     pathLinks:
     - pathFrom: {fileID: 3250914000842482657}
+      fromDirection: 3
       pathTo: {fileID: 3388070742683770444}
+      toDirection: 2
     riverLinks: []
   - blockGroupFrom: {fileID: 8822719361172551031}
     posistionAndRotationRequireFrom:
@@ -54824,7 +54896,9 @@ MonoBehaviour:
       rotation: {x: 0, y: 180, z: 0}
     pathLinks:
     - pathFrom: {fileID: 3250914000842482657}
+      fromDirection: 3
       pathTo: {fileID: 5130962160442985701}
+      toDirection: 2
     riverLinks: []
 --- !u!1 &4012835910570613715
 GameObject:
@@ -55626,6 +55700,11 @@ PrefabInstance:
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: possiblePaths.Array.data[2].activeDeep
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[0].isForceRotation
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
@@ -68668,6 +68747,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: possiblePaths.Array.data[3].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[5785453823756861656].directionTarget
       value: 0
       objectReference: {fileID: 0}
@@ -71011,7 +71095,9 @@ MonoBehaviour:
           rotation: {x: 0, y: 0, z: 0}
         Value:
         - pathFrom: {fileID: 8419592068069635561}
+          fromDirection: 1
           pathTo: {fileID: 649552870750965533}
+          toDirection: 1
   riverToRiver:
     riverToRiverDictionary:
       _serializedList: []
@@ -73592,6 +73678,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: possiblePaths.Array.data[0].directionTarget
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[0].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[5785453803896570095].directionTarget
       value: 3
       objectReference: {fileID: 0}
@@ -73708,17 +73804,25 @@ MonoBehaviour:
           rotation: {x: 0, y: 0, z: 0}
         Value:
         - pathFrom: {fileID: 4300522867705200726}
+          fromDirection: 0
           pathTo: {fileID: 8006580979095863510}
+          toDirection: 0
         - pathFrom: {fileID: 5346681605147963164}
+          fromDirection: 0
           pathTo: {fileID: 3192469220183296330}
+          toDirection: 0
       - Key:
           position: {x: 15, y: 16, z: -11}
           rotation: {x: 0, y: 0, z: 0}
         Value:
         - pathFrom: {fileID: 5346681605147963164}
+          fromDirection: 0
           pathTo: {fileID: 3806879320268794762}
+          toDirection: 0
         - pathFrom: {fileID: 8006580979095863510}
+          fromDirection: 0
           pathTo: {fileID: 1822724408400648230}
+          toDirection: 0
   riverToRiver:
     riverToRiverDictionary:
       _serializedList:
@@ -75304,13 +75408,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: possiblePaths.Array.data[0].isForceRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[1].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[3].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[5785453803896570067].directionTarget
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: managedReferences[5785453803896570067].isForceRotation
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -80802,6 +80921,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: possiblePaths.Array.data[0].directionTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[1].directionTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[1].isForceRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[5785453803896570068].directionTarget
       value: 0
       objectReference: {fileID: 0}
@@ -82989,6 +83123,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: possiblePaths.Array.data[1].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[5785453827865968913].directionTarget
       value: 0
       objectReference: {fileID: 0}
@@ -84421,6 +84560,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: possiblePaths.Array.data[0].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[5785453822516396047].directionTarget
       value: 0
       objectReference: {fileID: 0}
@@ -84838,6 +84982,16 @@ PrefabInstance:
         type: 3}
       propertyPath: possiblePaths.Array.data[1].activeDeep
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[0].isForceRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[1].isForceRotation
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -88651,13 +88805,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
+      propertyPath: possiblePaths.Array.data[1].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[2].isForceRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
       propertyPath: managedReferences[5785453803896570066].directionTarget
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: managedReferences[5785453803896570066].isForceRotation
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5627106417457594376, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -90301,25 +90465,33 @@ MonoBehaviour:
           rotation: {x: 0, y: 90, z: 0}
         Value:
         - pathFrom: {fileID: 5130962160442985701}
+          fromDirection: 0
           pathTo: {fileID: 3192469220183296330}
+          toDirection: 0
       - Key:
           position: {x: 8.5, y: 6.5, z: -8.5}
           rotation: {x: 0, y: -90, z: 0}
         Value:
         - pathFrom: {fileID: 3388070742683770444}
+          fromDirection: 0
           pathTo: {fileID: 3192469220183296330}
+          toDirection: 0
       - Key:
           position: {x: 8.5, y: 6.5, z: -8.5}
           rotation: {x: 0, y: 0, z: 0}
         Value:
         - pathFrom: {fileID: 5130962160442985701}
+          fromDirection: 0
           pathTo: {fileID: 5048063832141012273}
+          toDirection: 0
       - Key:
           position: {x: 8.5, y: 6.5, z: -8.5}
           rotation: {x: 0, y: 180, z: 0}
         Value:
         - pathFrom: {fileID: 3388070742683770444}
+          fromDirection: 0
           pathTo: {fileID: 5048063832141012273}
+          toDirection: 0
   riverToRiver:
     riverToRiverDictionary:
       _serializedList: []
@@ -92950,15 +93122,21 @@ MonoBehaviour:
           rotation: {x: 0, y: 0, z: 0}
         Value:
         - pathFrom: {fileID: 3077210030792142835}
+          fromDirection: 0
           pathTo: {fileID: 7668213791763550866}
+          toDirection: 1
         - pathFrom: {fileID: 6067265006117543847}
+          fromDirection: 0
           pathTo: {fileID: 6614209391628406313}
+          toDirection: 1
       - Key:
           position: {x: 3, y: 9, z: -6}
           rotation: {x: 0, y: 0, z: 0}
         Value:
         - pathFrom: {fileID: 6067265006117543847}
+          fromDirection: 0
           pathTo: {fileID: 7781898059845745441}
+          toDirection: 0
   riverToRiver:
     riverToRiverDictionary:
       _serializedList: []
@@ -95295,17 +95473,25 @@ MonoBehaviour:
           rotation: {x: 0, y: 90, z: 0}
         Value:
         - pathFrom: {fileID: 3054220466485279738}
+          fromDirection: 0
           pathTo: {fileID: 5835004200646185149}
+          toDirection: 0
         - pathFrom: {fileID: 1571980060219877578}
+          fromDirection: 0
           pathTo: {fileID: 7250878629869374664}
+          toDirection: 0
       - Key:
           position: {x: 9.5, y: 6.5, z: -7.5}
           rotation: {x: 0, y: 0, z: 0}
         Value:
         - pathFrom: {fileID: 3054220466485279738}
+          fromDirection: 0
           pathTo: {fileID: 3941704815012196732}
+          toDirection: 0
         - pathFrom: {fileID: 1571980060219877578}
+          fromDirection: 0
           pathTo: {fileID: 6462335829994778869}
+          toDirection: 0
   riverToRiver:
     riverToRiverDictionary:
       _serializedList: []
@@ -95379,6 +95565,16 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[5785453827865968994].type
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[1].directionTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[1].isForceRotation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
@@ -97154,9 +97350,13 @@ MonoBehaviour:
           rotation: {x: 0, y: 0, z: 0}
         Value:
         - pathFrom: {fileID: 2349375639341253888}
+          fromDirection: 0
           pathTo: {fileID: 1939001419796489192}
+          toDirection: 0
         - pathFrom: {fileID: 3250914000842482657}
+          fromDirection: 0
           pathTo: {fileID: 2112063900315350047}
+          toDirection: 0
   riverToRiver:
     riverToRiverDictionary:
       _serializedList: []
@@ -98749,6 +98949,11 @@ PrefabInstance:
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
         type: 3}
       propertyPath: managedReferences[5785453803896570089].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,
+        type: 3}
+      propertyPath: possiblePaths.Array.data[1].isForceRotation
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5056212342139906659, guid: 0dfeb0ea8d185da4fb0a82063b7a7435,

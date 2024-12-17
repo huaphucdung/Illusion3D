@@ -110,10 +110,6 @@ public class BlockGroup : MonoBehaviour
         pathToPath.Deactive();
         riverToRiver.Deactive();
     }
-
-    
-
-
 }
 
 [Serializable]
@@ -211,13 +207,15 @@ public class PathLink
 {
     [Header("Path From")]
     public Walkable pathFrom;
+    public Direction fromDirection;
+    
     [Header("Path To")]
     public Walkable pathTo;
-
+    public Direction toDirection;
     public void Active(bool value)
     {
-        pathFrom.ActivePath(pathTo, value);
-        pathTo.ActivePath(pathFrom, value);
+        pathFrom.ActivePath(pathTo, value, fromDirection);
+        pathTo.ActivePath(pathFrom, value, toDirection);
     }
 }
 

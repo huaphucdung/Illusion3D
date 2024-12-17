@@ -34,11 +34,12 @@ public class Walkable : MonoBehaviour
         return transform.position + transform.up * offset;
     }
 
-    public void ActivePath(Walkable target, bool value)
+    public void ActivePath(Walkable target, bool value, Direction direction)
     {
         Path path = possiblePaths.FirstOrDefault(x => x.target == target);
         if (path == null) return;
         path.active = value;
+        path.SetDirection(direction);
     }
 
     public void ActiveEnterModule(Player player)
@@ -66,7 +67,7 @@ public class Walkable : MonoBehaviour
         {
             if (path.target == null) continue;
             Gizmos.color = path.active ? Color.blue : Color.clear;
-            path.command.DrawGizmod(this, path.target);
+            path.command.DrawGizmod(this, path);
         }
     }
 
@@ -78,7 +79,7 @@ public class Walkable : MonoBehaviour
         {
             if (path.target == null) continue;
             Gizmos.color = path.active ? Color.green : Color.clear;
-            path.command.DrawGizmod(this, path.target);
+            path.command.DrawGizmod(this, path);
         }
     }
 }
@@ -86,11 +87,23 @@ public class Walkable : MonoBehaviour
 [Serializable]
 public class Path
 {
+    [Header("Settings:")]
     public Walkable target;
     public bool active = false;
     public bool activeDeep = false;
+
+    [Header("Force Settinngs:")]
+    public bool isForceRotation;
+    public Direction directionTarget;
+
+    [Header("Command:")]
     [SerializeReference, SubclassSelector]
     public IPathCommand command = new WalkPathCommand();
+
+    public void SetDirection(Direction direction)
+    {
+        directionTarget = direction;
+    }
 }
 
 

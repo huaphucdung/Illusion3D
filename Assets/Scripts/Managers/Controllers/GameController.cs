@@ -76,11 +76,11 @@ public class GameController
         Walkable currentWalkable = _currentBlock;
 
         //Check Do Rotation before before move at player all
-        _sequeue.Append(paths[0].command.FirstRotaion(_player, currentWalkable, paths[0].target, _playerSetting));
+        _sequeue.Append(paths[0].command.FirstRotaion(_player, currentWalkable, paths[0], _playerSetting));
 
         foreach (Path path in paths)
         {
-            _sequeue.Append(path.command.MovePath(_player, currentWalkable, path.target, _playerSetting).OnStart(() => _player.ActiveDeepFeature(path.activeDeep)))
+            _sequeue.Append(path.command.MovePath(_player, currentWalkable, path, _playerSetting).OnStart(() => _player.ActiveDeepFeature(path.activeDeep)))
                     .AppendCallback(
                         () => {
                             _currentBlock?.ActiveLevaveModule(_player);
