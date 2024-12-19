@@ -55,6 +55,7 @@ namespace Project.Module
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            blockGroup.DisablePathAll();
             // Record the initial mouse position in world coordinates
             initialMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(transform.position).z));
         }

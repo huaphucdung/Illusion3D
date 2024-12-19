@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: DeepPlayer
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   settings:
     passTag: DeepPlayer
     Event: 400
@@ -221,7 +221,7 @@ MonoBehaviour:
     overrideMode: 0
     overrideDepthState: 1
     depthCompareFunction: 7
-    enableWrite: 1
+    enableWrite: 0
     stencilSettings:
       overrideStencilState: 0
       stencilReference: 0
@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: DeepTopLv3
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: DeepTopLv3
     Event: 300
@@ -262,7 +262,7 @@ MonoBehaviour:
     overrideShaderPassIndex: 0
     overrideMode: 1
     overrideDepthState: 1
-    depthCompareFunction: 2
+    depthCompareFunction: 1
     enableWrite: 0
     stencilSettings:
       overrideStencilState: 0

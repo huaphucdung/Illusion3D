@@ -105,7 +105,7 @@ public class BlockGroup : MonoBehaviour
         EventBus<BlockGroupChangeEvent>.Raise(new BlockGroupChangeEvent() { group = this});
     }
 
-    private void DisablePathAll()
+    public void DisablePathAll()
     {
         pathToPath.Deactive();
         riverToRiver.Deactive();

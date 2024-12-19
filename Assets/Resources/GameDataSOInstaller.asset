@@ -22,5 +22,5 @@ MonoBehaviour:
     TimeEndLadder: 0.3
     BezierDuriation: 0.2
     BezierRotationDuriation: 0.2
-    QuaterCircleDuriationByOneUnitRadius: 0.3
-    QuaterCircleRotationDuriationByOneUnitRadius: 0.2
+    QuaterCircleDuriationByOneUnitRadius: 0.314
+    QuaterCircleRotationDuriationByOneUnitRadius: 0.314
