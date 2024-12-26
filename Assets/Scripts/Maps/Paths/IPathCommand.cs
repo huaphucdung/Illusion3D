@@ -201,15 +201,17 @@ public class BezierPathCommand : IPathCommand
 
         posCenter += valueOffset * (from.transform.up + to.transform.up);
 
+        float radius = Vector3.Distance(posCenter, from.GetWalkPoint());
+
         Sequence sequence = DOTween.Sequence();
 
-        sequence.Append(DOTween.To(ReturnTime, SetMove, 1f, Setting.BezierDuriation).SetEase(Ease.Linear));
+        sequence.Append(DOTween.To(ReturnTime, SetMove, 1f, radius * Setting.BezierDuriation).SetEase(Ease.Linear));
         void SetMove(float t)
         {
             player.transform.position = GetBezierPosition(t, from.GetWalkPoint(), posCenter, to.GetWalkPoint());
         }
         
-        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixedUp), Setting.BezierRotationDuriation).SetEase(Ease.Linear));
+        sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(forward, fixedUp), radius * Setting.BezierRotationDuriation).SetEase(Ease.Linear));
         return sequence;
     }
 
@@ -245,8 +247,23 @@ public class CirclePath : IPathCommand
         if (from == null || to == null) return;
         float angle = Mathf.Abs(angleDictionary[type]);
 
-        Vector3 midPoint = CacculatePointCenter(from.GetWalkPoint(), to.GetWalkPoint(), angle, from.transform.up, flip);
-        float radius = Vector3.Distance(from.GetWalkPoint(), midPoint);
+        (Vector3 midPoint, Vector3 centerPath) = CacculatePointCenter(from.GetWalkPoint(), to.GetWalkPoint(), angle, from.transform.up, flip);
+
+        Vector3 startCirclePoint = Vector3.zero;
+        switch(type)
+        {
+            case CircleType.Half:
+                Vector3 directionCenterPathToMidPoint = centerPath - midPoint;
+                startCirclePoint = from.GetWalkPoint() + directionCenterPathToMidPoint;
+                break;
+            case CircleType.Quater:
+                Vector3 directionOAndTo = (to.GetWalkPoint() - midPoint).normalized;
+                startCirclePoint = from.GetWalkPoint() + directionOAndTo * 0.5f;
+                break;
+        }
+
+        //Caculator radius
+        float radius = Vector3.Distance(startCirclePoint, centerPath);
 
         // Vector from A to B
         Vector3 direction = (to.GetWalkPoint() - from.GetWalkPoint()).normalized;
@@ -255,20 +272,24 @@ public class CirclePath : IPathCommand
         float angleStep = angle / segments;
         
         // Draw the arc path
-        for (int i = 1; i <= segments; i++)
+        for (int i = 0; i < segments; i++)
         {
             float angleForPoint = i * angleStep;
-            Vector3 currentPos = CalculatePointC(midPoint, radius, from.GetWalkPoint(), angleForPoint, from.transform.up, flip);
+            Vector3 currentPos = CalculatePointC(centerPath, radius, startCirclePoint, angleForPoint, from.transform.up, flip);
             Gizmos.DrawLine(previousPoint, currentPos);
             previousPoint = currentPos;
         }
+        Gizmos.DrawLine(previousPoint, to.GetWalkPoint());
+
 
         // Optionally, draw the control points as spheres
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(from.GetWalkPoint(), 0.1f);
         Gizmos.DrawSphere(to.GetWalkPoint(), 0.1f);
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.blue;
         Gizmos.DrawSphere(midPoint, 0.1f);
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(centerPath, 0.1f);
     }
 
     public override Sequence MovePath(Player player, Walkable from, Path path, PlayerSetting Setting)
@@ -276,21 +297,40 @@ public class CirclePath : IPathCommand
         Walkable to = path.target;
 
         float angle = Mathf.Abs(angleDictionary[type]);
-        Vector3 midPoint = CacculatePointCenter(from.GetWalkPoint(), to.GetWalkPoint(), angle, from.transform.up, flip);
-        float radius = Vector3.Distance(from.GetWalkPoint(), midPoint);
+        (Vector3 midPoint, Vector3 centerPath) = CacculatePointCenter(from.GetWalkPoint(), to.GetWalkPoint(), angle, from.transform.up, flip);
+       
+        Vector3 startCirclePoint = Vector3.zero;
+        
+        switch (type)
+        {
+            case CircleType.Half:
+                Vector3 directionCenterPathToMidPoint = centerPath - midPoint;
+                startCirclePoint = from.GetWalkPoint() + directionCenterPathToMidPoint;
+                break;
+            case CircleType.Quater:
+                Vector3 directionOAndTo = (to.GetWalkPoint() - midPoint).normalized;
+                Vector3 directionOAndFrom = (from.GetWalkPoint() - midPoint).normalized;
+                startCirclePoint = from.GetWalkPoint() + directionOAndTo * 0.5f;
+                break;
+        }
 
-        Vector3 previousPoint = from.GetWalkPoint();
+        //Caculator radius
+        float radius = Vector3.Distance(startCirclePoint, centerPath);
+
         Vector3 fixedUp = to.transform.up;
 
         Sequence sequence = DOTween.Sequence();
         float time = angle / 90;
-        
+
+        //Do Move to StartCirclePoint
+        sequence.Append(player.transform.DOMove(startCirclePoint,Setting.WalkDuriation * 0.5f).SetEase(Ease.Linear));
+
         //Do Move
         sequence.Append(DOTween.To(ReturnTime, SetMove, 1f, time * Setting.QuaterCircleDuriationByOneUnitRadius * radius).SetEase(Ease.Linear));
         void SetMove(float t)
         {
             float angleForPoint = t * angle;
-            player.transform.position = CalculatePointC(midPoint, radius, from.GetWalkPoint(), angleForPoint, fixedUp, flip);
+            player.transform.position = CalculatePointC(centerPath, radius, startCirclePoint, angleForPoint, fixedUp, flip);
         }
 
         //DoRoatrion
@@ -300,6 +340,9 @@ public class CirclePath : IPathCommand
 
         sequence.Join(player.transform.DORotateQuaternion(Quaternion.LookRotation(endDirectoin, fixedUp), time * Setting.QuaterCircleRotationDuriationByOneUnitRadius * radius)
             .SetEase(Ease.Linear));
+
+        //Do Move to EndCirclePoint
+        //sequence.Append(player.transform.DOMove(to.GetWalkPoint(), Setting.WalkDuriation * 0.5f).SetEase(Ease.Linear));
 
         return sequence;
     }
@@ -325,10 +368,8 @@ public class CirclePath : IPathCommand
         return pointC;
     }
 
-    private Vector3 CacculatePointCenter(Vector3 pointA, Vector3 pointB, float angle, Vector3 direction, bool flip)
+    private (Vector3 midPoint, Vector3 centerPath) CacculatePointCenter(Vector3 pointA, Vector3 pointB, float angle, Vector3 direction, bool flip)
     {
-        if (angle == 180) return (pointA + pointB) / 2;
-
         int flipValue = flip ? 1 : -1;
         // Step 1: Calculate the midpoint M between points A and B
         Vector3 midpoint = (pointA + pointB) / 2;
@@ -339,6 +380,10 @@ public class CirclePath : IPathCommand
         // Step 3: Find a perpendicular vector to AB using the cross product
         Vector3 perpendicularVector = Vector3.Cross(AB_Direction, direction * flipValue).normalized;
 
+        if (angle == 180)
+        {
+            return (midpoint, midpoint + perpendicularVector * -0.5f);
+        }
         // Step 4: Calculate the radius of the circle using the given central angle formula
         float distanceAB = AB_Direction.magnitude;
 
@@ -348,8 +393,9 @@ public class CirclePath : IPathCommand
         // Step 5: Calculate the center of the circle by moving from the midpoint in the perpendicular direction
         // You can move in either direction along the perpendicular vector to find two possible centers.
         Vector3 center = midpoint + perpendicularVector * radius;
-
-        return center;
+        Vector3 directionOToMidPoint = (midpoint - center).normalized;
+        Vector3 centerPath = center + directionOToMidPoint * 0.5f;
+        return (center, centerPath);
     }
 
     private float ReturnTime()
