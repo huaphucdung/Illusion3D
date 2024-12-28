@@ -1,35 +1,28 @@
-using System.Collections;
+using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RiverManager : MonoBehaviour
 {
-    [SerializeField] private List<River> sources = new List<River>();
+    [SerializedDictionary("Source", "Active")]
+    [SerializeField] private SerializedDictionary<River, bool> sourceDictionary = new SerializedDictionary<River, bool>();
 
-    private EventBinding<RiverEvent> riverEventBiding;
-
-    private void Start()
+    public void ActiveNewRun()
     {
-        riverEventBiding = new EventBinding<RiverEvent>(ActiveRiverRun);
-    }
-
-    [ContextMenu("Test active source")]
-    public void ActiveRiverRun()
-    {
-        foreach(River source in sources)
+        foreach(KeyValuePair<River, bool> source in sourceDictionary)
         {
-            source.ActiveRiverWater(true);
+            source.Key.ActiveRiverWater(source.Value);
         }
     }
 
-    [ContextMenu("Test not active source")]
-    public void NotActiveRiverRun()
+    public void ChangeRiverSources(Dictionary<River,bool> dictionary)
     {
-        foreach (River source in sources)
+        foreach (KeyValuePair<River, bool> sources in dictionary)
         {
-            source.ActiveRiverWater(false);
+            if(sourceDictionary.ContainsKey(sources.Key)) {
+                sourceDictionary[sources.Key] = sources.Value;
+            }
         }
+        ActiveNewRun();
     }
 }
-
-public struct RiverEvent : IEvent {}

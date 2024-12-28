@@ -40,7 +40,6 @@ public class River : MonoBehaviour
 
         _material.SetFloat(DissolveProperty, 0);
         _material.SetInt(IsRunningProperty, 0);
-        _dissolveValue = 0;
     }
 
     public void ActivePath(River target, bool value)

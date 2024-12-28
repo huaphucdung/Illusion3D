@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 
 public class MiniMap : MonoBehaviour
@@ -59,7 +58,7 @@ public class MiniMap : MonoBehaviour
         foreach (RiverLink link in riverLinksConnect)
         {
             link.Active(true);
-        }    
+        }
     }
 }
 

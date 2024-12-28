@@ -1,7 +1,9 @@
+using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using Zenject;
+using Zenject.ReflectionBaking.Mono.Cecil;
 
 public class MapController : MonoBehaviour
 {
@@ -16,16 +18,29 @@ public class MapController : MonoBehaviour
     public Walkable PointStart => _currentMiniMap.PointStart;
     public PlayableDirector PlayableDirector => _currentMiniMap.PlayableDirector;
     
-    
     private EventBinding<BlockGroupChangeEvent> blockGroupEventBinding;  
+    private EventBinding<RiverSourceActiveEvent> riverSourceActiveEventBinding;
+
+    public RiverManager RiverManager { get; private set; }
+
     private void Awake()
     {
+        RiverManager = GetComponent<RiverManager>();
+
         blockGroupEventBinding = new EventBinding<BlockGroupChangeEvent>(TriggerBlockGrounEvent);
+        riverSourceActiveEventBinding = new EventBinding<RiverSourceActiveEvent>(TriggerRiverSourceActiveEvent);
+       
+    }
+
+    private void Start()
+    {
+        RiverManager?.ActiveNewRun();
     }
 
     public void Initialize()
     {
         _currentMiniMap = miniMaps[0];
+        RiverManager?.ActiveNewRun();
     }
 
     public void NextMap()
@@ -37,16 +52,24 @@ public class MapController : MonoBehaviour
     private void OnEnable()
     { 
         EventBus<BlockGroupChangeEvent>.Register(blockGroupEventBinding);
+        EventBus<RiverSourceActiveEvent>.Register(riverSourceActiveEventBinding);
     }
 
     private void OnDisable()
     {
         EventBus<BlockGroupChangeEvent>.Deregister(blockGroupEventBinding);
+        EventBus<RiverSourceActiveEvent>.Deregister(riverSourceActiveEventBinding);
     }
 
-    public void TriggerBlockGrounEvent(BlockGroupChangeEvent @event)
+    private void TriggerBlockGrounEvent(BlockGroupChangeEvent @event)
     {
         _currentMiniMap?.ActivePathGroupToGroup(@event.group);
+        RiverManager?.ActiveNewRun();
+    }
+
+    private void TriggerRiverSourceActiveEvent(RiverSourceActiveEvent @event)
+    {
+        RiverManager?.ChangeRiverSources(@event.sourceDictionary);
     }
 }
 
@@ -54,4 +77,10 @@ public class BlockGroupChangeEvent : IEvent
 {
     public BlockGroup group;
 }
+
+public class RiverSourceActiveEvent : IEvent
+{
+    public Dictionary<River, bool> sourceDictionary;
+}
+
 

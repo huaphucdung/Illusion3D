@@ -42,12 +42,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DeepAmount: 1
+    - _DeepAmount: 0
     - _DissolveNoice: 20
     - _Dissove: 1
     - _Float: 0.183
     - _FoamAmount: 0.3
-    - _FoamCell: 10
+    - _FoamCell: 5
     - _FoamCutOff: 0.7
     - _FoamOffset: 1
     - _FoamSpeed: 1
@@ -61,7 +61,7 @@ Material:
     - _Color: {r: 0, g: 0.38888884, b: 1, a: 0}
     - _DeepColor: {r: 0, g: 0.21832396, b: 0.6377357, a: 0}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 0}
-    - _FoamSpeed: {r: 0.2, g: 0, b: 0, a: 0}
+    - _FoamSpeed: {r: 1, g: 0, b: 0, a: 0}
     - _FoamTextureScale: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2675204795142216814

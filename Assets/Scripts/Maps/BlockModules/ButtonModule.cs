@@ -7,6 +7,9 @@ public class ButtonModule : BlockModule
     [SerializedDictionary("Block Ground", "Position And Rotation Trigger")]
     [SerializeField] private SerializedDictionary<BlockGroup, PosistionAndRotationTrigger> blockEventDictionary;
 
+    [SerializedDictionary("Source", "Active")]
+    [SerializeField] private SerializedDictionary<River, bool> riverSourceDictionary;
+
     private bool canPress;
     private EventBinding<ResetEvent> resetEventBiding;
 
@@ -45,6 +48,8 @@ public class ButtonModule : BlockModule
             PosistionAndRotationTrigger value = blockEvent.Value;
             key.SetPositionAndRotaion(value.position, value.rotation);
         }
+
+        EventBus<RiverSourceActiveEvent>.Raise(new RiverSourceActiveEvent { sourceDictionary = riverSourceDictionary});
         canPress = false;
     }
 }
