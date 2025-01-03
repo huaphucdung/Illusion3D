@@ -7,12 +7,18 @@ using UnityEngine;
 public class River : MonoBehaviour
 {
     [Header("Effects:")]
-    [SerializeField] private ParticleSystem waterRunForwardEffect;
-    [SerializeField] private ParticleSystem waterRunCircleEffect;
+    [SerializeField] private ParticleSystem waterStartEffect;
+    [SerializeField] private ParticleSystem waterEndEffect;
     
-    [Header("River Connects:")]
+    [Header("River Main Line Connects:")]
     [SerializeField] private List<RiverPath> waterPaths = new List<RiverPath>();
 
+    [Header("River Main Line Connects:")]
+    [SerializeField] private List<RiverPath> waterSubPaths = new List<RiverPath>();
+
+    [Header("River Fall Connects:")]
+    [SerializeField] private RiverPath fallPath;
+    
     [Header("Settings:")]
     [SerializeField, Range(0.1f, 10f)] private float waterVelocity = 4f;
     [SerializeField, Range(0f, 5f)] private float diffDistanceBeforeFull; 
@@ -43,10 +49,18 @@ public class River : MonoBehaviour
     }
 
     public void ActivePath(River target, bool value)
-    {
+    { 
+        //Active Main Path only One Active
         RiverPath path = waterPaths.FirstOrDefault(x => x.target == target);
-        if (path == null) return;
-        path.active = value;
+        if (path != null) path.active = value;
+
+        //Active subPath
+        RiverPath subPath = waterSubPaths.FirstOrDefault(x => x.target == target);
+        if (subPath != null) subPath.active = value;
+
+
+        //Active Fall
+        fallPath.active = !waterPaths.Any(x => x.active == true);
     }
 
     public void ActiveRiverWater(bool value)
@@ -95,6 +109,13 @@ public class River : MonoBehaviour
         {
             path.target.ActiveRiverWater(_dissolveValue > 0.5f && path.active);
         }
+
+        foreach (RiverPath path in waterSubPaths)
+        {
+            path.target.ActiveRiverWater(_dissolveValue > 0.5f && path.active);
+        }
+
+        fallPath.target?.ActiveRiverWater(_dissolveValue > 0.5f && fallPath.active);
     }
 
     private void CaculateLengthWater()
@@ -127,14 +148,14 @@ public class River : MonoBehaviour
 
     private void ActiveWaterForwardEffec(bool value)
     {
-        if (waterRunForwardEffect == null) return;
-        if (value) waterRunForwardEffect.Play(); else waterRunForwardEffect.Stop();
+        if (waterStartEffect == null) return;
+        if (value) waterStartEffect.Play(); else waterStartEffect.Stop();
     }
 
     private void ActiveWaterCircleEffec(bool value)
     {
-        if (waterRunCircleEffect == null) return;
-        if (value) waterRunCircleEffect.Play(); else waterRunCircleEffect.Stop();
+        if (waterEndEffect == null) return;
+        if (value) waterEndEffect.Play(); else waterEndEffect.Stop();
     }
 }
 
