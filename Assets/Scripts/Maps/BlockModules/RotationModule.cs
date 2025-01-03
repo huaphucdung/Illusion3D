@@ -34,6 +34,12 @@ namespace Project.Module
             m_initialDragPosition = eventData.position;*/
 
             // Record the initial mouse position in world coordinates
+            DisablePathAll();
+            foreach (var group in dragGroups)
+            {
+                group.transformBlock.Value.DisablePathAll();
+            }
+
             initialMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(transform.position).z));
 
         }
@@ -120,6 +126,11 @@ namespace Project.Module
             {
                 group.transformBlock.Value.ActiveLockGroup(value);
             }
+        }
+
+        public void DisablePathAll()
+        {
+            _blockGroup?.DisablePathAll();
         }
     }
 }

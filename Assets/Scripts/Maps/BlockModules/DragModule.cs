@@ -34,6 +34,7 @@ namespace Project.Module
             // Record the object's initial position
             initialObjectPosition = transform.position;
             _blockGroup?.Active();
+            
         }
 
         public override void Active(Player player) {}
@@ -56,7 +57,12 @@ namespace Project.Module
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            _blockGroup?.DisablePathAll();
+            DisablePathAll();
+            foreach (var group in dragGroups)
+            {
+                group.transformBlock.Value.DisablePathAll();
+            }
+
             // Record the initial mouse position in world coordinates
             initialMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(transform.position).z));
         }
@@ -113,6 +119,10 @@ namespace Project.Module
         {
             _blockGroup?.LockNotCallAction(value);
         }
+        public void DisablePathAll()
+        {
+            _blockGroup?.DisablePathAll();
+        }
     }
 }
 
@@ -128,4 +138,5 @@ public interface ITransformBlock
     void Handle(float dragAmount, Vector3 direciotn);
     void End();
     void ActiveLockGroup(bool value);
+    void DisablePathAll();
 }

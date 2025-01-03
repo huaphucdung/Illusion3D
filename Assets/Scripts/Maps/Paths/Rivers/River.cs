@@ -51,6 +51,7 @@ public class River : MonoBehaviour
 
     public void ActiveRiverWater(bool value)
     {
+        
         float newValue = value ? 1 : 0;
         //Check current is same state then inoke and active path
         if (_dissolveValue == newValue)
@@ -58,7 +59,6 @@ public class River : MonoBehaviour
             ActiveConnectRivers();
             return;
         }
-
         _dissolveValue = newValue;
 
         //Active Effect Water Forward

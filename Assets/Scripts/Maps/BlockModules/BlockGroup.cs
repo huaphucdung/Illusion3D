@@ -109,6 +109,7 @@ public class BlockGroup : MonoBehaviour
     {
         pathToPath.Deactive();
         riverToRiver.Deactive();
+        EventBus<BlockGroupChangeEvent>.Raise(new BlockGroupChangeEvent() { group = this });
     }
 }
 
