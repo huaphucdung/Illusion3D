@@ -6,19 +6,25 @@ using UnityEngine.EventSystems;
 
 namespace Project.Module
 {
-    public sealed class RotationModule : BlockModule, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public sealed class RotationModule : BlockModule, ITransformBlock, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        [SerializeField] private BlockGroup blockGround;
+        [SerializeField] private List<TransformGroupActive> dragGroups;
         [SerializeField] private Vector3 constrainXYZ;
        /* [SerializeField] float speed;
         Transform m_thisTransform;
         Vector2 m_initialDragPosition;*/
 
+        private BlockGroup _blockGroup;
         private Vector3 initialMousePosition;
+
+        private void Start()
+        {
+            _blockGroup = GetComponent<BlockGroup>();
+        }
 
         public override void Active()
         {
-            blockGround.Active();
+            _blockGroup?.Active();
         }
         public override void Active(Player player) { }
 
@@ -34,7 +40,7 @@ namespace Project.Module
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (blockGround.IsLock) return;
+            if (_blockGroup !=null && _blockGroup.IsLock) return;
 
             /*Vector2 dragDelta = eventData.position - m_initialDragPosition;
 
@@ -62,13 +68,58 @@ namespace Project.Module
 
             // Ration the object along its up axis by the calculated displacement
             //initialObjectPosition = Quaternion.Euler(constrainXYZ * displacement);
-            transform.Rotate(constrainXYZ * displacement, Space.World);
+
+            foreach (var group in dragGroups)
+            {
+                group.transformBlock.Value.Handle(displacement, group.constrainXYZ);
+            }
+
+            Handle(displacement, constrainXYZ);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            foreach (var group in dragGroups)
+            {
+                group.transformBlock.Value.End();
+            }
+            End();
+        }
+
+        public void Handle(float dragAmount, Vector3 direciotn)
+        {
+            transform.Rotate(direciotn * dragAmount, Space.World);
+        }
+
+        public void End()
+        {
             Vector3 targetRotation = VectorExtensions.SnapRotation(transform.eulerAngles);
             transform.DORotate(targetRotation, .2f).SetEase(Ease.Linear).OnComplete(Active);
+        }
+
+        public void ActiveLockGroup(bool value)
+        {
+            _blockGroup?.LockNotCallAction(value);
+        }
+
+        private void OnEnable()
+        {
+            if (_blockGroup == null) return;
+            _blockGroup.lockAction += LockDragGroup;
+        }
+
+        private void OnDisable()
+        {
+            if (_blockGroup == null) return;
+            _blockGroup.lockAction -= LockDragGroup;
+        }
+
+        private void LockDragGroup(bool value)
+        {
+            foreach (var group in dragGroups)
+            {
+                group.transformBlock.Value.ActiveLockGroup(value);
+            }
         }
     }
 }
