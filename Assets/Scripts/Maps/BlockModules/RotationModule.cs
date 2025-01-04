@@ -1,6 +1,7 @@
 using DG.Tweening;
 using Project.Utilities;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -18,6 +19,8 @@ public sealed class RotationModule : BlockModule, ITransformBlock, IBeginDragHan
     private BlockGroup _blockGroup;
     private Vector3 initialMousePosition;
 
+    private float _cooldownTime;
+
     private void Start()
     {
         _blockGroup = GetComponent<BlockGroup>();
@@ -31,8 +34,11 @@ public sealed class RotationModule : BlockModule, ITransformBlock, IBeginDragHan
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (_cooldownTime > Time.time) return;
         /*m_thisTransform = transform;
         m_initialDragPosition = eventData.position;*/
+
+
 
         // Record the initial mouse position in world coordinates
         DisablePathAll();
@@ -47,6 +53,7 @@ public sealed class RotationModule : BlockModule, ITransformBlock, IBeginDragHan
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (_cooldownTime > Time.time) return;
         if (_blockGroup != null && _blockGroup.IsLock) return;
 
         /*Vector2 dragDelta = eventData.position - m_initialDragPosition;
@@ -86,6 +93,7 @@ public sealed class RotationModule : BlockModule, ITransformBlock, IBeginDragHan
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        _cooldownTime = Time.time + 1;
         foreach (var group in dragGroups)
         {
             group.transformBlock.Value.End();

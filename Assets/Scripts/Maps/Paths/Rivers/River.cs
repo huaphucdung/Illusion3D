@@ -61,7 +61,6 @@ public class River : MonoBehaviour
 
     public void ActiveRiverWater(bool value)
     {
-        
         float newValue = value ? 1 : 0;
         //Check current is same state then inoke and active path
         if (_dissolveValue == newValue)
@@ -69,12 +68,13 @@ public class River : MonoBehaviour
             ActiveConnectRivers();
             return;
         }
+        _dissolveValue = newValue;
         //Active Effect Water Forward
         ActiveWaterForwardEffec(value);
+        _currentTween?.Kill();
 
         //Ative water run material
-        _currentTween?.Kill();
-        _currentTween = _material.DOFloat(newValue, DissolveProperty, GetDuration()).SetEase(Ease.Linear)
+        _currentTween = _material.DOFloat(_dissolveValue, DissolveProperty, GetDuration()).SetEase(Ease.Linear)
         //Triger on Complete
         .OnComplete(OnRiverComplete);
     }
@@ -82,7 +82,6 @@ public class River : MonoBehaviour
    
     private void OnRiverComplete()
     {
-        _dissolveValue = 1 - _dissolveValue;
         ActiveWaterCircleEffec(_dissolveValue > 0.5f);
         ActiveConnectRivers();
         _material.SetInt(IsRunningProperty, (int)_dissolveValue);

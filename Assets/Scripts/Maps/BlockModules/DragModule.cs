@@ -22,6 +22,7 @@ namespace Project.Module
         private Vector3 initialObjectPosition;
 
         private Vector3 _defaultPosition;
+        private float _cooldownTime;
 
         private void Start()
         {
@@ -59,6 +60,7 @@ namespace Project.Module
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            if (_cooldownTime > Time.time) return;
             DisablePathAll();
             foreach (var group in dragGroups)
             {
@@ -71,6 +73,7 @@ namespace Project.Module
 
         public void OnDrag(PointerEventData eventData)
         {
+            if (_cooldownTime > Time.time) return;
             if (_blockGroup != null && _blockGroup.IsLock) return;
 
             // Get the current mouse position in world space
@@ -90,6 +93,7 @@ namespace Project.Module
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            _cooldownTime = Time.time;
             foreach (var group in dragGroups)
             {
                 group.transformBlock.Value.End();
