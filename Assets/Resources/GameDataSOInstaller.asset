@@ -24,3 +24,5 @@ MonoBehaviour:
     BezierRotationDuriation: 0.314
     QuaterCircleDuriationByOneUnitRadius: 0.314
     QuaterCircleRotationDuriationByOneUnitRadius: 0.314
+  riverSetting:
+    riverVelocity: 20

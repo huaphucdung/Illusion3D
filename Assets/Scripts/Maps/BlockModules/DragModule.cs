@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 namespace Project.Module
 {
     public class DragModule : BlockModule, ITransformBlock, IBeginDragHandler, IDragHandler, IEndDragHandler
@@ -13,9 +14,10 @@ namespace Project.Module
         [SerializeField] private List<TransformGroupActive> dragGroups;
         [SerializeField] private Vector3 constrainXYZ;
         [SerializeField] private float maxDrag = 5f;
-        
+
         private BlockGroup _blockGroup;
 
+        [Inject] GameManager _gameManager;
         private Vector3 initialMousePosition;
         private Vector3 initialObjectPosition;
 
@@ -34,10 +36,10 @@ namespace Project.Module
             // Record the object's initial position
             initialObjectPosition = transform.position;
             _blockGroup?.Active();
-            
+
         }
 
-        public override void Active(Player player) {}
+        public override void Active(Player player) { }
 
         public void Handle(float dragAmount, Vector3 direction)
         {

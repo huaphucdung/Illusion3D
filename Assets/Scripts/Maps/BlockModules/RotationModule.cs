@@ -3,134 +3,134 @@ using Project.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
-namespace Project.Module
+
+public sealed class RotationModule : BlockModule, ITransformBlock, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public sealed class RotationModule : BlockModule, ITransformBlock, IBeginDragHandler, IDragHandler, IEndDragHandler
+    [SerializeField] private List<TransformGroupActive> dragGroups;
+    [SerializeField] private Vector3 constrainXYZ;
+    /* [SerializeField] float speed;
+     Transform m_thisTransform;
+     Vector2 m_initialDragPosition;*/
+
+    [Inject] GameManager _gameManager;
+    private BlockGroup _blockGroup;
+    private Vector3 initialMousePosition;
+
+    private void Start()
     {
-        [SerializeField] private List<TransformGroupActive> dragGroups;
-        [SerializeField] private Vector3 constrainXYZ;
-       /* [SerializeField] float speed;
-        Transform m_thisTransform;
-        Vector2 m_initialDragPosition;*/
+        _blockGroup = GetComponent<BlockGroup>();
+    }
 
-        private BlockGroup _blockGroup;
-        private Vector3 initialMousePosition;
+    public override void Active()
+    {
+        _blockGroup?.Active();
+    }
+    public override void Active(Player player) { }
 
-        private void Start()
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        /*m_thisTransform = transform;
+        m_initialDragPosition = eventData.position;*/
+
+        // Record the initial mouse position in world coordinates
+        DisablePathAll();
+        foreach (var group in dragGroups)
         {
-            _blockGroup = GetComponent<BlockGroup>();
+            group.transformBlock.Value.DisablePathAll();
         }
 
-        public override void Active()
+        initialMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(transform.position).z));
+
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (_blockGroup != null && _blockGroup.IsLock) return;
+
+        /*Vector2 dragDelta = eventData.position - m_initialDragPosition;
+
+        // rotating in which direction
+        if (Mathf.Abs(dragDelta.x) > Mathf.Abs(dragDelta.y))
         {
-            _blockGroup?.Active();
+            // Horizontal drag, rotate along the Y-axis
+            float rotationY = dragDelta.x * speed * Time.deltaTime * constrainXY.y;
+            m_thisTransform.Rotate(0f, -rotationY, 0f, Space.World);
         }
-        public override void Active(Player player) { }
-
-        public void OnBeginDrag(PointerEventData eventData)
+        else
         {
-            /*m_thisTransform = transform;
-            m_initialDragPosition = eventData.position;*/
-
-            // Record the initial mouse position in world coordinates
-            DisablePathAll();
-            foreach (var group in dragGroups)
-            {
-                group.transformBlock.Value.DisablePathAll();
-            }
-
-            initialMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(transform.position).z));
-
-        }
-
-        public void OnDrag(PointerEventData eventData)
-        {
-            if (_blockGroup !=null && _blockGroup.IsLock) return;
-
-            /*Vector2 dragDelta = eventData.position - m_initialDragPosition;
-
-            // rotating in which direction
-            if (Mathf.Abs(dragDelta.x) > Mathf.Abs(dragDelta.y))
-            {
-                // Horizontal drag, rotate along the Y-axis
-                float rotationY = dragDelta.x * speed * Time.deltaTime * constrainXY.y;
-                m_thisTransform.Rotate(0f, -rotationY, 0f, Space.World);
-            }
-            else
-            {
-                // Vertical drag, rotate along the X-axis
-                float rotationX = dragDelta.y * speed * Time.deltaTime * constrainXY.x;
-                m_thisTransform.Rotate(rotationX, 0f, 0f, Space.World);
-            }
-
-            m_initialDragPosition = eventData.position;*/
-
-            // Get the current mouse position in world space
-            Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(transform.position).z));
-          
-            // Calculate the displacement between the initial and current mouse positions along the up axis
-            float displacement = Vector3.Dot(currentMousePosition - initialMousePosition, constrainXYZ);
-
-            // Ration the object along its up axis by the calculated displacement
-            //initialObjectPosition = Quaternion.Euler(constrainXYZ * displacement);
-
-            foreach (var group in dragGroups)
-            {
-                group.transformBlock.Value.Handle(displacement, group.constrainXYZ);
-            }
-
-            Handle(displacement, constrainXYZ);
+            // Vertical drag, rotate along the X-axis
+            float rotationX = dragDelta.y * speed * Time.deltaTime * constrainXY.x;
+            m_thisTransform.Rotate(rotationX, 0f, 0f, Space.World);
         }
 
-        public void OnEndDrag(PointerEventData eventData)
+        m_initialDragPosition = eventData.position;*/
+
+        // Get the current mouse position in world space
+        Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(transform.position).z));
+
+        // Calculate the displacement between the initial and current mouse positions along the up axis
+        float displacement = Vector3.Dot(currentMousePosition - initialMousePosition, constrainXYZ);
+
+        // Ration the object along its up axis by the calculated displacement
+        //initialObjectPosition = Quaternion.Euler(constrainXYZ * displacement);
+
+        foreach (var group in dragGroups)
         {
-            foreach (var group in dragGroups)
-            {
-                group.transformBlock.Value.End();
-            }
-            End();
+            group.transformBlock.Value.Handle(displacement, group.constrainXYZ);
         }
 
-        public void Handle(float dragAmount, Vector3 direciotn)
-        {
-            transform.Rotate(direciotn * dragAmount, Space.World);
-        }
+        Handle(displacement, constrainXYZ);
+    }
 
-        public void End()
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        foreach (var group in dragGroups)
         {
-            Vector3 targetRotation = VectorExtensions.SnapRotation(transform.eulerAngles);
-            transform.DORotate(targetRotation, .2f).SetEase(Ease.Linear).OnComplete(Active);
+            group.transformBlock.Value.End();
         }
+        End();
+    }
 
-        public void ActiveLockGroup(bool value)
-        {
-            _blockGroup?.LockNotCallAction(value);
-        }
+    public void Handle(float dragAmount, Vector3 direciotn)
+    {
+        transform.Rotate(direciotn * dragAmount, Space.World);
+    }
 
-        private void OnEnable()
-        {
-            if (_blockGroup == null) return;
-            _blockGroup.lockAction += LockDragGroup;
-        }
+    public void End()
+    {
+        Vector3 targetRotation = VectorExtensions.SnapRotation(transform.eulerAngles);
+        transform.DORotate(targetRotation, .2f).SetEase(Ease.Linear).OnComplete(Active);
+    }
 
-        private void OnDisable()
-        {
-            if (_blockGroup == null) return;
-            _blockGroup.lockAction -= LockDragGroup;
-        }
+    public void ActiveLockGroup(bool value)
+    {
+        _blockGroup?.LockNotCallAction(value);
+    }
 
-        private void LockDragGroup(bool value)
-        {
-            foreach (var group in dragGroups)
-            {
-                group.transformBlock.Value.ActiveLockGroup(value);
-            }
-        }
+    private void OnEnable()
+    {
+        if (_blockGroup == null) return;
+        _blockGroup.lockAction += LockDragGroup;
+    }
 
-        public void DisablePathAll()
+    private void OnDisable()
+    {
+        if (_blockGroup == null) return;
+        _blockGroup.lockAction -= LockDragGroup;
+    }
+
+    private void LockDragGroup(bool value)
+    {
+        foreach (var group in dragGroups)
         {
-            _blockGroup?.DisablePathAll();
+            group.transformBlock.Value.ActiveLockGroup(value);
         }
+    }
+
+    public void DisablePathAll()
+    {
+        _blockGroup?.DisablePathAll();
     }
 }

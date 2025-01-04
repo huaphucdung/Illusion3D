@@ -1,3 +1,4 @@
+using AYellowpaper.SerializedCollections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,9 @@ public class MiniMap : MonoBehaviour
 
     [Header("Group To Group Connects:")]
     [SerializeField] private List<BlockGroupConnect> groupToGroupConnects;
+
+    [Header("Map Codition Trigger:")]
+    [SerializeField] private MapCoditionTrigger mapCoditionTrigger;
 
     public Walkable PointStart => pointStart;
     public PlayableDirector PlayableDirector => director;
@@ -60,6 +64,12 @@ public class MiniMap : MonoBehaviour
             link.Active(true);
         }
     }
+
+    public void TriggerRiver(River river)
+    {
+        if (river == null) return;
+        mapCoditionTrigger?.Active(river);
+    }
 }
 
 
@@ -69,16 +79,43 @@ public class BlockGroupConnect
     [Header("Group From:")]
     public BlockGroup blockGroupFrom;
     public PosistionAndRotationTrigger posistionAndRotationRequireFrom;
-    
+
     [Space]
 
     [Header("Group To:")]
     public BlockGroup blockGroupTo;
     public PosistionAndRotationTrigger posistionAndRotationRequireTo;
-    
+
     [Header("Path Links:")]
     public List<PathLink> pathLinks;
 
     [Header("River Links:")]
     public List<RiverLink> riverLinks;
+}
+
+[Serializable]
+public class MapCoditionTrigger
+{
+    [SerializedDictionary("Block Ground", "Position And Rotation Trigger")]
+    [SerializeField] private SerializedDictionary<BlockGroup, PosistionAndRotationTrigger> blockEventDictionary;
+    [SerializedDictionary("Source", "Active")]
+    [SerializeField] private SerializedDictionary<River, bool> riverSourceDictionary;
+    [Header("Setttings:")]
+    [SerializeField] private int amountRiverNeed;
+
+    private readonly HashSet<River> riverTrigger = new HashSet<River>();
+
+    public void Active(River river)
+    {
+        riverTrigger.Add(river);
+        if (riverTrigger.Count < amountRiverNeed) return;
+
+        foreach (KeyValuePair<BlockGroup, PosistionAndRotationTrigger> blockEvent in blockEventDictionary)
+        {
+            BlockGroup key = blockEvent.Key;
+            PosistionAndRotationTrigger value = blockEvent.Value;
+            key.SetPositionAndRotaion(value.position, value.rotation);
+        }
+        EventBus<RiverSourceActiveEvent>.Raise(new RiverSourceActiveEvent { sourceDictionary = riverSourceDictionary });
+    }
 }

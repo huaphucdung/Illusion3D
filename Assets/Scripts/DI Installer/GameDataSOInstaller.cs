@@ -7,10 +7,11 @@ using Zenject;
 public class GameDataSOInstaller : ScriptableObjectInstaller<GameDataSOInstaller>
 {
     [SerializeField] private PlayerSetting playerSetting;
+    [SerializeField] private RiverSetting riverSetting;
     public override void InstallBindings()
     {
         Container.BindInstance(playerSetting).AsSingle().NonLazy();
-        Debug.Log("RUn SO");
+        Container.BindInstance(riverSetting).AsSingle().NonLazy();
     }
 }
 
@@ -54,4 +55,10 @@ public class PlayerSetting
         if (directionDictioanry.TryGetValue(direction, out Vector3 value)) return value;
         return Vector3.forward;
     }
+}
+
+[Serializable]
+public class RiverSetting
+{
+    [Range(0.1f, 50f)] public float riverVelocity = 8f;
 }

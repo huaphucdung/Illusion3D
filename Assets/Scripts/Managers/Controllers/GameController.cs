@@ -72,6 +72,7 @@ public class GameController
         _sequeue = DOTween.Sequence().SetAutoKill();
  
         EventBus<BlockGroupLoockAllEvent>.Raise(new BlockGroupLoockAllEvent() { isLock = true });
+        
 
         Walkable currentWalkable = _currentBlock;
 

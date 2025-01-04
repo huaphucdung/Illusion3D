@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.VFX;
+using Zenject;
 
 public class River : MonoBehaviour
 {
@@ -13,19 +15,16 @@ public class River : MonoBehaviour
     [Header("River Main Line Connects:")]
     [SerializeField] private List<RiverPath> waterPaths = new List<RiverPath>();
 
-    [Header("River Main Line Connects:")]
-    [SerializeField] private List<RiverPath> waterSubPaths = new List<RiverPath>();
-
     [Header("River Fall Connects:")]
     [SerializeField] private RiverPath fallPath;
-    
-    [Header("Settings:")]
-    [SerializeField, Range(0.1f, 10f)] private float waterVelocity = 4f;
-    [SerializeField, Range(0f, 5f)] private float diffDistanceBeforeFull; 
-    
+
+    [Inject] private RiverSetting settings;
+
     private const string DissolveProperty = "_Dissove";
     private const string IsRunningProperty = "_IsRunning";
     private const string FoamSacleProperty = "_FoamTextureScale";
+
+    private RiverModule _module;
 
     private LineRenderer lineRenderer;
     private Material _material;
@@ -36,6 +35,8 @@ public class River : MonoBehaviour
 
     private void Start()
     {
+        _module = GetComponent<RiverModule>();
+
         lineRenderer = GetComponent<LineRenderer>();
         _material = lineRenderer.material;
         CaculateLengthWater();
@@ -54,11 +55,6 @@ public class River : MonoBehaviour
         RiverPath path = waterPaths.FirstOrDefault(x => x.target == target);
         if (path != null) path.active = value;
 
-        //Active subPath
-        RiverPath subPath = waterSubPaths.FirstOrDefault(x => x.target == target);
-        if (subPath != null) subPath.active = value;
-
-
         //Active Fall
         fallPath.active = !waterPaths.Any(x => x.active == true);
     }
@@ -73,48 +69,36 @@ public class River : MonoBehaviour
             ActiveConnectRivers();
             return;
         }
-        _dissolveValue = newValue;
-
         //Active Effect Water Forward
         ActiveWaterForwardEffec(value);
-        
+
         //Ative water run material
         _currentTween?.Kill();
-        _currentTween = _material.DOFloat(_dissolveValue, DissolveProperty, GetDuration()).SetEase(Ease.Linear)
-        //Trigger on Update 
-        .OnUpdate(OnRiverUpdate)
+        _currentTween = _material.DOFloat(newValue, DissolveProperty, GetDuration()).SetEase(Ease.Linear)
         //Triger on Complete
         .OnComplete(OnRiverComplete);
     }
 
-    private void OnRiverUpdate()
-    {
-        if (_currentTween.Elapsed() < GetTimeTrigger()) return;
-        _currentTween.OnUpdate(null);
-
-        //Active Effect Water Circle
-        ActiveWaterCircleEffec(_dissolveValue > 0.5f);
-        ActiveConnectRivers();
-    }
-
+   
     private void OnRiverComplete()
     {
+        _dissolveValue = 1 - _dissolveValue;
+        ActiveWaterCircleEffec(_dissolveValue > 0.5f);
+        ActiveConnectRivers();
         _material.SetInt(IsRunningProperty, (int)_dissolveValue);
+
+        if (_dissolveValue == 1) _module.Active();
     }
 
     private void ActiveConnectRivers()
     { 
-        //Active connect paths
+        //Active Run connect paths
         foreach (RiverPath path in waterPaths)
         {
             path.target.ActiveRiverWater(_dissolveValue > 0.5f && path.active);
         }
-
-        foreach (RiverPath path in waterSubPaths)
-        {
-            path.target.ActiveRiverWater(_dissolveValue > 0.5f && path.active);
-        }
-
+        
+        //Actice Run fall path
         fallPath.target?.ActiveRiverWater(_dissolveValue > 0.5f && fallPath.active);
     }
 
@@ -133,17 +117,12 @@ public class River : MonoBehaviour
 
     private void SetTexureScaleByLength()
     {
-        _material.SetVector(FoamSacleProperty, new Vector2(_length, 1));
+        _material.SetVector(FoamSacleProperty, new Vector2(_length, lineRenderer.startWidth));
     }
 
     private float GetDuration()
     {
-        return _length / waterVelocity;
-    }
-
-    private float GetTimeTrigger()
-    {
-        return (_length - diffDistanceBeforeFull) / waterVelocity;
+        return _length / settings.riverVelocity;
     }
 
     private void ActiveWaterForwardEffec(bool value)

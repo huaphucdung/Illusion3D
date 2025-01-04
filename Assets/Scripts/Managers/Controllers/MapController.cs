@@ -21,6 +21,9 @@ public class MapController : MonoBehaviour
     private EventBinding<BlockGroupChangeEvent> blockGroupEventBinding;  
     private EventBinding<RiverSourceActiveEvent> riverSourceActiveEventBinding;
 
+    private EventBinding<RiverTriggerEvent> riverTriggerEventBinding;
+
+
     public RiverManager RiverManager { get; private set; }
 
     private void Awake()
@@ -29,7 +32,7 @@ public class MapController : MonoBehaviour
 
         blockGroupEventBinding = new EventBinding<BlockGroupChangeEvent>(TriggerBlockGrounEvent);
         riverSourceActiveEventBinding = new EventBinding<RiverSourceActiveEvent>(TriggerRiverSourceActiveEvent);
-       
+        riverTriggerEventBinding = new EventBinding<RiverTriggerEvent>(RiverTrigerEvent);
     }
 
     private void Start()
@@ -53,12 +56,14 @@ public class MapController : MonoBehaviour
     { 
         EventBus<BlockGroupChangeEvent>.Register(blockGroupEventBinding);
         EventBus<RiverSourceActiveEvent>.Register(riverSourceActiveEventBinding);
+        EventBus<RiverTriggerEvent>.Register(riverTriggerEventBinding);
     }
 
     private void OnDisable()
     {
         EventBus<BlockGroupChangeEvent>.Deregister(blockGroupEventBinding);
         EventBus<RiverSourceActiveEvent>.Deregister(riverSourceActiveEventBinding);
+        EventBus<RiverTriggerEvent>.Deregister(riverTriggerEventBinding);
     }
 
     private void TriggerBlockGrounEvent(BlockGroupChangeEvent @event)
@@ -70,6 +75,11 @@ public class MapController : MonoBehaviour
     private void TriggerRiverSourceActiveEvent(RiverSourceActiveEvent @event)
     {
         RiverManager?.ChangeRiverSources(@event.sourceDictionary);
+    }
+
+    private void RiverTrigerEvent(RiverTriggerEvent @event)
+    {
+        _currentMiniMap?.TriggerRiver(@event.river);
     }
 }
 
@@ -83,4 +93,5 @@ public class RiverSourceActiveEvent : IEvent
     public Dictionary<River, bool> sourceDictionary;
 }
 
+public class RiverTriggerEvent : IEvent { public River river; }
 

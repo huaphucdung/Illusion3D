@@ -1,3 +1,6 @@
+using ModestTree;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -10,10 +13,13 @@ public class GameManager : MonoBehaviour
     private EventBinding<TriggertEvent> triggerEventBinding;
     private EventBinding<CutSceneEndEvent> cutSceneEndEventBinding;
 
+    private readonly HashSet<object> tweenObject = new HashSet<object>();
+
     private void Awake()
     {
         triggerEventBinding = new EventBinding<TriggertEvent>(OnTriggerEvent);
         cutSceneEndEventBinding = new EventBinding<CutSceneEndEvent>(OnCutSceneEnd);
+
     }
 
     private void Start()
@@ -40,6 +46,7 @@ public class GameManager : MonoBehaviour
         _gameController.ActiveControl();
         EventBus<TriggertEvent>.Register(triggerEventBinding);
         EventBus<CutSceneEndEvent>.Register(cutSceneEndEventBinding);
+
     }
 
     private void OnDisable()
@@ -47,6 +54,7 @@ public class GameManager : MonoBehaviour
         _gameController.DeactiveControl();
         EventBus<TriggertEvent>.Deregister(triggerEventBinding);
         EventBus<CutSceneEndEvent>.Deregister(cutSceneEndEventBinding);
+
     }
 
 
