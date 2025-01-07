@@ -11,9 +11,6 @@ public class MiniMap : MonoBehaviour
     [Header("Point Start:")]
     [SerializeField] private Walkable pointStart;
 
-    [Header("Point Start:")]
-    [SerializeField] private PlayableDirector director;
-
     [Header("Group To Group Connects:")]
     [SerializeField] private List<BlockGroupConnect> groupToGroupConnects;
 
@@ -21,8 +18,6 @@ public class MiniMap : MonoBehaviour
     [SerializeField] private MapCoditionTrigger mapCoditionTrigger;
 
     public Walkable PointStart => pointStart;
-    public PlayableDirector PlayableDirector => director;
-
     private static HashSet<PathLink> pathLinksConnect = new HashSet<PathLink>();
     private static HashSet<RiverLink> riverLinksConnect = new HashSet<RiverLink>();
 

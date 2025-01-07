@@ -77,7 +77,7 @@ Material:
     - _Strength_Value_Around: 0
     m_Colors:
     - _Color: {r: 0.051, g: 0.051, b: 0.051, a: 0}
-    - _Color_Around: {r: 2.297397, g: 2.297397, b: 2.297397, a: 0}
+    - _Color_Around: {r: 0.4051026, g: 0.4051026, b: 0.4051026, a: 0}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _Tiling_Around: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

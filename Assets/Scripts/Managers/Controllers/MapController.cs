@@ -14,10 +14,8 @@ public class MapController : MonoBehaviour
     [Inject] private GameController _gameController;
 
     public MiniMap _currentMiniMap;
-
     public Walkable PointStart => _currentMiniMap.PointStart;
-    public PlayableDirector PlayableDirector => _currentMiniMap.PlayableDirector;
-    
+
     private EventBinding<BlockGroupChangeEvent> blockGroupEventBinding;  
     private EventBinding<RiverSourceActiveEvent> riverSourceActiveEventBinding;
 
@@ -46,7 +44,7 @@ public class MapController : MonoBehaviour
         RiverManager?.ActiveNewRun();
     }
 
-    public void NextMap()
+    public void NextMiniMap()
     {
         if (miniMaps.IndexOf(_currentMiniMap) + 1 >= miniMaps.Count) return;
         _currentMiniMap = miniMaps[miniMaps.IndexOf(_currentMiniMap) + 1];
@@ -93,5 +91,6 @@ public class RiverSourceActiveEvent : IEvent
     public Dictionary<River, bool> sourceDictionary;
 }
 
-public class RiverTriggerEvent : IEvent { public River river; }
+public class RiverTriggerEvent : IEvent
+{ public River river; }
 

@@ -44,7 +44,7 @@ Material:
     m_Floats:
     - _DeepAmount: 0
     - _DissolveNoice: 20
-    - _Dissove: 1
+    - _Dissove: 0
     - _Float: 0.183
     - _FoamAmount: 0.3
     - _FoamCell: 5
