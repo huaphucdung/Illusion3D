@@ -1,6 +1,7 @@
 using DG.Tweening;
 using Project.Utilities;
 using System.Collections.Generic;
+using System.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,6 +15,12 @@ public sealed class RotationModule : BlockModule, ITransformBlock, IBeginDragHan
     /* [SerializeField] float speed;
      Transform m_thisTransform;
      Vector2 m_initialDragPosition;*/
+
+    [Header("Litmit Settings:")]
+    [SerializeField] private bool isLimit;
+    [SerializeField] private Vector3 objectDirection;
+    [SerializeField] private Vector3 direction;
+    [SerializeField] private float maxAngle;
 
     [Inject] GameManager _gameManager;
     private BlockGroup _blockGroup;
@@ -103,7 +110,22 @@ public sealed class RotationModule : BlockModule, ITransformBlock, IBeginDragHan
 
     public void Handle(float dragAmount, Vector3 direciotn)
     {
-        transform.Rotate(direciotn * dragAmount, Space.World);
+        Vector3 rotationResult = direciotn * dragAmount;
+        rotationResult.x = Mathf.Round(rotationResult.x);
+        rotationResult.y = Mathf.Round(rotationResult.y);
+        rotationResult.z = Mathf.Round(rotationResult.z);
+        Quaternion quaternion = Quaternion.Euler(rotationResult);
+        Quaternion rotation = transform.rotation;
+
+        rotation *= Quaternion.Inverse(rotation) * quaternion * rotation;
+
+
+        if (isLimit)
+        {
+            Vector3 forward = (rotation * objectDirection.normalized).normalized;
+            if (Vector3.Angle(forward, direction.normalized) > maxAngle) return;
+        }
+        transform.rotation = rotation;
     }
 
     public void End()
@@ -140,5 +162,11 @@ public sealed class RotationModule : BlockModule, ITransformBlock, IBeginDragHan
     public void DisablePathAll()
     {
         _blockGroup?.DisablePathAll();
+    }
+
+    private float NormalAngle(float angle)
+    {
+        if (angle < 0) angle += 360;
+        return angle % 360;
     }
 }
