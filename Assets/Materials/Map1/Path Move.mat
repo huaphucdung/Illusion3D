@@ -69,7 +69,7 @@ Material:
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
-    - _Color: {r: 0, g: 0.031549606, b: 0.21509439, a: 0}
+    - _Color: {r: 0.0077536376, g: 0.012663568, b: 0.04150939, a: 0}
     - _ColorBackGround: {r: 1, g: 1, b: 1, a: 0}
     - _Color_1: {r: 1, g: 1, b: 1, a: 0}
     - _Offset: {r: 0.5, g: 0.5, b: 0, a: 0}
