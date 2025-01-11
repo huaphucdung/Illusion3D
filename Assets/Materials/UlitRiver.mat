@@ -44,7 +44,7 @@ Material:
     m_Floats:
     - _DeepAmount: 0
     - _DissolveNoice: 20
-    - _Dissove: 0
+    - _Dissove: 1
     - _Float: 0.183
     - _FoamAmount: 0.3
     - _FoamCell: 5
@@ -58,8 +58,8 @@ Material:
     - _RiverGo: 1
     - _Thickness: 0.101
     m_Colors:
-    - _Color: {r: 0, g: 0.38888884, b: 1, a: 0}
-    - _DeepColor: {r: 0, g: 0.21832396, b: 0.6377357, a: 0}
+    - _Color: {r: 0.13082935, g: 0.5674979, b: 0.9245283, a: 0}
+    - _DeepColor: {r: 0.0056602955, g: 0.34727398, b: 1, a: 0}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 0}
     - _FoamSpeed: {r: 1, g: 0, b: 0, a: 0}
     - _FoamTextureScale: {r: 9, g: 1, b: 0, a: 0}

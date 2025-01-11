@@ -58,8 +58,8 @@ Material:
     - _RiverGo: 1
     - _Thickness: 0.1
     m_Colors:
-    - _Color: {r: 0, g: 0.39773595, b: 0.9622642, a: 0}
-    - _DeepColor: {r: 0, g: 0.24194874, b: 0.5849056, a: 0}
+    - _Color: {r: 0.024756042, g: 0.32623276, b: 0.690566, a: 0}
+    - _DeepColor: {r: 0, g: 0.22140053, b: 0.5320754, a: 0}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 0}
     - _FoamSpeed: {r: 0.05, g: 0.05, b: 0, a: 0}
     - _FoamTextureScale: {r: 1, g: 1, b: 0, a: 0}
