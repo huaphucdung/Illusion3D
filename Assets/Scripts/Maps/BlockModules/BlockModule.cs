@@ -8,7 +8,7 @@ public abstract class BlockModule : MonoBehaviour
 
     private EventBinding<ResetEvent> resetEventBiding;
 
-    private void Start()
+    private void Awake()
     {
         resetEventBiding = new EventBinding<ResetEvent>(ResetModule);
     }
