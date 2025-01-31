@@ -1,12 +1,6 @@
 using Cinemachine;
 using DG.Tweening;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using UnityEngine;
-using UnityEngine.Rendering;
-using static UnityEngine.Rendering.DebugUI;
 
 public class CameraShakeModule : MonoBehaviour
 {

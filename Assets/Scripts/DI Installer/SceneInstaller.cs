@@ -1,8 +1,5 @@
-using System.Collections.Generic;
-using System;
 using UnityEngine;
 using Zenject;
-using Zenject.Asteroids;
 
 public class SceneInstaller : MonoInstaller
 {

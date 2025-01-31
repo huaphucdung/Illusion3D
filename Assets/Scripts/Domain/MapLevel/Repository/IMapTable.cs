@@ -3,7 +3,8 @@ using System.Collections;
 namespace Project.Domain.MapLevel{
     public interface IMapTable{
         IEnumerator Initialize();
-        public MapLevelModel GetMapLevelModel(ushort id);
+        void CleanUp();
+        MapLevelModel GetMapLevelModel(ushort id);
         int AllLevelsCount { get; }
     }
 }

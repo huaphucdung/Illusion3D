@@ -406,7 +406,8 @@ MonoBehaviour:
   levelThumbnail: {fileID: 1986836209339220815}
   levelName: {fileID: 4823525579515808174}
   levelDescription: {fileID: 0}
-  playButton: {fileID: 8496422921628380147}
+  playButton: {fileID: 4875114617942771675}
+  backButton: {fileID: 8496422921628380147}
 --- !u!1 &3702509669009187819
 GameObject:
   m_ObjectHideFlags: 0

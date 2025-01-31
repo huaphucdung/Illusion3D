@@ -527,6 +527,7 @@ MonoBehaviour:
   m_animation: {fileID: 984834501430422403}
   m_completeAnimation: {fileID: 984834501430422403}
   m_button: {fileID: 406756154731199101}
+  m_completeMark: {fileID: 7749895617722210299}
 --- !u!111 &984834501430422403
 Animation:
   m_ObjectHideFlags: 0

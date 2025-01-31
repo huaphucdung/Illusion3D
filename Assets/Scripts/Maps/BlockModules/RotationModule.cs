@@ -2,7 +2,7 @@ using DG.Tweening;
 using Project.Utilities;
 using System.Collections.Generic;
 using System.Data;
-using TMPro;
+//using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;

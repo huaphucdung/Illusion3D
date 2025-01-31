@@ -8,5 +8,7 @@ namespace Project.Domain.Player{
             Id = 1;
             CurrentLevel = 1;
         }
+
+        public PlayerData(ushort id, uint currentLevel) => (Id, CurrentLevel) = (id, currentLevel);
     }
 }

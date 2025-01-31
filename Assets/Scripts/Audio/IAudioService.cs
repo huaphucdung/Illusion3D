@@ -1,4 +1,3 @@
-using Project.Events;
 
 namespace Project.Audio
 {

@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 1096867062}
   m_Layer: 0
   m_Name: UIRoot
-  m_TagString: Untagged
+  m_TagString: PageContainer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -644,6 +644,103 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!1 &1389833796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1389833797}
+  - component: {fileID: 1389833798}
+  - component: {fileID: 1389833799}
+  - component: {fileID: 1389833800}
+  m_Layer: 0
+  m_Name: Bootstrapper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1389833797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389833796}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1389833798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389833796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 1389833800}
+  - {fileID: 1389833799}
+  _installerPrefabs: []
+  _autoRun: 1
+  OnPreInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPreResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  _parentNewObjectsUnderSceneContext: 0
+  _contractNames: []
+  _parentContractNames: []
+--- !u!114 &1389833799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389833796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 262ab6319e0021744966af3fa51b08be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_canvas: {fileID: 935950806}
+  m_mainMenuPageId: UIScreens/MainMenu
+  m_pauseMenuPageId: UIScreens/PauseMenu
+  m_levelSelectionMenuPageId: UIScreens/LevelSelectionMenu
+  m_levelDetailModalId: UIScreens/LevelDetailPanel
+--- !u!114 &1389833800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389833796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4a4ef5c31f57e48bb23e88799e5d38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_mapTable: {fileID: 11400000, guid: 8f99b8248c4c5834dbf1770631ffff32, type: 2}
 --- !u!1 &1515116635
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,9 +750,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1515116636}
-  - component: {fileID: 1515116637}
   - component: {fileID: 1515116639}
-  - component: {fileID: 1515116640}
   m_Layer: 0
   m_Name: UIApplicationRoot
   m_TagString: Untagged
@@ -678,24 +773,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1515116637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515116635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2a669833e0af6048aa7c6dad53c1a6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_mainMenuId: UIScreens/MainMenu
-  m_levelSelectionMenuId: UIScreens/LevelSelectionMenu
-  m_levelDetailPanelId: UIScreens/LevelDetailPanel
-  m_pauseMenuId: 
-  m_pageContainer: {fileID: 1096867062}
-  m_modalContainer: {fileID: 2027303362}
 --- !u!114 &1515116639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -710,30 +787,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   invokeOnStart: 1
   serializedEvent:
-    rid: 6298960507804057603
+    rid: 3426602314456891392
   references:
     version: 2
     RefIds:
-    - rid: 6298960507804057603
-      type: {class: SerializableUIEvent, ns: Project.Events, asm: Assembly-CSharp}
+    - rid: 3426602314456891392
+      type: {class: SerializableUIEvent, ns: Project.Events, asm: Project.Events}
       data:
         state: 0
---- !u!114 &1515116640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515116635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a623778731183a6489a5d95ad0d9e959, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_initializers:
-  - {fileID: 1515116637}
-  m_dependencyFactories:
-  - {fileID: 11400000, guid: debd66c4019b7c044876cd6d9a55948f, type: 2}
 --- !u!1 &2027303360
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,7 +808,7 @@ GameObject:
   - component: {fileID: 2027303362}
   m_Layer: 0
   m_Name: ModalContainer
-  m_TagString: Untagged
+  m_TagString: ModalContainer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -928,3 +989,4 @@ SceneRoots:
   - {fileID: 611658708}
   - {fileID: 1051730736}
   - {fileID: 1515116636}
+  - {fileID: 1389833797}

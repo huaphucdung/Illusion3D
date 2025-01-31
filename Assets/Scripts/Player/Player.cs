@@ -1,10 +1,5 @@
-using DG.Tweening;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using Zenject;
-using Zenject.SpaceFighter;
 
 [RequireComponent(typeof(PlayerAnimator))]
 public class Player : MonoBehaviour

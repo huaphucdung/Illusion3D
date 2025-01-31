@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using static UnityEngine.Rendering.DebugUI;
+// using static UnityEngine.Rendering.DebugUI;
 
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimator : MonoBehaviour
